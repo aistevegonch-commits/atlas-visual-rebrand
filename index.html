@@ -56,7 +56,7 @@ nav {
   color:var(--text); text-decoration:none; letter-spacing:-0.5px;
 }
 .logo span { color:var(--gold); }
-.nav-links { display:flex; gap:32px; list-style:none; }
+.nav-links { display:flex; gap:32px; list-style:none; align-items:center; }
 .nav-links a {
   color:var(--text-secondary); text-decoration:none; font-size:14px; font-weight:500;
   transition:color 0.3s; position:relative;
@@ -67,6 +67,12 @@ nav {
 }
 .nav-links a:hover { color:var(--text); }
 .nav-links a:hover::after { width:100%; }
+.nav-links .nav-cta-link {
+  color:var(--gold); border:1px solid var(--gold-dim); padding:6px 16px;
+  border-radius:100px; font-size:13px; font-weight:600;
+}
+.nav-links .nav-cta-link:hover { background:var(--gold); color:var(--bg); }
+.nav-links .nav-cta-link::after { display:none; }
 .nav-cta {
   background:transparent; border:1px solid var(--gold-dim); color:var(--gold);
   padding:8px 20px; border-radius:100px; font-size:13px; font-weight:600;
@@ -375,7 +381,8 @@ footer p { font-size:13px; color:var(--text-muted); }
     <li><a href="#tiers">Pricing</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#cases">Work</a></li>
-    <li><a href="#contact" class="nav-cta">Start a Project</a></li>
+    <li><a href="playbook.html">Playbook</a></li>
+    <li><a href="90-day-plan.html" class="nav-cta-link">90-Day Plan</a></li>
   </ul>
   <button class="mobile-toggle" aria-label="Menu">☰</button>
 </nav>

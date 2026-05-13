@@ -1,0 +1,1934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Atlas Visual Playbook</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #06070a;
+      --bg-elevated: #0c0d12;
+      --bg-card: #11121a;
+      --border: #1a1c26;
+      --border-light: #252836;
+      --accent: #d4a853;
+      --accent-dim: #a8833a;
+      --accent-glow: rgba(212, 168, 83, 0.15);
+      --text: #e8e9ec;
+      --text-dim: #8b8f9a;
+      --text-muted: #5a5e6b;
+      --danger: #c25b5b;
+      --danger-bg: rgba(194, 91, 91, 0.08);
+      --danger-border: rgba(194, 91, 91, 0.35);
+      --warning: #d4945a;
+      --warning-bg: rgba(212, 148, 90, 0.08);
+      --warning-border: rgba(212, 148, 90, 0.35);
+      --success: #6ab78a;
+      --success-bg: rgba(106, 183, 138, 0.08);
+      --info: #6a9bc7;
+      --info-bg: rgba(106, 155, 199, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, .display {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    /* Navigation */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(6, 7, 10, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav-links::-webkit-scrollbar { display: none; }
+
+    .nav-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 6px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--text);
+      background: var(--bg-elevated);
+    }
+
+    /* Layout */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section {
+      padding: 64px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 80px 0 56px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      border: 1px solid var(--accent-dim);
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 700;
+      margin-bottom: 16px;
+      background: linear-gradient(180deg, var(--text) 0%, var(--text-dim) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--text-dim);
+      max-width: 640px;
+      margin: 0 auto 48px;
+      line-height: 1.5;
+    }
+
+    .hero-meta {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .hero-meta span { display: flex; align-items: center; gap: 6px; }
+
+    .hero-meta .dot {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+    }
+
+    /* Stat cards */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 48px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: left;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .stat-card:hover { border-color: var(--border-light); transform: translateY(-2px); }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .stat-card.con .stat-value { color: var(--text-dim); }
+    .stat-card.mod .stat-value { color: var(--accent); }
+    .stat-card.opt .stat-value { color: var(--success); }
+
+    .stat-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Section headers */
+    .section-header {
+      margin-bottom: 40px;
+    }
+
+    .section-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(26px, 4vw, 36px);
+      margin-bottom: 12px;
+    }
+
+    .section-header p {
+      color: var(--text-dim);
+      font-size: 16px;
+      max-width: 680px;
+    }
+
+    /* Callouts */
+    .callout {
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 24px 0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .callout.danger {
+      background: var(--danger-bg);
+      border: 1px solid var(--danger-border);
+      color: #e8c4c4;
+    }
+
+    .callout.warning {
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      color: #edd4c0;
+    }
+
+    .callout.info {
+      background: var(--info-bg);
+      border: 1px solid rgba(106, 155, 199, 0.25);
+      color: #c4d8ec;
+    }
+
+    .callout.success {
+      background: rgba(74, 222, 128, 0.08);
+      border: 1px solid rgba(74, 222, 128, 0.35);
+      color: #c4ecd4;
+    }
+
+    .callout-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Tables */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 24px 0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 560px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: var(--bg-elevated);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    td.num { font-family: 'Space Grotesk', monospace; text-align: right; }
+
+    /* Progress bars */
+    .progress-item {
+      margin: 16px 0;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 6px;
+      color: var(--text-dim);
+    }
+
+    .progress-track {
+      height: 8px;
+      background: var(--bg-elevated);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 100px;
+      background: linear-gradient(90deg, var(--accent-dim), var(--accent));
+      transition: width 1.2s ease;
+    }
+
+    .progress-fill.danger { background: linear-gradient(90deg, #8b3a3a, var(--danger)); }
+    .progress-fill.success { background: linear-gradient(90deg, #3a7a5a, var(--success)); }
+
+    /* Metric grid */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    .metric {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .metric-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .metric-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Checklists */
+    .checklist {
+      list-style: none;
+      margin: 16px 0;
+    }
+
+    .checklist li {
+      padding: 8px 0 8px 28px;
+      position: relative;
+      font-size: 14px;
+      color: var(--text-dim);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    .checklist li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 11px;
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--border-light);
+      border-radius: 4px;
+    }
+
+    .checklist li.checked::before {
+      background: var(--accent);
+      border-color: var(--accent);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2306070a'%3E%3Cpath d='M12.78 4.28a.75.75 0 00-1.06-1.06L6.5 8.44 4.28 6.22a.75.75 0 00-1.06 1.06l2.75 2.75a.75.75 0 001.06 0l5.75-5.75z'/%3E%3C/svg%3E");
+      background-size: 14px;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      margin: 32px 0;
+      padding-left: 24px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 4px;
+      bottom: 4px;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 32px;
+      padding-left: 24px;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -22px;
+      top: 4px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--accent);
+    }
+
+    .timeline-item.done::before { background: var(--accent); }
+
+    .timeline-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .timeline-meta {
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .timeline-body {
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    /* Flowchart */
+    .flowchart {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 32px 0;
+    }
+
+    .flow-node {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      position: relative;
+    }
+
+    .flow-node.danger { border-color: var(--danger-border); background: var(--danger-bg); }
+    .flow-node.warning { border-color: var(--warning-border); background: var(--warning-bg); }
+    .flow-node.success { border-color: rgba(106, 183, 138, 0.3); background: var(--success-bg); }
+
+    .flow-node + .flow-node { margin-top: 24px; }
+
+    .flow-node + .flow-node::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -25px;
+      width: 2px;
+      height: 25px;
+      background: var(--border-light);
+      transform: translateX(-50%);
+    }
+
+    .flow-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .flow-desc {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    /* Gear cards */
+    .gear-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    .gear-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      transition: border-color 0.2s;
+    }
+
+    .gear-card:hover { border-color: var(--border-light); }
+
+    .gear-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .gear-spec {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+    }
+
+    .gear-price {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    /* ROI test */
+    .roi-question {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 16px 0;
+    }
+
+    .roi-question h4 {
+      font-size: 14px;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .roi-question p {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+    }
+
+    .roi-verdict {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-top: 4px;
+    }
+
+    .roi-verdict.vanity { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger-border); }
+    .roi-verdict.smart { background: var(--success-bg); color: var(--success); border: 1px solid rgba(106, 183, 138, 0.3); }
+    .roi-verdict.marginal { background: var(--warning-bg); color: var(--warning); border: 1px solid var(--warning-border); }
+
+    /* Typography helpers */
+    p { margin-bottom: 16px; color: var(--text-dim); }
+    p.lead { font-size: 16px; color: var(--text); }
+
+    h3 {
+      font-size: 20px;
+      margin: 40px 0 16px;
+      color: var(--text);
+    }
+
+    h4 {
+      font-size: 15px;
+      margin: 24px 0 10px;
+      color: var(--text);
+    }
+
+    strong { color: var(--text); font-weight: 600; }
+
+    ul { margin: 12px 0 12px 20px; color: var(--text-dim); }
+    li { margin-bottom: 6px; }
+
+    .mono {
+      font-family: 'Space Grotesk', monospace;
+      font-size: 13px;
+      background: var(--bg-elevated);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--accent);
+    }
+
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding-left: 20px;
+      margin: 24px 0;
+      font-style: italic;
+      color: var(--text-dim);
+    }
+
+    .highlight { color: var(--accent); }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 640px) {
+      .two-col { grid-template-columns: 1fr; }
+      .nav-links a { padding: 6px 8px; font-size: 11px; }
+    }
+
+    /* Print */
+    @media print {
+      nav { position: static; }
+      body { background: #fff; color: #000; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">Atlas Visual</div>
+    <div class="nav-links">
+      <a href="#truth">Truth</a>
+      <a href="#market">Market</a>
+      <a href="#financial">Financial</a>
+      <a href="#gear">Gear</a>
+      <a href="#launch">90-Day</a>
+      <a href="#acquisition">Clients</a>
+      <a href="#workflows">Ops</a>
+      <a href="#editing">Outsource</a>
+      <a href="#failure">Failure</a>
+      <a href="#decision">Decide</a>
+      <a href="#scale">Scale</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="container">
+    <div class="hero-badge">Confidential Internal Playbook — May 2026</div>
+    <h1>The Atlas Visual Playbook</h1>
+    <p class="hero-sub">How to actually build a $150K+ video production company. No fluff. No guarantees. Just the truth.</p>
+    <div class="hero-meta">
+      <span><span class="dot"></span> Rebrand: Andrew's Production → Atlas Visual</span>
+      <span><span class="dot"></span> Target: Real Estate Developers + Investment Firms</span>
+      <span><span class="dot"></span> Clark County / Vancouver, WA + Portland Metro</span>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat-card con">
+        <div class="stat-label">Conservative Scenario</div>
+        <div class="stat-value">$76,100</div>
+        <div class="stat-desc">25 projects · 2.08/mo · solo edits everything</div>
+      </div>
+      <div class="stat-card mod">
+        <div class="stat-label">Moderate Scenario</div>
+        <div class="stat-value">$143,400</div>
+        <div class="stat-desc">40 projects · 3.33/mo · 35% outsourced</div>
+      </div>
+      <div class="stat-card opt">
+        <div class="stat-label">Optimistic Scenario</div>
+        <div class="stat-value">$233,000</div>
+        <div class="stat-desc">45 projects · 3.75/mo · big client lands early</div>
+      </div>
+    </div>
+
+    <div class="callout success" style="margin-top:24px;text-align:left;">
+      <div class="callout-title" style="color:#4ade80;">✓ Equipment Already Owned — Numbers Reflect Actual Operating Costs</div>
+      <p>All scenario projections assume zero equipment purchase. Your true launch cost is operations and reserves only.</p>
+    </div>
+
+    <div class="callout success" style="margin-top:16px;text-align:left;">
+      <div class="callout-title" style="color:#4ade80;">Strategic Advantage — Owned Equipment</div>
+      <p>Owning your gear outright is a massive competitive moat:</p>
+      <ul style="margin:8px 0 0 20px;">
+        <li><strong style="color:#4ade80;">Margins beat new competitors by 15–20%.</strong> You can undercut and still profit, or charge market rate and bank the difference.</li>
+        <li><strong style="color:#4ade80;">5–6 month survival runway</strong> without a single client — no gear payments bleeding cash.</li>
+        <li><strong style="color:#4ade80;">Client selectivity.</strong> You can say no to bad-fit projects because your overhead is compressed.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 1: THE BRUTAL TRUTH -->
+<section id="truth">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">Section 01</div>
+      <h2>The Brutal Truth</h2>
+      <p>This business is a sales job with a camera. If you are not comfortable with that, close this document now.</p>
+    </div>
+
+    <div class="callout danger">
+      <div class="callout-title">⚠ Reality Check</div>
+      Most videographers never break $100K because they confuse craft with business. They buy better cameras instead of better sales processes. They edit for 30 hours instead of making 30 calls. They treat revenue like luck and expenses like therapy.
+    </div>
+
+    <h3>The Three Realities of Time</h3>
+    <div class="progress-item">
+      <div class="progress-label"><span>Shooting (the fun part)</span><span>20%</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:20%"></div></div>
+    </div>
+    <div class="progress-item">
+      <div class="progress-label"><span>Operations (editing, delivery, admin)</span><span>30%</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:30%"></div></div>
+    </div>
+    <div class="progress-item">
+      <div class="progress-label"><span>Sales (prospecting, pitching, following up)</span><span>50%</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:50%"></div></div>
+    </div>
+
+    <h3>The $250K Ceiling</h3>
+    <p>Den Lennie, who has coached 178+ production companies, calls this the <strong>$250K ceiling</strong>. If you are still opening Premiere Pro (or DaVinci) daily, you are a high-paid freelancer, not a CEO. One shooter can only film and edit so many projects. At $1,500 average, you need 11 projects a month to hit $200K. At $3,000, you need 5-6. That is a grueling pace with no vacation.</p>
+
+    <p class="lead">Breaking the ceiling requires one of three things: <strong>higher prices</strong>, <strong>a team</strong>, or <strong>retainers</strong>. Preferably all three.</p>
+
+    <div class="metric-grid">
+      <div class="metric">
+        <div class="metric-num">$67,500</div>
+        <div class="metric-label">Solo generalist at $75/hr<br>(900 billable hrs)</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">$90,000</div>
+        <div class="metric-label">Solo generalist at $100/hr<br>(900 billable hrs)</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">$112,500</div>
+        <div class="metric-label">Solo generalist at $125/hr<br>(900 billable hrs)</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">$120,000</div>
+        <div class="metric-label">Atlas Visual niche path<br>(18 projects/year)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: MARKET REALITY -->
+<section id="market">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">Section 02</div>
+      <h2>Market Reality</h2>
+      <p>You are not competing with Hollywood. You are fighting for a tiny slice of a $31B market against solo operators, agencies, and iPhones.</p>
+    </div>
+
+    <h3>Market Size Context</h3>
+    <p>The US video production market is ~$31.2B. But that includes <em>everything</em> — Hollywood, corporate, TikTok, social media. Real estate video is a niche within a niche. No major research firm tracks it separately. Clark County, WA is not LA. Vancouver's average home price is ~$450K. The budgets reflect that.</p>
+
+    <div class="callout info">
+      <div class="callout-title">ℹ COVID Changed the Game — Permanently</div>
+      Virtual tours went from novelty to expectation during COVID and stuck. NAR 2025 Technology Survey: <strong>52% of agents use drone photography/video</strong>. Video is now table stakes for $1M+ listings in major metros. In secondary markets like Clark County, adoption lags — which means opportunity, but also education costs.
+    </div>
+
+    <h3>Competition Analysis</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Positioning</th>
+            <th>Pricing</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Sparkhouse</strong> (Irvine, CA)</td>
+            <td>Full-service creative, RE + corporate</td>
+            <td class="num">$5K–$100K/project</td>
+            <td>171 Clutch reviews, 5.0 rating. Premium.</td>
+          </tr>
+          <tr>
+            <td><strong>Luxury Presence</strong> (Santa Monica)</td>
+            <td>RE marketing platform + video</td>
+            <td class="num">~$4K+/mo retainer</td>
+            <td>Bundle with websites, SEO, branding.</td>
+          </tr>
+          <tr>
+            <td><strong>Shields Films</strong> (Portland)</td>
+            <td>Award-winning property tours + branding</td>
+            <td class="num">$1K–$5K+</td>
+            <td>Most direct PNW competitor.</td>
+          </tr>
+          <tr>
+            <td><strong>Peak3 Visuals</strong> (Seattle/Bellevue)</td>
+            <td>Cinematic 6K RE video, drone, twilight</td>
+            <td class="num">$800–$3K</td>
+            <td>24-48hr delivery. Fast and polished.</td>
+          </tr>
+          <tr>
+            <td><strong>BLARE Media</strong> (Portland/Seattle)</td>
+            <td>Corporate + commercial video</td>
+            <td class="num">$3K–$15K</td>
+            <td>Not RE-specific. Covers Vancouver.</td>
+          </tr>
+          <tr>
+            <td><strong>Lighthouse Visuals</strong></td>
+            <td>RE photo + video</td>
+            <td class="num">Starting $185/video</td>
+            <td>Low-end volume play.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Clark County / Vancouver, WA</h3>
+    <div class="callout warning">
+      <div class="callout-title">⚠ Opportunity or Warning Sign?</div>
+      No dedicated RE video production companies showed up in search for Vancouver/Clark County specifically. The market is likely served by Portland shops willing to cross the river (20-min drive), solo videographers on Craigslist/Thumbtack, and agents shooting their own iPhone content. <strong>No competition could mean no demand, or it could mean an unserved market.</strong>
+    </div>
+
+    <h3>The Agency vs Solo Operator Gap</h3>
+    <p>Solo operators ($150–$1,500/project) compete on price, speed, and personal service. Their ceiling is time-for-money. Agency positioning ($3K–$15K/project) requires a professional website, portfolio, sales process, and brand trust. <strong>Most solo operators never cross this chasm.</strong> Clients with $10K+ budgets rarely hire individuals. Clients with $500 budgets rarely hire agencies.</p>
+
+    <h3>AI Disruption Threat</h3>
+    <p>AI video generation (Sora, Runway) is not yet replacing property tours, but it is replacing templated marketing videos. Virtual staging and 3D tours (Matterport) are commoditizing fast — $100 Matterport scans exist. The defendable niche: <strong>high-end cinematic storytelling</strong> and <strong>relationship-driven commercial work</strong> that requires on-site judgment and creative direction.</p>
+  </div>
+</section>
+
+<!-- SECTION 3: FINANCIAL REALITY -->
+<section id="financial">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">Section 03</div>
+      <h2>Financial Reality</h2>
+      <p>The numbers do not care about your enthusiasm. Here is what actually happens to the money.</p>
+    </div>
+
+    <h3>Three Scenarios — Year 1 Revenue</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th class="num">Conservative</th>
+            <th class="num">Moderate</th>
+            <th class="num">Optimistic</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Total Revenue</strong></td>
+            <td class="num">$76,100</td>
+            <td class="num">$143,400</td>
+            <td class="num">$233,000</td>
+          </tr>
+          <tr>
+            <td>Essential % of Revenue</td>
+            <td class="num">36.3%</td>
+            <td class="num">31.0%</td>
+            <td class="num">19.7%</td>
+          </tr>
+          <tr>
+            <td>Signature % of Revenue</td>
+            <td class="num">49.9%</td>
+            <td class="num">50.9%</td>
+            <td class="num">48.5%</td>
+          </tr>
+          <tr>
+            <td>Enterprise % of Revenue</td>
+            <td class="num">13.8%</td>
+            <td class="num">18.1%</td>
+            <td class="num">31.8%</td>
+          </tr>
+          <tr>
+            <td>Avg Projects/Month</td>
+            <td class="num">2.08</td>
+            <td class="num">3.33</td>
+            <td class="num">3.75</td>
+          </tr>
+          <tr>
+            <td>Owner Salary</td>
+            <td class="num">$54,000</td>
+            <td class="num">$72,000</td>
+            <td class="num">$90,000</td>
+          </tr>
+          <tr>
+            <td>Net Operating Income</td>
+            <td class="num">$6,469</td>
+            <td class="num">$40,152</td>
+            <td class="num">$95,530</td>
+          </tr>
+          <tr>
+            <td>Net Margin</td>
+            <td class="num" style="color:#4ade80;">8.5%</td>
+            <td class="num" style="color:#4ade80;">28%</td>
+            <td class="num" style="color:#4ade80;">41%</td>
+          </tr>
+          <tr>
+            <td>Cash Reserve (Mo 12)</td>
+            <td class="num">$16,800</td>
+            <td class="num">$34,000</td>
+            <td class="num">$69,400</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>True Cost Per Project (Including Owner Time)</h3>
+    <p>Your time is not free. When valued at market replacement rates ($125/hr on set, $95/hr post/admin), the picture changes dramatically.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Tier</th>
+            <th class="num">Revenue</th>
+            <th class="num">Owner Time Cost</th>
+            <th class="num">Out-of-Pocket</th>
+            <th class="num">True Cost</th>
+            <th class="num">True Profit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Essential</td>
+            <td class="num">$1,725</td>
+            <td class="num">$893</td>
+            <td class="num">$0</td>
+            <td class="num">$893</td>
+            <td class="num" style="color:var(--success)">$832</td>
+          </tr>
+          <tr>
+            <td>Signature</td>
+            <td class="num">$4,750</td>
+            <td class="num">$2,995</td>
+            <td class="num">$0</td>
+            <td class="num">$2,995</td>
+            <td class="num" style="color:var(--success)">$1,755</td>
+          </tr>
+          <tr>
+            <td>Enterprise</td>
+            <td class="num">$10,500</td>
+            <td class="num">$5,800</td>
+            <td class="num">$0</td>
+            <td class="num">$5,800</td>
+            <td class="num" style="color:var(--success)">$4,700</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout success" style="margin-top:16px;">
+      <div class="callout-title" style="color:#4ade80;">✓ Equipment-Free True Cost</div>
+      These costs assume all production equipment is already owned. Out-of-pocket gear costs are removed, compressing true cost and expanding margin on every tier.
+    </div>
+
+    <div class="callout danger">
+      <div class="callout-title">⚠ The Essential Trap</div>
+      Essential projects still barely break even when you account for owner time at market rate. If you outsource editing on Essential work, you <strong>lose money</strong>. Essential exists to build relationships and fill gaps between Signature projects. If you get stuck doing only Essential work, you need <strong>1.86 projects per month</strong> (22/year) to break even. At 14 hours per project, that is 26 hours/week of production time alone, leaving zero hours for sales. <strong>This is the death spiral.</strong>
+    </div>
+
+    <h3>Break-Even Analysis</h3>
+    <p>To cover fixed costs ($503/mo) + minimum owner salary ($4,500/mo) + reduced marketing ($250/mo), Atlas Visual needs <strong>$5,253/month</strong>.</p>
+
+    <div class="metric-grid">
+      <div class="metric">
+        <div class="metric-num">2.15</div>
+        <div class="metric-label">Projects/month minimum<br>blended mix</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">1.05</div>
+        <div class="metric-label">Projects/month<br>Signature-only path</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">1.86</div>
+        <div class="metric-label">Projects/month<br>Essential-only trap</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">0.48</div>
+        <div class="metric-label">Projects/month<br>Enterprise-only</div>
+      </div>
+    </div>
+
+    <h3>Cash Flow Gap</h3>
+    <p>Video production has a brutal cash flow profile. You incur costs before you collect revenue, and clients pay slowly. <strong>Net-30 often means Net-45.</strong> 47% of B2B invoices are paid late.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Event</th>
+            <th class="num">Day</th>
+            <th class="num">Cash Movement</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Proposal sent</td><td class="num">0</td><td class="num">$0</td></tr>
+          <tr><td>Contract signed + deposit invoice</td><td class="num">5</td><td class="num">$0</td></tr>
+          <tr><td><strong>Deposit received</strong></td><td class="num"><strong>12</strong></td><td class="num"><strong>+$862</strong></td></tr>
+          <tr><td>Shoot day</td><td class="num">20</td><td class="num">-$85</td></tr>
+          <tr><td>Editor invoice (if contracted)</td><td class="num">38</td><td class="num">-$350</td></tr>
+          <tr><td>Editor paid (net-15)</td><td class="num">53</td><td class="num">-$350</td></tr>
+          <tr><td>Final delivery + invoice</td><td class="num">45</td><td class="num">$0</td></tr>
+          <tr><td><strong>Final payment received</strong></td><td class="num"><strong>58</strong></td><td class="num"><strong>+$862</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout warning">
+      <div class="callout-title">⚠ Cash Flow Reality</div>
+      In the Conservative scenario, cumulative cash exceeds <strong>$18,500 by Month 6</strong> because no equipment purchases drain capital. The equipment-free launch accelerates break-even by 2–3 months. <strong>Atlas Visual needs $6,500–10,000 in startup cash reserves to survive the Conservative ramp.</strong>
+    </div>
+
+    <h3>The Signature-Only Path</h3>
+    <p>If Atlas Visual lands exclusively Signature-tier clients, the owner needs just <strong>1.05 projects per month</strong> (13 per year) to break even at a $54,000 salary. This is the most efficient path to survival and the reason niche specialization matters.</p>
+  </div>
+</section>
+
+<!-- SECTION 4: REVISED DEPLOYMENT -->
+<section id="gear">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">Section 04</div>
+      <h2>Revised Deployment — Equipment-Free Launch</h2>
+      <p>You already own the gear. The $10K budget is reallocated to legal protection, operating reserves, marketing, and software. No camera purchases. No debt.</p>
+    </div>
+
+    <h3>Launch Budget</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th class="num">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Legal / LLC / Insurance</td><td class="num">$1,200</td></tr>
+          <tr><td>Operating Reserve</td><td class="num">$6,500</td></tr>
+          <tr><td>Marketing / Website / Spec Shoots</td><td class="num">$2,000</td></tr>
+          <tr><td>Software / Subscriptions (1 year)</td><td class="num">$700</td></tr>
+          <tr><td><strong>Total</strong></td><td class="num"><strong>$10,400</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout success" style="margin:16px 0;">
+      <div class="callout-title" style="color:#4ade80;">✓ Equipment Already Owned / No Purchase Needed</div>
+      <p>Every item below is already in hand. Depreciation and amortization are removed from project costing.</p>
+    </div>
+
+    <div class="gear-grid">
+      <div class="gear-card" style="border-color:rgba(74,222,128,0.25);">
+        <div class="gear-name" style="color:#4ade80;">✓ Sony FX30 Body</div>
+        <div class="gear-spec">APS-C cinema camera, 4K 120fps, 10-bit 4:2:2, S-Log3, dual card slots</div>
+        <div class="gear-price" style="color:#4ade80;">Owned</div>
+      </div>
+      <div class="gear-card" style="border-color:rgba(74,222,128,0.25);">
+        <div class="gear-name" style="color:#4ade80;">✓ Sigma 10-18mm f/2.8</div>
+        <div class="gear-spec">Ultra-wide for interiors, fast aperture for low light</div>
+        <div class="gear-price" style="color:#4ade80;">Owned</div>
+      </div>
+      <div class="gear-card" style="border-color:rgba(74,222,128,0.25);">
+        <div class="gear-name" style="color:#4ade80;">✓ DJI RS 4 Gimbal</div>
+        <div class="gear-spec">Best-in-class for mirrorless, native vertical shooting</div>
+        <div class="gear-price" style="color:#4ade80;">Owned</div>
+      </div>
+      <div class="gear-card" style="border-color:rgba(74,222,128,0.25);">
+        <div class="gear-name" style="color:#4ade80;">✓ Manfrotto MT055XPRO3 + 502AH</div>
+        <div class="gear-spec">Fluid head tripod, non-negotiable for locked-off shots</div>
+        <div class="gear-price" style="color:#4ade80;">Owned</div>
+      </div>
+      <div class="gear-card" style="border-color:rgba(74,222,128,0.25);">
+        <div class="gear-name" style="color:#4ade80;">✓ Aputure Amaran 200x S</div>
+        <div class="gear-spec">Bicolor LED, Bowens mount, key light for interiors</div>
+        <div class="gear-price" style="color:#4ade80;">Owned</div>
+      </div>
+      <div class="gear-card" style="border-color:rgba(74,222,128,0.25);">
+        <div class="gear-name" style="color:#4ade80;">✓ 2x Aputure MC Pro RGB Tubes</div>
+        <div class="gear-spec">Accent/fill, magnetic, luxury kitchen/bath highlights</div>
+        <div class="gear-price" style="color:#4ade80;">Owned</div>
+      </div>
+      <div class="gear-card" style="border-color:rgba(74,222,128,0.25);">
+        <div class="gear-name" style="color:#4ade80;">✓ Zoom H1n Recorder</div>
+        <div class="gear-spec">Backup audio for interviews</div>
+        <div class="gear-price" style="color:#4ade80;">Owned</div>
+      </div>
+      <div class="gear-card" style="border-color:rgba(74,222,128,0.25);">
+        <div class="gear-name" style="color:#4ade80;">✓ Rode VideoMic Pro+</div>
+        <div class="gear-spec">On-camera shotgun, scratch/reference audio</div>
+        <div class="gear-price" style="color:#4ade80;">Owned</div>
+      </div>
+      <div class="gear-card" style="border-color:rgba(74,222,128,0.25);">
+        <div class="gear-name" style="color:#4ade80;">✓ Mac Mini M4 (16GB/256GB)</div>
+        <div class="gear-spec">Base model; add external SSD for storage</div>
+        <div class="gear-price" style="color:#4ade80;">Owned</div>
+      </div>
+      <div class="gear-card" style="border-color:rgba(74,222,128,0.25);">
+        <div class="gear-name" style="color:#4ade80;">✓ Samsung T7 Shield 2TB</div>
+        <div class="gear-spec">Working drive, edit from this not internal</div>
+        <div class="gear-price" style="color:#4ade80;">Owned</div>
+      </div>
+      <div class="gear-card" style="border-color:rgba(74,222,128,0.25);">
+        <div class="gear-name" style="color:#4ade80;">✓ 2x WD My Passport 4TB</div>
+        <div class="gear-spec">Backup drives #1 and #2, 3-2-1 rule mandatory</div>
+        <div class="gear-price" style="color:#4ade80;">Owned</div>
+      </div>
+      <div class="gear-card" style="border-color:rgba(74,222,128,0.25);">
+        <div class="gear-name" style="color:#4ade80;">✓ Insurance + Operating Reserve</div>
+        <div class="gear-spec">BOP + E&O ($1,200/yr) + float for editor payments</div>
+        <div class="gear-price" style="color:#4ade80;">Allocated</div>
+      </div>
+    </div>
+
+    <h3>Software Stack</h3>
+    <ul>
+      <li><strong>DaVinci Resolve:</strong> FREE. Full NLE, world-class color, Fairlight audio, Fusion VFX. The no-brainer.</li>
+      <li><strong>Artlist / Epidemic Sound:</strong> $199/year unlimited music licensing.</li>
+      <li><strong>Frame.io:</strong> $15/mo for client review and delivery.</li>
+    </ul>
+
+    <h3>The 15% Rule</h3>
+    <div class="callout warning">
+      <div class="callout-title">⚠ Gear Discipline</div>
+      In Year 1, no single equipment purchase should exceed <strong>15% of trailing 3-month revenue</strong>. If you made $22,500 in the last quarter, your gear budget cap is $3,375. Anything above that is gambling with survival cash.
+    </div>
+
+    <h3>Gear ROI Test</h3>
+    <p>Before any purchase over $1,000, answer these three questions with numbers:</p>
+
+    <div class="roi-question">
+      <h4>1. Will this enable charging 15%+ more on the next 6 projects?</h4>
+      <p>Example: New cinema camera enables "4K 120fps slow-motion" as a billed add-on at $400/project. 6 × $400 = $2,400. Purchase price $5,500. Payback: 14 projects.</p>
+      <span class="roi-verdict marginal">Marginal — verify against actual client demand</span>
+    </div>
+
+    <div class="roi-question">
+      <h4>2. Will this reduce production time by 20%+ on every project?</h4>
+      <p>Example: New computer renders 40% faster. Saves 3 hrs/project × 30 projects × $95/hr = $8,550/year. Purchase price $3,200. Payback: 4.5 months.</p>
+      <span class="roi-verdict smart">Smart Buy</span>
+    </div>
+
+    <div class="roi-question">
+      <h4>3. Does a paying client specifically require this capability?</h4>
+      <p>Example: Client requires RAW 6K delivery. Current camera does not. Client revenue = $12,000. Purchase justified by confirmed revenue.</p>
+      <span class="roi-verdict smart">Smart Buy</span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Purchase</th>
+            <th class="num">Cost</th>
+            <th>Verdict</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>New $6,500 camera body</td><td class="num">$6,500</td><td><span style="color:var(--danger)">Vanity</span> — clients cannot tell the difference in final delivery</td></tr>
+          <tr><td>New editing workstation</td><td class="num">$3,200</td><td><span style="color:var(--success)">Smart</span> — 40% faster render = real money</td></tr>
+          <tr><td>Lighting upgrade ($1,600)</td><td class="num">$1,600</td><td><span style="color:var(--success)">Smart</span> — directly improves interior shots</td></tr>
+          <tr><td>Cinema camera ($12,000+)</td><td class="num">$12,000</td><td><span style="color:var(--danger)">Vanity</span> — 15% of annual income at $80K revenue</td></tr>
+          <tr><td>Gimbal upgrade ($1,100)</td><td class="num">$1,100</td><td><span style="color:var(--success)">Smart</span> — less post-stabilization time</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: 90-DAY LAUNCH PLAYBOOK -->
+<section id="launch">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">Section 05</div>
+      <h2>90-Day Launch Playbook</h2>
+      <p>The first 90 days determine whether this is a business or an expensive hobby. Execute with precision.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item done">
+        <div class="timeline-meta">Day 1 – 30</div>
+        <div class="timeline-title">Foundation and Warm Network Activation</div>
+        <div class="timeline-body">
+          <ul>
+            <li>Form LLC, get EIN, open business checking account.</li>
+            <li>Build simple website (Squarespace or Carrd; $12-20/mo). Needs: 60-sec demo reel, services, about with your face, contact + Calendly.</li>
+            <li>Create LinkedIn company page. Order business cards ($100).</li>
+            <li><strong>Warm Network Blitz:</strong> List every person you know in real estate. Send personal texts/emails asking for intros, not sales pitches.</li>
+            <li><strong>Goal:</strong> 5-10 intro conversations.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">Day 31 – 60</div>
+        <div class="timeline-title">Cold Outreach and Content Marketing</div>
+        <div class="timeline-body">
+          <ul>
+            <li><strong>LinkedIn outbound:</strong> Target Director of Development, VP Acquisitions, Marketing Manager, Asset Manager. Connection request + note. Post 2x/week.</li>
+            <li><strong>Cold email volume:</strong> 20 personalized emails/week. Expect 5-10% response, 1-2% meeting rate. That's ~1 meeting per week if you do the work.</li>
+            <li><strong>Content marketing:</strong> Film 2-3 spec RE videos. Post to YouTube with SEO titles. Repost to Reels/TikTok with local hashtags.</li>
+          </ul>
+          <div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;padding:16px;margin-top:12px;">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.06em;color:var(--accent);margin-bottom:8px;">Cold Email Script — Developers/PE Firms</div>
+            <p style="font-size:13px;color:var(--text-dim);margin:0;font-style:italic;">Subject: Quick question about [Company Name]'s marketing</p>
+            <p style="font-size:13px;color:var(--text);margin:8px 0 0;">Hi [First Name],</p>
+            <p style="font-size:13px;color:var(--text-dim);margin:4px 0;">I came across [Specific Project] and was impressed by [genuine compliment].</p>
+            <p style="font-size:13px;color:var(--text-dim);margin:4px 0;">I'm [Name], a videographer who helps developers showcase properties to investors and tenants through cinematic video tours.</p>
+            <p style="font-size:13px;color:var(--text-dim);margin:4px 0;">Would you be open to a 10-minute call to see if video could fit into [Company]'s marketing for upcoming projects?</p>
+            <p style="font-size:13px;color:var(--text);margin:8px 0 0;">Best,<br>[Name] | [Website] | [Phone]</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">Day 61 – 90</div>
+        <div class="timeline-title">Proposals and First Closes</div>
+        <div class="timeline-body">
+          <ul>
+            <li><strong>Portfolio strategy:</strong> Use spec work labeled "Concept Piece" or "Director's Cut." Film a local commercial space or AirBnB. Edit to look luxury. Do not lie about clients — developers hire you for your eye, not your client list.</li>
+            <li><strong>Pricing ladder:</strong> Projects 1-3: $900-1,200 (30-40% below market) in exchange for testimonial, 2 referral intros, portfolio rights, case study permission. Projects 4-6: $1,500-2,000. Projects 7+: $2,500-5,000+.</li>
+          </ul>
+          <div class="callout info" style="margin-top:12px;">
+            <div class="callout-title">Proposal Structure</div>
+            1. Client challenge / opportunity<br>
+            2. Your solution (video concept)<br>
+            3. Scope and deliverables<br>
+            4. Timeline<br>
+            5. Investment and terms<br>
+            6. About you / team<br>
+            7. Next steps
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 6: CLIENT ACQUISITION -->
+<section id="acquisition">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">Section 06</div>
+      <h2>Client Acquisition — What Actually Works</h2>
+      <p>Hope is not a strategy. Here are the channels, the math, and the honest close rates.</p>
+    </div>
+
+    <h3>Referrals: 40–60% of Consistent Business</h3>
+    <p>Real estate is relationship-driven. One agent refers another. Brokerage relationships are gold — land one Keller Williams or Windermere office, get 20 agents. <strong>Highest close rate (~50-70%), but unpredictable.</strong> Feast-famine source without systems.</p>
+
+    <h3>Cold Email: 0.3–1.5% Close Rate</h3>
+    <p>To land 1 client, you need to contact <strong>70-300 qualified prospects</strong>. B2B cold email response rates are ~1-5%. Targeting 1-2 contacts per company yields 7.8% reply rates vs 3.8% when blasting 10+ people. Relentless follow-up (2-3 touches minimum) is non-negotiable.</p>
+
+    <h3>LinkedIn Outbound System</h3>
+    <ul class="checklist">
+      <li class="checked">Optimize personal profile: headline = "Cinematic property videos for developers" not "Videographer | Storyteller | Creative."</li>
+      <li class="checked">Create company page with portfolio and contact.</li>
+      <li class="checked">Post 2x/week: behind-the-scenes, before/after grades, market commentary + video example.</li>
+      <li>Send 15-20 connection requests/week to target titles with personalized notes.</li>
+      <li>Engage on target companies' posts before sending cold messages.</li>
+    </ul>
+
+    <h3>Trade Shows and Associations</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Association</th>
+            <th>Focus</th>
+            <th>Entry Cost</th>
+            <th>Reality</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>NAIOP</strong></td>
+            <td>Commercial real estate development</td>
+            <td class="num">$300-800/yr</td>
+            <td>Developer-heavy. Attend; do not exhibit until $500K+ revenue.</td>
+          </tr>
+          <tr>
+            <td><strong>ULI</strong></td>
+            <td>Urban Land Institute</td>
+            <td class="num">$450+/yr</td>
+            <td>Institutional investor attendance. Higher-level contacts than NAIOP.</td>
+          </tr>
+          <tr>
+            <td>Local Realtor Associations</td>
+            <td>SW Washington Realtors, PMAR</td>
+            <td class="num">$150-300/yr</td>
+            <td>Cheapest entry point. Agent-centric, lower budgets.</td>
+          </tr>
+          <tr>
+            <td>NAHB Local Chapters</td>
+            <td>Builder associations</td>
+            <td class="num">$200-400/yr</td>
+            <td>Good for new construction video.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Content Marketing: 6–12 Month Payoff</h3>
+    <p>Ranking for "[City] real estate video production" drives inbound leads. High competition in major metros; lower competition in Vancouver/Clark County. <strong>Most scalable, but slow.</strong> Best for building a moat while you hustle for direct sales.</p>
+
+    <div class="callout danger">
+      <div class="callout-title">⚠ The Portfolio Trap Warning</div>
+      Do not work for free. Do not discount Signature or Enterprise to "build portfolio." Portfolio quality improves faster when clients pay full price — they give better feedback, clearer direction, and higher stakes that force growth. Discounted clients ($800 Essential projects) refer other discount-seeking clients. Your network becomes a pyramid of price sensitivity. <strong>If more than 30% of Year 1 projects are priced below $2,000, you are in the trap. Abort immediately and raise rates.</strong>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 7: OPERATIONAL WORKFLOWS -->
+<section id="workflows">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">Section 07</div>
+      <h2>Operational Workflows</h2>
+      <p>Amateurs wing it. Professionals run systems. Here are the systems.</p>
+    </div>
+
+    <h3>Pre-Production</h3>
+    <ul class="checklist">
+      <li class="checked"><strong>Discovery Call (30 min):</strong> Purpose, audience, placement, style, timeline, budget.</li>
+      <li class="checked"><strong>Shot List / Creative Brief:</strong> Deliver 48 hours before shoot. Every required shot listed. Golden hour times, drone restrictions, access points.</li>
+      <li><strong>Location Scout:</strong> Google Earth / DroneDeploy for access. Check power, parking, noise sources (HVAC, highways). Confirm key access.</li>
+    </ul>
+
+    <h3>Production Day: Solo Shooting Checklist</h3>
+    <div class="two-col">
+      <div>
+        <h4>Before Leaving</h4>
+        <ul class="checklist">
+          <li class="checked">Batteries charged (camera, gimbal, audio, phone)</li>
+          <li class="checked">Memory cards formatted (2× copies)</li>
+          <li class="checked">Lens cloth, ND filters</li>
+          <li class="checked">Shot list printed or on phone</li>
+          <li class="checked">Client contact saved</li>
+          <li class="checked">Insurance cert saved to phone</li>
+        </ul>
+      </div>
+      <div>
+        <h4>On Location</h4>
+        <ul class="checklist">
+          <li class="checked">360 walkthrough first; plan route</li>
+          <li class="checked">Shoot exteriors first (light changes)</li>
+          <li class="checked">Every shot: 10-second minimum head and tail</li>
+          <li class="checked">B-roll: wide, medium, detail, movement</li>
+          <li class="checked">Record 30 seconds room tone per location</li>
+          <li class="checked">Backup cards to portable SSD between setups</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Backup Protocol (Non-Negotiable)</h3>
+    <div class="callout danger">
+      <div class="callout-title">⚠ One Drive Failure = Bankruptcy</div>
+      Dual card recording if camera supports it (FX30 does). At lunch/break: offload Card A to SSD #1, Card B to SSD #2. <strong>Never travel with all media in one bag.</strong> Do not erase cards until 3 copies exist. Keep client projects for 1 year minimum.
+    </div>
+
+    <h3>Post-Production Workflow</h3>
+    <ol style="color:var(--text-dim);padding-left:20px;margin:12px 0;">
+      <li><strong>Ingest:</strong> Copy footage, verify integrity, rename files.</li>
+      <li><strong>Proxy Creation:</strong> If underpowered machine, create proxies in Resolve.</li>
+      <li><strong>Assembly Cut:</strong> Rough story structure. No color, no sound mix.</li>
+      <li><strong>Fine Cut:</strong> Pacing, music, graphics. Match frame rates and resolutions.</li>
+      <li><strong>Color Grade:</strong> Show LUT, shot-by-shot correction, stylized grade.</li>
+      <li><strong>Sound Design:</strong> Mix dialogue, ambient, music levels duck under speech.</li>
+      <li><strong>Graphics:</strong> Lower thirds, end card with CTA.</li>
+      <li><strong>Export:</strong> Master ProRes 422 HQ. Deliverables H.264/H.265 MP4 (4K + 1080p).</li>
+      <li><strong>Archive:</strong> Move to backup drives. Clear working drive after client approval.</li>
+    </ol>
+
+    <h3>Revision and Change Orders</h3>
+    <p>Standard contract includes <strong>2 revision rounds</strong>:</p>
+    <ul>
+      <li><strong>Round 1:</strong> Structural (reorder scenes, swap music, trim sections).</li>
+      <li><strong>Round 2:</strong> Polish (text changes, color tweak, audio level).</li>
+      <li><strong>Round 3+:</strong> Billed at $100-150/hour or flat $300/round. <strong>More than 3 rounds = change order.</strong></li>
+    </ul>
+
+    <h3>Invoicing and Payment Terms</h3>
+    <div class="metric-grid">
+      <div class="metric">
+        <div class="metric-num">50%</div>
+        <div class="metric-label">Non-refundable deposit<br>to lock dates</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">50%</div>
+        <div class="metric-label">Due on delivery<br>Net-15 preferred</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">1.5%</div>
+        <div class="metric-label">Late fee per month<br>after 30 days</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">47%</div>
+        <div class="metric-label">B2B invoices<br>paid late</div>
+      </div>
+    </div>
+
+    <div class="callout warning">
+      <div class="callout-title">⚠ Net-30 Means Net-45</div>
+      Do not spend deposit money until project is delivered. For projects &gt;$5,000, structure: <strong>40% booking / 40% production day / 20% final delivery.</strong> Maintain $10,000 operating reserve.
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 8: OUTSOURCED EDITING -->
+<section id="editing">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">Section 08</div>
+      <h2>Outsourced Editing</h2>
+      <p>Your time is worth $100+/hr. Editing is a $35-45/hr task. The math is obvious.</p>
+    </div>
+
+    <h3>Why Outsource</h3>
+    <p>You cannot scale if you are editing. Your job is shooting and selling. Editing is a $35-45/hour task; your time is worth $100+/hour holding a camera or closing deals. <strong>Contract editors at 3+ projects/month.</strong></p>
+
+    <h3>Platforms</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Platform</th>
+            <th>Pros</th>
+            <th>Cons</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Upwork</strong></td>
+            <td>Large talent pool, escrow, filters for RE experience</td>
+            <td>Race to bottom, vetting required</td>
+          </tr>
+          <tr>
+            <td><strong>Fiverr</strong></td>
+            <td>Fixed-price packages, fast turnaround</td>
+            <td>Quality varies wildly</td>
+          </tr>
+          <tr>
+            <td><strong>Motion Array / ProductionHUB</strong></td>
+            <td>Higher-end talent</td>
+            <td>More expensive</td>
+          </tr>
+          <tr>
+            <td>Dedicated post houses</td>
+            <td>Premium quality, consistent</td>
+            <td>$2,500+/project; overkill at startup</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>What to Pay (Per Project, Not Per Hour)</h3>
+    <div class="gear-grid">
+      <div class="gear-card">
+        <div class="gear-name">Basic RE Listing (1-2 min)</div>
+        <div class="gear-spec">8-12 hrs @ $35-45/hr</div>
+        <div class="gear-price">$300-500</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-name">Cinematic Property Tour (2-3 min)</div>
+        <div class="gear-spec">16-24 hrs @ $40-55/hr</div>
+        <div class="gear-price">$500-800</div>
+      </div>
+      <div class="gear-card">
+        <div class="gear-name">Corporate / Developer Brand (3-5 min)</div>
+        <div class="gear-spec">35-50 hrs @ $45-60/hr</div>
+        <div class="gear-price">$800-1,500</div>
+      </div>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-title">ℹ Pricing Rule</div>
+      Your pricing to client needs to be <strong>2.5-3× your editor cost</strong> to cover your time shooting, gear, overhead, and profit.
+    </div>
+
+    <h3>Quality Control: Editor Onboarding Kit</h3>
+    <ul class="checklist">
+      <li class="checked">Brand guidelines (fonts, color palette, logo)</li>
+      <li class="checked">LUT pack (your color grade preset)</li>
+      <li class="checked">Music style guide (temp tracks showing vibe)</li>
+      <li class="checked">Title card templates (.mogrt or .drp)</li>
+      <li class="checked">Example edits (3-5 perfect reference videos)</li>
+      <li>Footage handoff protocol with naming convention: PROPERTYNAME_DATE_CAMA/B_CARD01</li>
+    </ul>
+
+    <h3>Building a Bench of 3 Editors</h3>
+    <ul>
+      <li><strong>Editor A (Primary):</strong> Fast, reliable, knows your style. Gets 60% of work.</li>
+      <li><strong>Editor B (Secondary):</strong> Different style (more cinematic). Handles overflow.</li>
+      <li><strong>Editor C (Emergency):</strong> Backup / specialist (motion graphics, color).</li>
+    </ul>
+    <p>Pay net-15 or net-30. 1099 at year-end. Use Melio or Bill.com for ACH transfers.</p>
+  </div>
+</section>
+
+<!-- SECTION 9: THE FAILURE MODES -->
+<section id="failure">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">Section 09</div>
+      <h2>The Failure Modes</h2>
+      <p>Most videography businesses do not fail because the work is bad. They fail because the business is bad.</p>
+    </div>
+
+    <h3>Why Most Solo Videographers Never Break $100K</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Problem</th>
+            <th>Effect on Revenue</th>
+            <th>Atlas Visual Antidote</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Hourly billing</strong></td>
+            <td>Caps income at hours × rate</td>
+            <td>Project-based pricing decoupled from time</td>
+          </tr>
+          <tr>
+            <td><strong>No niche</strong></td>
+            <td>Compete on price. Avg project = $1,200.</td>
+            <td>Real estate developers only. Premium positioning.</td>
+          </tr>
+          <tr>
+            <td><strong>No sales process</strong></td>
+            <td>Wait for random low-budget referrals</td>
+            <td>Active outbound: LinkedIn, direct mail, networking</td>
+          </tr>
+          <tr>
+            <td><strong>No follow-up</strong></td>
+            <td>80% of revenue should come from existing clients</td>
+            <td>CRM. Quarterly check-ins. Retainer migration.</td>
+          </tr>
+          <tr>
+            <td><strong>Edit everything</strong></td>
+            <td>20-30 hrs/project caps output at 30-40/year</td>
+            <td>Contract editors at 3+ projects/month</td>
+          </tr>
+          <tr>
+            <td><strong>Take any gig</strong></td>
+            <td>No systems, no efficiency</td>
+            <td>Say no. Essential tier filters, not catches everything.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Seasonality: 60-70% of Revenue in Q2-Q3</h3>
+    <p>Peak: March through October (spring/summer construction completions, lease-ups). Slow: Thanksgiving through February (developers are budgeting, not marketing). <strong>Stack cash in peak months.</strong> In slow season, pivot to corporate headshots, architectural photography, post-production-only work for other videographers, and build your own content/SEO.</p>
+
+    <h3>Client Concentration Risk</h3>
+    <div class="callout danger">
+      <div class="callout-title">⚠ Danger Zone</div>
+      One client = 50%+ of revenue. <strong>No single client over 30% of monthly revenue.</strong> If you land a big developer retainer, keep hustling for diversified clients. If they leave, you die.
+    </div>
+
+    <h3>Cash Flow Death Spiral</h3>
+    <p>You shoot in Week 1. Invoice 50% deposit before shoot. You deliver in Week 3. Invoice remaining 50%; Net-30 means payment in Week 7. <strong>Your editor needs payment in Week 4.</strong> You are floating editor costs for 3-4 weeks before client pays. If client pays late (47% do), you are floating 6-8 weeks. This is where video businesses die.</p>
+
+    <h3>Equipment Addiction vs Revenue Generation</h3>
+    <p>The video industry is uniquely vulnerable to gear fetishism. Cameras are reviewed like sports cars. <strong>Year 1 equipment reserve:</strong> $3,000-6,000 depending on scenario. This is not a slush fund. It is a replacement reserve for failure, not an upgrade fund for desire.</p>
+
+    <h3>Failure Statistics</h3>
+    <div class="metric-grid">
+      <div class="metric">
+        <div class="metric-num">20-22%</div>
+        <div class="metric-label">First-year business<br>failure rate (BLS)</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">30%</div>
+        <div class="metric-label">Closed by year 2</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">50%</div>
+        <div class="metric-label">Dead by year 5</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">1 in 5</div>
+        <div class="metric-label">Real first-year<br>failure rate</div>
+      </div>
+    </div>
+
+    <h3>Risk Profile — Equipment-Free Launch</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Risk Factor</th>
+            <th>Standard Launch</th>
+            <th>Equipment-Free Launch</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Upfront capital at risk</td><td class="num">$8,000–10,000</td><td class="num" style="color:#4ade80;">$1,200–2,000</td></tr>
+          <tr><td>Monthly burn from gear debt</td><td class="num">$300–600/mo</td><td class="num" style="color:#4ade80;">$0</td></tr>
+          <tr><td>Cash reserve at Month 12 (Conservative)</td><td class="num">$8,400</td><td class="num" style="color:#4ade80;">$16,800</td></tr>
+          <tr><td>Months of survival with zero revenue</td><td class="num">2–3 months</td><td class="num" style="color:#4ade80;">5–6 months</td></tr>
+          <tr><td>Equipment obsolescence risk</td><td>High — new gear depreciates immediately</td><td style="color:#4ade80;">Low — already amortized</td></tr>
+          <tr><td>Break-even timeline</td><td>Month 5–6</td><td style="color:#4ade80;">Month 3–4</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 10: QUIT / PIVOT / DOUBLE DOWN -->
+<section id="decision">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">Section 10</div>
+      <h2>Quit / Pivot / Double Down</h2>
+      <p>At Month 12, you will face a decision. Here is the framework to make it with data, not emotion.</p>
+    </div>
+
+    <h3>Quit Signals</h3>
+    <p>If <strong>3 or more</strong> of these are true at the 12-month mark, videography is not the right business model for your current resources and market:</p>
+    <div class="flowchart">
+      <div class="flow-node danger">
+        <div class="flow-title">Revenue &lt; $58,000</div>
+        <div class="flow-desc">The market is not buying what you are selling, or you are not selling effectively.</div>
+      </div>
+      <div class="flow-node danger">
+        <div class="flow-title">Zero Repeat Clients</div>
+        <div class="flow-desc">Your work or client experience is not good enough to retain. Fatal flaw.</div>
+      </div>
+      <div class="flow-node danger">
+        <div class="flow-title">Average Project Value Declining</div>
+        <div class="flow-desc">You are competing on price and losing. The brand is becoming toxic to premium buyers.</div>
+      </div>
+      <div class="flow-node danger">
+        <div class="flow-title">Personal Savings Below $6,000</div>
+        <div class="flow-desc">You are one slow month from personal financial crisis. Stress will destroy quality.</div>
+      </div>
+      <div class="flow-node danger">
+        <div class="flow-title">Dreading Every Shoot</div>
+        <div class="flow-desc">Burnout is not a character flaw. It is data. The business model is unsustainable for your psychology.</div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--text-muted);">If you quit: The skills transfer. Video production, client management, and storytelling are valuable in corporate marketing departments and agencies. A failed freelance attempt is market research, not a failed career.</p>
+
+    <h3>Pivot Signals</h3>
+    <div class="flowchart">
+      <div class="flow-node warning">
+        <div class="flow-title">Revenue $65K-$95K but Wrong Client Mix</div>
+        <div class="flow-desc">You are working hard for agents and small businesses, not developers. <strong>Action:</strong> Narrow niche further. Fire low-value clients. Raise prices 40%.</div>
+      </div>
+      <div class="flow-node warning">
+        <div class="flow-title">Strong Portfolio, Weak Sales</div>
+        <div class="flow-desc">Creative work is good. Business development is bad. <strong>Action:</strong> Hire a part-time BDR. Focus 100% on selling for 90 days.</div>
+      </div>
+      <div class="flow-node warning">
+        <div class="flow-title">Good Close Rate on Essential, Zero on Signature</div>
+        <div class="flow-desc">Value proposition is not landing at premium tier. <strong>Action:</strong> Redesign Signature package. Add deliverables (stills, social cuts). Case studies with ROI proof.</div>
+      </div>
+      <div class="flow-node warning">
+        <div class="flow-title">Seasonal Feast-Famine</div>
+        <div class="flow-desc">Summer slammed. Winter dead. <strong>Action:</strong> Push retainers hard in Q3. Pre-sell Q1 content in December. Diversify to indoor/architectural work.</div>
+      </div>
+    </div>
+
+    <h3>Double Down Signals</h3>
+    <div class="flowchart">
+      <div class="flow-node success">
+        <div class="flow-title">3+ Clients Have Rebooked</div>
+        <div class="flow-desc">Product-market fit exists. <strong>Action:</strong> Offer annual retainers. Pre-book Q2-Q4.</div>
+      </div>
+      <div class="flow-node success">
+        <div class="flow-title">2+ Referral Projects Closed</div>
+        <div class="flow-desc">Word of mouth is working. <strong>Action:</strong> Formalize referral program: 10% credit for successful referrals.</div>
+      </div>
+      <div class="flow-node success">
+        <div class="flow-title">Turning Down Low-Quality Work</div>
+        <div class="flow-desc">Positioning is strong enough to say no. <strong>Action:</strong> Raise Signature 15%. Add "Platinum" tier at $9,500.</div>
+      </div>
+      <div class="flow-node success">
+        <div class="flow-title">Revenue Growing 30%+ Quarter-over-Quarter</div>
+        <div class="flow-desc">Flywheel is spinning. <strong>Action:</strong> Hire W-2 editor. Expand to Seattle or Bend.</div>
+      </div>
+      <div class="flow-node success">
+        <div class="flow-title">Cash Reserves Exceed $20,000</div>
+        <div class="flow-desc">Business is self-sustaining with buffer. <strong>Action:</strong> Invest in systems: CRM, automated proposals, upgraded website.</div>
+      </div>
+    </div>
+
+    <h3>12-Month Decision Matrix</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Condition</th>
+            <th>Decision</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Revenue &lt;$60K, 0 repeats, declining trend</td>
+            <td style="color:var(--danger);font-weight:600;">Quit — or take a salaried role</td>
+          </tr>
+          <tr>
+            <td>Revenue $60K-$100K, 1-2 repeats, flat trend</td>
+            <td style="color:var(--warning);font-weight:600;">Pivot — niche harder, raise prices, fix sales</td>
+          </tr>
+          <tr>
+            <td>Revenue &gt;$100K, 3+ repeats, growing trend</td>
+            <td style="color:var(--success);font-weight:600;">Double Down — hire, market, expand</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 11: SCALING PATH -->
+<section id="scale">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">Section 11</div>
+      <h2>Scaling Path</h2>
+      <p>Do not scale until the math forces you to. Premature hiring is the fastest way to turn profit into payroll anxiety.</p>
+    </div>
+
+    <h3>When to Hire the First W-2 Editor</h3>
+    <div class="callout danger">
+      <div class="callout-title">⚠ Do NOT Hire W-2 in Year 1</div>
+      Use contract editors to bridge. Hire W-2 only when:<br>
+      1. Trailing 6-month average revenue exceeds $18,000/month, <strong>AND</strong><br>
+      2. Owner is editing &gt;30 hours/week consistently, <strong>AND</strong><br>
+      3. Cash reserves exceed $25,000 (6 months of editor salary buffer).<br><br>
+      <strong>Estimated hire date:</strong> Month 14-18 (Q2-Q3 Year 2) if Moderate or Optimistic trajectory holds.
+    </div>
+
+    <h3>W-2 Editor Economics</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Cost Component</th>
+            <th class="num">Annual</th>
+            <th class="num">Monthly</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Base Salary (entry-mid, Vancouver/Portland)</td><td class="num">$48,000</td><td class="num">$4,000</td></tr>
+          <tr><td>Payroll Taxes (FICA, FUTA, SUTA)</td><td class="num">$3,672</td><td class="num">$306</td></tr>
+          <tr><td>Workers Comp Insurance</td><td class="num">$480</td><td class="num">$40</td></tr>
+          <tr><td>Simple IRA Match (3%)</td><td class="num">$1,440</td><td class="num">$120</td></tr>
+          <tr><td>Software / Seat Licenses</td><td class="num">$720</td><td class="num">$60</td></tr>
+          <tr><td><strong>Total Loaded Cost</strong></td><td class="num"><strong>$54,312</strong></td><td class="num"><strong>$4,526</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Revenue Per Employee Benchmarks</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Stage</th>
+            <th class="num">Headcount</th>
+            <th class="num">Annual Revenue</th>
+            <th class="num">Rev/Employee</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Solo operator (current)</td>
+            <td class="num">1</td>
+            <td class="num">$76K – $233K</td>
+            <td class="num">$76K – $233K</td>
+          </tr>
+          <tr>
+            <td>Solo maxed out</td>
+            <td class="num">1</td>
+            <td class="num">$185K – $220K</td>
+            <td class="num">$185K – $220K</td>
+          </tr>
+          <tr>
+            <td>Micro-agency (owner + 1 editor)</td>
+            <td class="num">2</td>
+            <td class="num">$280K – $380K</td>
+            <td class="num">$140K – $190K</td>
+          </tr>
+          <tr>
+            <td>Small agency (owner + 2 staff)</td>
+            <td class="num">3</td>
+            <td class="num">$420K – $600K</td>
+            <td class="num">$140K – $200K</td>
+          </tr>
+          <tr>
+            <td>Regional player</td>
+            <td class="num">5-8</td>
+            <td class="num">$750K – $1.2M</td>
+            <td class="num">$100K – $150K</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-title">ℹ Atlas Visual Year 3 Target</div>
+      2 FTE (owner + editor) at $340,000 revenue = <strong>$170,000/employee</strong>. Healthy and above the $150,000/employee danger line where overhead begins to eat the business.
+    </div>
+
+    <h3>Geographic Expansion Costs</h3>
+    <p>Do not expand until Clark County + Portland metro generate $250,000/year. The travel tax on a solo operator is severe and invisible until you track it.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Market</th>
+            <th class="num">Distance</th>
+            <th class="num">Relationship Cost</th>
+            <th class="num">Travel/Project</th>
+            <th class="num">Break-Even/Year</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Seattle</strong></td>
+            <td class="num">165 mi</td>
+            <td class="num">$2,394</td>
+            <td class="num">$324</td>
+            <td class="num">4 Signature</td>
+          </tr>
+          <tr>
+            <td><strong>Bend</strong></td>
+            <td class="num">175 mi</td>
+            <td class="num">$2,508</td>
+            <td class="num">$417</td>
+            <td class="num">3 Signature</td>
+          </tr>
+          <tr>
+            <td><strong>Spokane</strong></td>
+            <td class="num">350 mi</td>
+            <td class="num">$5,496</td>
+            <td class="num">$687</td>
+            <td class="num">5 Signature</td>
+          </tr>
+          <tr>
+            <td><strong>Boise</strong></td>
+            <td class="num">425 mi</td>
+            <td class="num">$6,840</td>
+            <td class="num">$824</td>
+            <td class="num">6 Signature</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout warning">
+      <div class="callout-title">⚠ Expansion Rule</div>
+      Do not enter a new market unless you have a confirmed warm introduction to a decision-maker who can generate <strong>$50,000+ in first-year revenue</strong>. Cold expansion into new cities is a cash bonfire for solo operators.
+    </div>
+
+    <h3>Retainer Migration Strategy</h3>
+    <p>The ultimate escape from the time-for-money trap is recurring revenue. Once you have 3+ repeat clients, propose monthly retainers:</p>
+    <ul>
+      <li><strong>Content Retainer:</strong> $3,500-6,500/mo for 2-4 videos + social cutdowns.</li>
+      <li><strong>Brand Retainer:</strong> $4,250-8,500/mo for ongoing campaign support, headshots, event coverage.</li>
+      <li><strong>Annual Commitment:</strong> 5% discount for 12-month commitment with auto-debit.</li>
+    </ul>
+
+    <div style="margin-top:64px;padding-top:40px;border-top:1px solid var(--border);text-align:center;">
+      <p style="font-size:13px;color:var(--text-muted);font-style:italic;">
+        This document uses specific dollar amounts calculated from 2025-2026 PNW market rates, WA state tax and LLC costs, and industry-standard creative agency benchmarks.<br>
+        All owner time is costed at replacement value ($95-125/hr) to prevent the delusion of "free" labor.<br><br>
+        <span class="mono">Atlas Visual Playbook v1.0 — May 2026 — Confidential</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Active nav link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      if (scrollY >= sectionTop - 80) current = section.getAttribute('id');
+    });
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>

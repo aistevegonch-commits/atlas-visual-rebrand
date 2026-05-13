@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas Visual — Financial Model</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #06070a;
+  --bg-elevated: #0c0e14;
+  --bg-card: #11131a;
+  --bg-card-hover: #161925;
+  --border: #1e2028;
+  --border-subtle: rgba(255,255,255,0.06);
+  --gold: #d4a853;
+  --gold-dim: rgba(212,168,83,0.35);
+  --gold-glow: rgba(212,168,83,0.12);
+  --gold-muted: rgba(212,168,83,0.18);
+  --text: #e8e9ec;
+  --text-secondary: #8b8f9a;
+  --text-muted: #5a5e6a;
+  --green: #5cb85c;
+  --green-dim: rgba(92,184,92,0.15);
+  --red: #d9534f;
+  --red-dim: rgba(217,83,79,0.15);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --max-width: 1200px;
+  --section-pad: clamp(60px, 8vw, 120px);
+  --transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-size:15px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+.font-display { font-family:'Space Grotesk',sans-serif; }
+
+/* Navigation */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:1000;
+  padding:18px 5vw;
+  display:flex; align-items:center; justify-content:space-between;
+  background:rgba(6,7,10,0.85);
+  backdrop-filter:blur(16px) saturate(1.2);
+  border-bottom:1px solid var(--border-subtle);
+}
+.logo {
+  font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:20px;
+  color:var(--text); text-decoration:none; letter-spacing:-0.5px;
+}
+.logo span { color:var(--gold); }
+.nav-links { display:flex; gap:32px; list-style:none; align-items:center; }
+.nav-links a {
+  color:var(--text-secondary); text-decoration:none; font-size:13px; font-weight:500;
+  transition:color 0.3s; position:relative; letter-spacing:0.3px;
+}
+.nav-links a::after {
+  content:''; position:absolute; bottom:-4px; left:0; width:0; height:1.5px;
+  background:var(--gold); transition:width 0.3s;
+}
+.nav-links a:hover { color:var(--text); }
+.nav-links a:hover::after { width:100%; }
+.nav-links a.active { color:var(--gold); }
+.nav-cta {
+  background:transparent; border:1px solid var(--gold-dim); color:var(--gold);
+  padding:8px 20px; border-radius:100px; font-size:13px; font-weight:600;
+  cursor:pointer; transition:all 0.3s; font-family:inherit; text-decoration:none; display:inline-block;
+}
+.nav-cta:hover { background:var(--gold); color:var(--bg); }
+.mobile-toggle { display:none; background:none; border:none; color:var(--text); font-size:24px; cursor:pointer; }
+
+/* Container */
+.container { max-width:var(--max-width); margin:0 auto; padding:0 5vw; }
+
+/* Hero */
+.hero {
+  position:relative; min-height:60vh; display:flex; align-items:center;
+  padding-top:120px; padding-bottom:60px;
+  border-bottom:1px solid var(--border);
+}
+.hero-bg {
+  position:absolute; inset:0; opacity:0.35;
+  background:
+    radial-gradient(ellipse 600px 400px at 80% 20%, rgba(212,168,83,0.08), transparent),
+    radial-gradient(ellipse 500px 350px at 10% 80%, rgba(212,168,83,0.04), transparent);
+  pointer-events:none;
+}
+.hero-content { position:relative; z-index:2; width:100%; }
+.hero-label {
+  display:inline-block; font-size:11px; font-weight:700; letter-spacing:3px;
+  text-transform:uppercase; color:var(--gold); border:1px solid var(--gold-dim);
+  padding:5px 14px; border-radius:100px; margin-bottom:20px;
+}
+.hero h1 {
+  font-family:'Space Grotesk',sans-serif; font-size:clamp(36px, 5vw, 64px);
+  font-weight:700; line-height:1.05; letter-spacing:-2px; color:var(--text);
+  max-width:700px;
+}
+.hero h1 .gold { color:var(--gold); }
+.hero p.lead {
+  font-size:clamp(16px, 1.3vw, 19px); color:var(--text-secondary);
+  max-width:560px; margin-top:18px; line-height:1.6;
+}
+
+/* Metric Cards */
+.metrics-grid {
+  display:grid; grid-template-columns:repeat(3, 1fr); gap:20px;
+  margin-top:48px;
+}
+.metric-card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:32px 28px;
+  transition:all 0.35s ease;
+  position:relative; overflow:hidden;
+}
+.metric-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:var(--gold); opacity:0.6; transition:opacity 0.3s;
+}
+.metric-card:hover {
+  transform:translateY(-3px);
+  border-color:var(--gold-dim);
+  background:var(--bg-card-hover);
+}
+.metric-card:hover::before { opacity:1; }
+.metric-card .metric-label {
+  font-size:11px; font-weight:600; letter-spacing:2px;
+  text-transform:uppercase; color:var(--text-muted); margin-bottom:12px;
+}
+.metric-card .metric-value {
+  font-family:'Space Grotesk',sans-serif; font-size:clamp(28px, 3vw, 40px);
+  font-weight:700; color:var(--gold); line-height:1;
+}
+.metric-card .metric-note {
+  font-size:13px; color:var(--text-secondary); margin-top:10px;
+}
+.metric-card.secondary .metric-value { color:var(--text); }
+.metric-card.accent .metric-value { color:var(--green); }
+.metric-card.accent::before { background:var(--green); }
+
+/* Sections common */
+.section { padding:var(--section-pad) 0; position:relative; }
+.section + .section { border-top:1px solid var(--border); }
+.section-header { margin-bottom:48px; }
+.section-label {
+  display:inline-block; font-size:11px; font-weight:700; letter-spacing:3px;
+  text-transform:uppercase; color:var(--gold); margin-bottom:12px;
+}
+.section h2 {
+  font-family:'Space Grotesk',sans-serif; font-size:clamp(26px, 3vw, 38px);
+  font-weight:700; letter-spacing:-1px; line-height:1.15;
+}
+.section p.section-desc {
+  color:var(--text-secondary); margin-top:12px; max-width:640px; font-size:15px;
+}
+
+/* Tables */
+.table-wrap {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+}
+.data-table { width:100%; border-collapse:collapse; font-size:14px; }
+.data-table thead th {
+  background:var(--bg-elevated);
+  color:var(--text-secondary);
+  font-weight:600;
+  font-size:11px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  padding:16px 20px;
+  text-align:left;
+  border-bottom:1px solid var(--border);
+  white-space:nowrap;
+}
+.data-table tbody td {
+  padding:16px 20px;
+  border-bottom:1px solid var(--border);
+  color:var(--text);
+  vertical-align:middle;
+}
+.data-table tbody tr:last-child td { border-bottom:none; }
+.data-table tbody tr:hover td { background:rgba(255,255,255,0.02); }
+.data-table .num { font-family:'Space Grotesk',sans-serif; font-weight:600; text-align:right; }
+.data-table .highlight { color:var(--gold); font-weight:600; }
+.data-table .positive { color:var(--green); }
+.data-table .negative { color:var(--red); }
+.data-table .center { text-align:center; }
+.data-table .cell-muted { color:var(--text-secondary); }
+
+/* Scenario colors */
+.scenario-con { color:var(--text-secondary); }
+.scenario-mod { color:var(--gold); }
+.scenario-opt { color:var(--green); }
+
+/* True cost table tweaks */
+.true-cost-table td { padding:18px 20px; }
+
+/* Progress bars */
+.progress-wrap {
+  display:flex; align-items:center; gap:16px;
+}
+.progress-track {
+  flex:1; height:10px; background:var(--bg-elevated);
+  border-radius:100px; overflow:hidden;
+}
+.progress-fill {
+  height:100%; border-radius:100px;
+  transition:width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.progress-fill.gold { background:var(--gold); }
+.progress-fill.green { background:var(--green); }
+.progress-fill.red { background:var(--red); }
+.progress-val {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:13px; font-weight:600;
+  min-width:44px; text-align:right;
+  white-space:nowrap;
+}
+
+/* Cash flow chart */
+.chart-wrap {
+  display:flex; flex-direction:column; gap:14px;
+  margin-top:16px;
+}
+.chart-row {
+  display:grid;
+  grid-template-columns:50px 1fr 90px 110px;
+  align-items:center;
+  gap:16px;
+  padding:14px 20px;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  transition:background 0.2s;
+}
+.chart-row:hover { background:var(--bg-card-hover); }
+.chart-row.header {
+  background:var(--bg-elevated);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--text-secondary);
+  border:none;
+  pointer-events:none;
+}
+.chart-row.header:hover { background:var(--bg-elevated); }
+.chart-month {
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700; font-size:14px; color:var(--text-secondary);
+}
+.chart-bar-wrap {
+  display:flex; align-items:center; gap:12px;
+}
+.chart-bar {
+  height:22px;
+  border-radius:4px;
+  transition:width 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.chart-bar.rev { background:var(--gold); }
+.chart-bar.cost { background:var(--red); }
+.chart-net {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:14px; font-weight:600;
+  text-align:right;
+}
+.chart-cum {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:14px; font-weight:600;
+  text-align:right;
+}
+
+/* Breakeven cards */
+.breakeven-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+  gap:16px;
+}
+.be-card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:24px;
+  transition:all 0.3s;
+}
+.be-card:hover { border-color:var(--gold-dim); }
+.be-card .be-title {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:16px; font-weight:700; margin-bottom:16px;
+}
+.be-card .be-row {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:10px 0;
+  border-bottom:1px solid var(--border);
+  font-size:13px;
+}
+.be-card .be-row:last-child { border-bottom:none; }
+.be-card .be-row .be-label { color:var(--text-secondary); }
+.be-card .be-row .be-val {
+  font-family:'Space Grotesk',sans-serif; font-weight:600;
+}
+.be-card .be-tag {
+  display:inline-block; font-size:11px; font-weight:600;
+  padding:4px 10px; border-radius:100px; margin-top:14px;
+  letter-spacing:0.5px;
+}
+.be-tag.safe { background:var(--green-dim); color:var(--green); }
+.be-tag.risk { background:var(--red-dim); color:var(--red); }
+
+/* Scaling thresholds */
+.threshold-list {
+  display:flex; flex-direction:column; gap:16px;
+}
+.threshold-item {
+  display:grid;
+  grid-template-columns:180px 1fr 120px;
+  gap:24px;
+  align-items:center;
+  padding:22px 24px;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  transition:all 0.3s;
+}
+.threshold-item:hover { border-color:var(--gold-dim); background:var(--bg-card-hover); }
+.threshold-trigger {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:15px; font-weight:700;
+}
+.threshold-desc {
+  color:var(--text-secondary); font-size:14px;
+}
+.threshold-timeline {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:13px; font-weight:600;
+  color:var(--gold);
+  text-align:right;
+}
+
+/* Decision matrix */
+.decision-grid {
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+}
+.decision-card {
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:24px;
+  align-items:center;
+  padding:24px 28px;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  transition:all 0.3s;
+}
+.decision-card:hover { border-color:var(--gold-dim); }
+.decision-card .dec-condition {
+  font-size:15px; color:var(--text-secondary); line-height:1.5;
+}
+.decision-card .dec-condition strong { color:var(--text); }
+.decision-card .dec-verdict {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:14px; font-weight:700;
+  padding:8px 18px;
+  border-radius:var(--radius-sm);
+  white-space:nowrap;
+  text-align:center;
+}
+.dec-verdict.quit { background:var(--red-dim); color:var(--red); }
+.dec-verdict.pivot { background:var(--gold-muted); color:var(--gold); }
+.dec-verdict.double { background:var(--green-dim); color:var(--green); }
+
+/* Footer */
+.page-footer {
+  border-top:1px solid var(--border);
+  padding:40px 5vw;
+  text-align:center;
+  color:var(--text-muted);
+  font-size:13px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .metrics-grid { grid-template-columns:1fr; }
+  .nav-links { display:none; }
+  .mobile-toggle { display:block; }
+  .chart-row {
+    grid-template-columns:50px 1fr 80px;
+  }
+  .chart-cum { display:none; }
+  .threshold-item {
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+  .threshold-timeline { text-align:left; }
+  .decision-card {
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .data-table { font-size:12px; }
+  .data-table thead th, .data-table tbody td { padding:12px 14px; }
+  .section { padding:48px 0; }
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(30px); }
+  to { opacity:1; transform:translateY(0); }
+}
+.animate { opacity:0; }
+.animate.in-view { animation:fadeUp 0.8s var(--transition) forwards; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Atlas<span>Visual</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="playbook.html">Playbook</a></li>
+    <li><a href="financial-model.html" class="active">Financial Model</a></li>
+    <li><a href="video.html">Video</a></li>
+    <li><a href="index.html#contact" class="nav-cta">Contact</a></li>
+  </ul>
+  <button class="mobile-toggle" aria-label="Menu">☰</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="container hero-content">
+    <span class="hero-label">Internal Dashboard</span>
+    <h1 class="font-display">Atlas Visual <span class="gold">Financial Model</span></h1>
+    <p class="lead">Equipment-free scenarios. Every dollar accounted for. A clear-eyed view of what it takes to build a profitable solo video production practice.</p>
+
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Conservative</div>
+        <div class="metric-value">$76,100</div>
+        <div class="metric-note">25 projects / yr — marginal viability</div>
+      </div>
+      <div class="metric-card secondary">
+        <div class="metric-label">Moderate</div>
+        <div class="metric-value">$143,400</div>
+        <div class="metric-note">40 projects / yr — sustainable growth</div>
+      </div>
+      <div class="metric-card accent">
+        <div class="metric-label">Optimistic</div>
+        <div class="metric-value">$233,000</div>
+        <div class="metric-note">45 projects / yr — strong margins</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENARIO COMPARISON -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">01 / Scenarios</span>
+      <h2 class="font-display">Scenario Comparison</h2>
+      <p class="section-desc">Three operating models from conservative survival to optimistic growth. All figures assume zero equipment purchases — pure service-based revenue.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th class="center">Conservative</th>
+            <th class="center">Moderate</th>
+            <th class="center">Optimistic</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Total Revenue</strong></td>
+            <td class="num highlight">$76,100</td>
+            <td class="num highlight">$143,400</td>
+            <td class="num highlight">$233,000</td>
+          </tr>
+          <tr>
+            <td>Projects / Year</td>
+            <td class="num">25</td>
+            <td class="num">40</td>
+            <td class="num">45</td>
+          </tr>
+          <tr>
+            <td>Avg Projects / Month</td>
+            <td class="num">2.08</td>
+            <td class="num">3.33</td>
+            <td class="num">3.75</td>
+          </tr>
+          <tr>
+            <td>Owner Salary</td>
+            <td class="num">$54,000</td>
+            <td class="num">$72,000</td>
+            <td class="num">$90,000</td>
+          </tr>
+          <tr>
+            <td>Variable Costs</td>
+            <td class="num">~$5,200</td>
+            <td class="num">~$11,500</td>
+            <td class="num">~$19,800</td>
+          </tr>
+          <tr>
+            <td>Fixed Costs</td>
+            <td class="num">$6,062</td>
+            <td class="num">$6,062</td>
+            <td class="num">$6,062</td>
+          </tr>
+          <tr>
+            <td>Marketing</td>
+            <td class="num">$3,600</td>
+            <td class="num">$4,800</td>
+            <td class="num">$6,000</td>
+          </tr>
+          <tr>
+            <td>Equipment Reserve</td>
+            <td class="num cell-muted">$0</td>
+            <td class="num cell-muted">$0</td>
+            <td class="num cell-muted">$0</td>
+          </tr>
+          <tr>
+            <td><strong>Net Operating Income</strong></td>
+            <td class="num">$7,238</td>
+            <td class="num positive">$34,014</td>
+            <td class="num positive">$86,226</td>
+          </tr>
+          <tr>
+            <td><strong>Net Margin</strong></td>
+            <td class="num">8.5%</td>
+            <td class="num positive">23.7%</td>
+            <td class="num positive">37.0%</td>
+          </tr>
+          <tr>
+            <td>Month 12 Cash</td>
+            <td class="num">$16,800</td>
+            <td class="num">$34,000</td>
+            <td class="num positive">$69,400</td>
+          </tr>
+          <tr>
+            <td><strong>True Profit?</strong></td>
+            <td class="num negative">Marginal</td>
+            <td class="num positive">Yes</td>
+            <td class="num positive">Yes</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- TRUE COST PER PROJECT -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">02 / Unit Economics</span>
+      <h2 class="font-display">True Cost Per Project</h2>
+      <p class="section-desc">What each project actually costs when you account for owner time at market rates. Equipment-free means lower overhead, but time is still the biggest cost.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data-table true-cost-table">
+        <thead>
+          <tr>
+            <th>Tier</th>
+            <th class="num">Revenue</th>
+            <th class="num">Owner Time Cost</th>
+            <th class="num">Hard Costs</th>
+            <th class="num">True Cost</th>
+            <th class="num">True Profit</th>
+            <th class="num">Margin</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Essential</strong></td>
+            <td class="num">$1,725</td>
+            <td class="num">$1,450</td>
+            <td class="num">$143</td>
+            <td class="num">$1,593 → <strong class="highlight">$893</strong></td>
+            <td class="num">$832</td>
+            <td class="num positive">48.2%</td>
+          </tr>
+          <tr>
+            <td><strong>Signature</strong></td>
+            <td class="num">$4,750</td>
+            <td class="num">$2,995</td>
+            <td class="num">$525</td>
+            <td class="num">$3,520 → <strong class="highlight">$2,995</strong></td>
+            <td class="num">$1,755</td>
+            <td class="num positive">37.0%</td>
+          </tr>
+          <tr>
+            <td><strong>Enterprise</strong></td>
+            <td class="num">$10,500</td>
+            <td class="num">$5,800</td>
+            <td class="num">$1,688</td>
+            <td class="num">$7,488 → <strong class="highlight">$5,800</strong></td>
+            <td class="num">$4,700</td>
+            <td class="num positive">44.8%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="margin-top:20px; color:var(--text-secondary); font-size:14px;">
+      <strong style="color:var(--red);">Note:</strong> Essential with contract editor still loses money ($–218). The owner must personally edit Essential-tier projects to make them profitable.
+    </p>
+  </div>
+</section>
+
+<!-- MONTH-BY-MONTH CASH FLOW -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">03 / Cash Flow</span>
+      <h2 class="font-display">Month-by-Month Cash Flow</h2>
+      <p class="section-desc">Moderate scenario ramp-up. Cash turns positive in Month 7. By Month 12, the business has built a $37,947 cash cushion — enough to absorb a slow quarter.</p>
+    </div>
+
+    <div class="chart-wrap">
+      <div class="chart-row header">
+        <div class="chart-month">Mo</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; padding-left:12px;">
+          <span>Revenue In</span>
+          <span>Costs Out</span>
+        </div>
+        <div class="chart-net">Net</div>
+        <div class="chart-cum">Cumulative</div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-month">1</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:center; padding-left:12px;">
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill gold" style="width:0%"></div></div><span class="progress-val">$0</span></div>
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill red" style="width:74%"></div></div><span class="progress-val">–$5,253</span></div>
+        </div>
+        <div class="chart-net negative">–$5,253</div>
+        <div class="chart-cum negative">–$5,253</div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-month">2</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:center; padding-left:12px;">
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill gold" style="width:18%"></div></div><span class="progress-val">$2,500</span></div>
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill red" style="width:77%"></div></div><span class="progress-val">–$5,500</span></div>
+        </div>
+        <div class="chart-net negative">–$3,000</div>
+        <div class="chart-cum negative">–$8,253</div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-month">3</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:center; padding-left:12px;">
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill gold" style="width:30%"></div></div><span class="progress-val">$4,200</span></div>
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill red" style="width:73%"></div></div><span class="progress-val">–$5,200</span></div>
+        </div>
+        <div class="chart-net negative">–$1,000</div>
+        <div class="chart-cum negative">–$9,253</div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-month">4</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:center; padding-left:12px;">
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill gold" style="width:48%"></div></div><span class="progress-val">$6,800</span></div>
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill red" style="width:82%"></div></div><span class="progress-val">–$5,800</span></div>
+        </div>
+        <div class="chart-net positive">+$1,000</div>
+        <div class="chart-cum negative">–$8,253</div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-month">5</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:center; padding-left:12px;">
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill gold" style="width:65%"></div></div><span class="progress-val">$9,200</span></div>
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill red" style="width:88%"></div></div><span class="progress-val">–$6,200</span></div>
+        </div>
+        <div class="chart-net positive">+$3,000</div>
+        <div class="chart-cum negative">–$5,253</div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-month">6</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:center; padding-left:12px;">
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill gold" style="width:81%"></div></div><span class="progress-val">$11,500</span></div>
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill red" style="width:92%"></div></div><span class="progress-val">–$6,500</span></div>
+        </div>
+        <div class="chart-net positive">+$5,000</div>
+        <div class="chart-cum negative">–$253</div>
+      </div>
+
+      <div class="chart-row" style="border-color:var(--gold-dim);">
+        <div class="chart-month">7</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:center; padding-left:12px;">
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill gold" style="width:90%"></div></div><span class="progress-val">$12,800</span></div>
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill red" style="width:96%"></div></div><span class="progress-val">–$6,800</span></div>
+        </div>
+        <div class="chart-net positive">+$6,000</div>
+        <div class="chart-cum positive">+$5,747</div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-month">8</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:center; padding-left:12px;">
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill gold" style="width:95%"></div></div><span class="progress-val">$13,500</span></div>
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill red" style="width:99%"></div></div><span class="progress-val">–$7,000</span></div>
+        </div>
+        <div class="chart-net positive">+$6,500</div>
+        <div class="chart-cum positive">+$12,247</div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-month">9</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:center; padding-left:12px;">
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill gold" style="width:100%"></div></div><span class="progress-val">$14,200</span></div>
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill red" style="width:100%"></div></div><span class="progress-val">–$7,200</span></div>
+        </div>
+        <div class="chart-net positive">+$7,000</div>
+        <div class="chart-cum positive">+$19,247</div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-month">10</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:center; padding-left:12px;">
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill gold" style="width:97%"></div></div><span class="progress-val">$13,800</span></div>
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill red" style="width:98%"></div></div><span class="progress-val">–$7,100</span></div>
+        </div>
+        <div class="chart-net positive">+$6,700</div>
+        <div class="chart-cum positive">+$25,947</div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-month">11</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:center; padding-left:12px;">
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill gold" style="width:93%"></div></div><span class="progress-val">$13,200</span></div>
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill red" style="width:97%"></div></div><span class="progress-val">–$7,000</span></div>
+        </div>
+        <div class="chart-net positive">+$6,200</div>
+        <div class="chart-cum positive">+$32,147</div>
+      </div>
+
+      <div class="chart-row" style="background:var(--bg-elevated); border-color:var(--gold-dim);">
+        <div class="chart-month">12</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:center; padding-left:12px;">
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill gold" style="width:89%"></div></div><span class="progress-val">$12,700</span></div>
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill red" style="width:96%"></div></div><span class="progress-val">–$6,900</span></div>
+        </div>
+        <div class="chart-net positive">+$5,800</div>
+        <div class="chart-cum positive" style="color:var(--gold);">+$37,947</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BREAK-EVEN ANALYSIS -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">04 / Break-Even</span>
+      <h2 class="font-display">Break-Even Analysis</h2>
+      <p class="section-desc">How many projects per month are needed to hit each target? Contribution margin varies by project mix. Lower is better.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Break-Even Target</th>
+            <th class="num">Monthly Need</th>
+            <th class="num">Contribution Margin</th>
+            <th class="num">Projects / Month</th>
+            <th class="num">Projects / Year</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Bare survival</td>
+            <td class="num">$503</td>
+            <td class="num">$1,632</td>
+            <td class="num">0.31</td>
+            <td class="num">3.7</td>
+          </tr>
+          <tr>
+            <td>$54K salary</td>
+            <td class="num">$5,253</td>
+            <td class="num">$1,632</td>
+            <td class="num">1.86</td>
+            <td class="num">22.3</td>
+          </tr>
+          <tr>
+            <td>$72K salary</td>
+            <td class="num">$6,753</td>
+            <td class="num">$2,095</td>
+            <td class="num">1.71</td>
+            <td class="num">20.5</td>
+          </tr>
+          <tr>
+            <td>$90K salary</td>
+            <td class="num">$8,253</td>
+            <td class="num">$2,405</td>
+            <td class="num">1.89</td>
+            <td class="num">22.7</td>
+          </tr>
+          <tr>
+            <td>Signature-only, $54K</td>
+            <td class="num">$5,253</td>
+            <td class="num">$4,225</td>
+            <td class="num">1.05</td>
+            <td class="num">12.6</td>
+          </tr>
+          <tr>
+            <td>Enterprise-only, $54K</td>
+            <td class="num">$5,253</td>
+            <td class="num">$8,813</td>
+            <td class="num">0.48</td>
+            <td class="num">5.8</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="breakeven-grid" style="margin-top:32px;">
+      <div class="be-card">
+        <div class="be-title">Bare Survival</div>
+        <div class="be-row"><span class="be-label">Monthly need</span><span class="be-val">$503</span></div>
+        <div class="be-row"><span class="be-label">Projects/month</span><span class="be-val">0.31</span></div>
+        <div class="be-row"><span class="be-label">Projects/year</span><span class="be-val">3.7</span></div>
+        <span class="be-tag risk">Not viable</span>
+      </div>
+      <div class="be-card">
+        <div class="be-title">$54K Salary — Mixed</div>
+        <div class="be-row"><span class="be-label">Monthly need</span><span class="be-val">$5,253</span></div>
+        <div class="be-row"><span class="be-label">Projects/month</span><span class="be-val">1.86</span></div>
+        <div class="be-row"><span class="be-label">Projects/year</span><span class="be-val">22.3</span></div>
+        <span class="be-tag safe">Achievable</span>
+      </div>
+      <div class="be-card">
+        <div class="be-title">$90K Salary — Mixed</div>
+        <div class="be-row"><span class="be-label">Monthly need</span><span class="be-val">$8,253</span></div>
+        <div class="be-row"><span class="be-label">Projects/month</span><span class="be-val">1.89</span></div>
+        <div class="be-row"><span class="be-label">Projects/year</span><span class="be-val">22.7</span></div>
+        <span class="be-tag safe">Achievable</span>
+      </div>
+      <div class="be-card">
+        <div class="be-title">Enterprise-Only, $54K</div>
+        <div class="be-row"><span class="be-label">Monthly need</span><span class="be-val">$5,253</span></div>
+        <div class="be-row"><span class="be-label">Projects/month</span><span class="be-val">0.48</span></div>
+        <div class="be-row"><span class="be-label">Projects/year</span><span class="be-val">5.8</span></div>
+        <span class="be-tag safe">Highly efficient</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCALING THRESHOLDS -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">05 / Scaling</span>
+      <h2 class="font-display">Scaling Thresholds</h2>
+      <p class="section-desc">When to hire, when to buy gear, when to expand. These triggers protect cash and prevent premature scaling.</p>
+    </div>
+
+    <div class="threshold-list">
+      <div class="threshold-item">
+        <div class="threshold-trigger">Contract Editor</div>
+        <div class="threshold-desc">When project volume exceeds solo editing capacity without hurting delivery quality.</div>
+        <div class="threshold-timeline">Month 4–6</div>
+      </div>
+      <div class="threshold-item">
+        <div class="threshold-trigger">W-2 Editor Hire</div>
+        <div class="threshold-desc">Requires sustained revenue &gt;$18K/month for 6+ months and a $25K cash buffer.</div>
+        <div class="threshold-timeline">Month 14–18</div>
+      </div>
+      <div class="threshold-item">
+        <div class="threshold-trigger">Gear Purchase &gt;$1,000</div>
+        <div class="threshold-desc">Only when trailing 3-month revenue exceeds $12,000 — proof of consistent demand.</div>
+        <div class="threshold-timeline">Month 6+</div>
+      </div>
+      <div class="threshold-item">
+        <div class="threshold-trigger">Geographic Expansion</div>
+        <div class="threshold-desc">Only when the local market is fully saturated at &gt;$250K/year annual run rate.</div>
+        <div class="threshold-timeline">Year 2–3</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DECISION MATRIX -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">06 / Decisions</span>
+      <h2 class="font-display">The Decision Matrix — Month 12</h2>
+      <p class="section-desc">A hard framework for the Year 1 review. No ambiguity. Revenue, repeat business, and growth trend determine the path forward.</p>
+    </div>
+
+    <div class="decision-grid">
+      <div class="decision-card">
+        <div class="dec-condition">
+          <strong>Revenue &lt; $60K</strong>, zero repeat clients, and declining or flat month-over-month
+        </div>
+        <div class="dec-verdict quit">QUIT</div>
+      </div>
+      <div class="decision-card">
+        <div class="dec-condition">
+          <strong>Revenue $60K–$100K</strong>, 1–2 repeat clients, flat trend — you have product-market fit but no engine
+        </div>
+        <div class="dec-verdict pivot">PIVOT</div>
+      </div>
+      <div class="decision-card">
+        <div class="dec-condition">
+          <strong>Revenue &gt; $100K</strong>, 3+ repeat clients, and a growing trend — the machine is working
+        </div>
+        <div class="dec-verdict double">DOUBLE DOWN</div>
+      </div>
+    </div>
+
+    <div style="margin-top:48px; padding:28px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius);">
+      <h3 class="font-display" style="font-size:18px; margin-bottom:14px;">How to Read This</h3>
+      <p style="color:var(--text-secondary); font-size:14px; line-height:1.7; margin-bottom:12px;">
+        The Decision Matrix is designed to remove emotion from the Year 1 review. Most solo founders either quit too early or scale too late. This framework forces you to look at three objective signals:
+      </p>
+      <ul style="color:var(--text-secondary); font-size:14px; line-height:1.9; padding-left:20px;">
+        <li><strong style="color:var(--text);">Revenue</strong> — is the business generating enough to justify the owner's time?</li>
+        <li><strong style="color:var(--text);">Repeat clients</strong> — does the product create loyalty, or is every sale a new hunt?</li>
+        <li><strong style="color:var(--text);">Trend</strong> — is momentum building, stalling, or reversing?</li>
+      </ul>
+      <p style="color:var(--text-secondary); font-size:14px; line-height:1.7; margin-top:14px;">
+        If you are in the <strong style="color:var(--gold);">PIVOT</strong> zone, the move is not to work harder — it is to raise prices, narrow the niche, or change the offer. If you are in the <strong style="color:var(--green);">DOUBLE DOWN</strong> zone, the move is to hire, market harder, and expand capacity.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer class="page-footer">
+  <p>Atlas Visual Financial Model — Internal Planning Document</p>
+</footer>
+
+<script>
+// Intersection observer for scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.section-header, .table-wrap, .chart-row:not(.header), .be-card, .threshold-item, .decision-card').forEach(el => {
+  el.classList.add('animate');
+  observer.observe(el);
+});
+
+// Mobile menu toggle
+const mobileToggle = document.querySelector('.mobile-toggle');
+const navLinks = document.querySelector('.nav-links');
+if (mobileToggle && navLinks) {
+  mobileToggle.addEventListener('click', () => {
+    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+    navLinks.style.position = 'absolute';
+    navLinks.style.top = '100%';
+    navLinks.style.left = '0';
+    navLinks.style.right = '0';
+    navLinks.style.flexDirection = 'column';
+    navLinks.style.background = 'rgba(6,7,10,0.95)';
+    navLinks.style.padding = '20px 5vw';
+    navLinks.style.backdropFilter = 'blur(16px)';
+    navLinks.style.borderBottom = '1px solid var(--border)';
+    navLinks.style.gap = '16px';
+  });
+}
+</script>
+</body>
+</html>

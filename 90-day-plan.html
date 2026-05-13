@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>90-Day Execution Plan — Atlas Visual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #06070a;
+    --bg-elevated: #0c0e14;
+    --bg-card: #11131a;
+    --bg-hover: #181b26;
+    --accent: #d4a853;
+    --accent-dim: rgba(212,168,83,0.15);
+    --text: #e8e9ec;
+    --text-muted: #8b8f9a;
+    --border: rgba(255,255,255,0.08);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --max-width: 1100px;
+    --transition: 0.2s ease;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; margin: 0 0 0.5em; line-height: 1.2; }
+  h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 700; letter-spacing: -0.02em; }
+  h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; letter-spacing: -0.01em; }
+  h3 { font-size: 1.15rem; font-weight: 600; }
+  h4 { font-size: 1rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; }
+  p { margin: 0 0 1em; color: var(--text-muted); }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  ul { margin: 0 0 1em; padding-left: 0; list-style: none; }
+  li { margin: 0 0 0.5em; }
+
+  /* Layout */
+  .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+
+  /* Sticky Nav */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(6,7,10,0.85);
+    backdrop-filter: blur(16px) saturate(1.2);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .nav-brand {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .nav-links { display: flex; gap: 6px; flex-wrap: wrap; }
+  .nav-link {
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: var(--transition);
+    white-space: nowrap;
+  }
+  .nav-link:hover, .nav-link.active {
+    color: var(--accent);
+    background: var(--accent-dim);
+    text-decoration: none;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 80px 0 60px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-badge {
+    display: inline-block;
+    padding: 5px 14px;
+    border-radius: 100px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .hero p { max-width: 560px; margin: 0 auto 36px; font-size: 1.05rem; }
+
+  /* Phase cards in hero */
+  .phase-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .phase-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 18px;
+    text-align: center;
+    transition: var(--transition);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .phase-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .phase-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity var(--transition);
+  }
+  .phase-card:hover::after { opacity: 1; }
+  .phase-card .days {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .phase-card .label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .phase-card .arrow {
+    margin-top: 10px;
+    font-size: 1.1rem;
+    color: var(--text-muted);
+  }
+
+  /* Sections */
+  .section { padding: 64px 0; border-bottom: 1px solid var(--border); }
+  .section:last-child { border-bottom: none; }
+  .section-header { margin-bottom: 32px; }
+  .section-header h2 { margin-bottom: 6px; }
+  .section-header p { max-width: 640px; margin-bottom: 0; }
+
+  /* Phase timeline bar */
+  .timeline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+  .timeline-step {
+    flex: 1;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--bg-hover);
+    position: relative;
+    transition: var(--transition);
+  }
+  .timeline-step.active { background: var(--accent); }
+  .timeline-step span {
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .timeline-arrow { color: var(--accent); font-size: 1rem; }
+
+  /* Progress bar */
+  .progress-wrap { margin-bottom: 28px; }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+  .progress-bar {
+    height: 8px;
+    background: var(--bg-hover);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: var(--accent);
+    transition: width 1.2s ease;
+  }
+
+  /* Checklist */
+  .checklist { display: flex; flex-direction: column; gap: 10px; }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    transition: var(--transition);
+    cursor: pointer;
+  }
+  .check-item:hover { border-color: rgba(212,168,83,0.35); background: var(--bg-hover); }
+  .check-item.done { opacity: 0.55; }
+  .check-item.done .check-text { text-decoration: line-through; color: var(--text-muted); }
+  .check-box {
+    width: 20px; height: 20px;
+    min-width: 20px;
+    border-radius: 5px;
+    border: 2px solid var(--text-muted);
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 2px;
+    transition: var(--transition);
+  }
+  .check-item.done .check-box { border-color: var(--accent); background: var(--accent); }
+  .check-box svg { width: 12px; height: 12px; color: var(--bg); opacity: 0; transition: opacity var(--transition); }
+  .check-item.done .check-box svg { opacity: 1; }
+  .check-text { font-size: 0.92rem; line-height: 1.5; color: var(--text); }
+  .check-text strong { color: var(--text); font-weight: 600; }
+
+  /* Week grid */
+  .week-grid { display: grid; grid-template-columns: 1fr; gap: 28px; }
+  @media (min-width: 860px) {
+    .week-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  .week-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    transition: var(--transition);
+  }
+  .week-card:hover { border-color: rgba(212,168,83,0.25); }
+  .week-card h3 { margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .week-card h3 .dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--accent); display: inline-block;
+  }
+
+  /* Budget table */
+  .budget-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+  .budget-table th, .budget-table td {
+    padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.92rem;
+  }
+  .budget-table th {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--text-muted); background: var(--bg-card);
+  }
+  .budget-table tr:last-child td { border-bottom: none; font-weight: 700; color: var(--accent); }
+  .budget-table tr:hover td { background: var(--bg-hover); }
+
+  /* Metrics grid */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  @media (min-width: 640px) { .metrics-grid { grid-template-columns: repeat(4, 1fr); } }
+  .metric-cell {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    text-align: center;
+  }
+  .metric-cell .num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.4rem; font-weight: 700; color: var(--accent); margin-bottom: 4px;
+  }
+  .metric-cell .desc { font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+  /* Criteria cards */
+  .criteria-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media (min-width: 720px) { .criteria-grid { grid-template-columns: repeat(3, 1fr); } }
+  .criteria-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    position: relative;
+    transition: var(--transition);
+  }
+  .criteria-card:hover { border-color: var(--accent); }
+  .criteria-card .tag {
+    position: absolute; top: 16px; right: 16px;
+    font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 3px 10px; border-radius: 100px; border: 1px solid var(--text-muted); color: var(--text-muted);
+  }
+  .criteria-card.stretch .tag { border-color: var(--accent); color: var(--accent); }
+
+  /* Failure modes */
+  .failure-item {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 18px 18px 18px 16px; margin-bottom: 10px;
+  }
+  .failure-icon {
+    min-width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(212,168,83,0.12); border: 1px solid rgba(212,168,83,0.35);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem; color: var(--accent);
+  }
+  .failure-item h4 { margin-bottom: 6px; font-size: 0.85rem; }
+  .failure-item p { margin-bottom: 0; font-size: 0.88rem; }
+
+  /* Footer */
+  .footer {
+    padding: 40px 0 60px; text-align: center; border-top: 1px solid var(--border);
+  }
+  .footer p { font-size: 0.82rem; color: var(--text-muted); }
+
+  /* Scroll reveal */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* Responsive */
+  @media (max-width: 720px) {
+    .phase-row { grid-template-columns: 1fr; }
+    .nav-inner { flex-direction: column; align-items: flex-start; }
+    .nav-links { width: 100%; justify-content: flex-start; }
+    .hero { padding: 60px 0 44px; }
+    .section { padding: 44px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Sticky Nav -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">Atlas Visual — 90-Day Plan</div>
+    <div class="nav-links">
+      <a class="nav-link active" href="#hero">Overview</a>
+      <a class="nav-link" href="#phase1">Foundation</a>
+      <a class="nav-link" href="#phase2">Outreach</a>
+      <a class="nav-link" href="#phase3">Close</a>
+      <a class="nav-link" href="#budget">Budget</a>
+      <a class="nav-link" href="#success">Success</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="hero">
+  <div class="container">
+    <div class="hero-badge">Operations Manual</div>
+    <h1>The First 90 Days</h1>
+    <p>Day-by-day execution plan. What to do, when to do it, and what success looks like.</p>
+    <div class="phase-row">
+      <div class="phase-card" onclick="document.getElementById('phase1').scrollIntoView({behavior:'smooth'})">
+        <div class="days">01–30</div>
+        <div class="label">Foundation</div>
+        <div class="arrow">→</div>
+      </div>
+      <div class="phase-card" onclick="document.getElementById('phase2').scrollIntoView({behavior:'smooth'})">
+        <div class="days">31–60</div>
+        <div class="label">Outreach</div>
+        <div class="arrow">→</div>
+      </div>
+      <div class="phase-card" onclick="document.getElementById('phase3').scrollIntoView({behavior:'smooth'})">
+        <div class="days">61–90</div>
+        <div class="label">Close</div>
+        <div class="arrow">→</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Phase 1: Foundation -->
+<section class="section reveal" id="phase1">
+  <div class="container">
+    <div class="section-header">
+      <h4>Phase 1</h4>
+      <h2>Foundation <span style="color:var(--text-muted);font-weight:400;">(Days 1–30)</span></h2>
+      <p>Build the legal, digital, and operational backbone of Atlas Visual. No outreach yet — just infrastructure.</p>
+    </div>
+
+    <!-- Timeline -->
+    <div class="timeline">
+      <div class="timeline-step active"><span>Wk 1</span></div>
+      <div class="timeline-step active"><span>Wk 2</span></div>
+      <div class="timeline-step active"><span>Wk 3</span></div>
+      <div class="timeline-step active"><span>Wk 4</span></div>
+      <div class="timeline-step"><span>Wk 5</span></div>
+      <div class="timeline-step"><span>Wk 6</span></div>
+      <div class="timeline-step"><span>Wk 7</span></div>
+      <div class="timeline-step"><span>Wk 8</span></div>
+      <div class="timeline-step"><span>Wk 9</span></div>
+      <div class="timeline-step"><span>Wk 10</span></div>
+      <div class="timeline-step"><span>Wk 11</span></div>
+      <div class="timeline-step"><span>Wk 12</span></div>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Phase 1 Progress</span><span id="p1-percent">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="p1-bar" style="width:0%"></div></div>
+    </div>
+
+    <div class="week-grid">
+      <!-- Week 1 -->
+      <div class="week-card">
+        <h3><span class="dot"></span>Week 1: Legal & Identity</h3>
+        <div class="checklist" data-phase="p1">
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Form LLC</strong> in Washington State (file online, $200)</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Obtain EIN</strong> from IRS (free, online)</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Open business checking account</strong></div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Register for WA B&O tax</strong> (1.5% on gross receipts)</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Obtain Master Business License</strong> ($50–100)</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Get liability insurance quote</strong> (BOP + E&O, ~$1,200/year)</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Purchase domain</strong> (atlasvisual.co or similar, ~$15)</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Set up Google Workspace</strong> ($12/month)</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Create Atlas Visual logo</strong> (Canva Pro or hire designer, $50–200)</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Set up QuickBooks or Wave</strong> for accounting</div></div>
+        </div>
+      </div>
+
+      <!-- Week 2 -->
+      <div class="week-card">
+        <h3><span class="dot"></span>Week 2: Digital Presence</h3>
+        <div class="checklist" data-phase="p1">
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Build website</strong> (use existing index.html or Carrd/Squarespace)</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Create LinkedIn company page</strong></div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Set up Calendly</strong> for discovery calls</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Create portfolio/demo reel</strong> (use existing work)</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Set up Vimeo Pro or YouTube</strong> for portfolio hosting</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Order business cards</strong> (Moo, $100)</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Create email signature</strong> and brand templates</div></div>
+        </div>
+      </div>
+
+      <!-- Week 3 -->
+      <div class="week-card">
+        <h3><span class="dot"></span>Week 3: Systems & Tools</h3>
+        <div class="checklist" data-phase="p1">
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Set up Frame.io account</strong> ($15/month)</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Subscribe to Artlist or Epidemic Sound</strong> ($199/year)</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Create editor onboarding kit</strong> (LUTs, style guide, templates)</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Draft client services agreement template</strong></div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Draft subcontractor/editor agreement template</strong></div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Set up CRM</strong> (HubSpot free tier)</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Create proposal template</strong></div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Set up invoicing system</strong> (QuickBooks or Wave)</div></div>
+        </div>
+      </div>
+
+      <!-- Week 4 -->
+      <div class="week-card">
+        <h3><span class="dot"></span>Week 4: Warm Network Blitz</h3>
+        <div class="checklist" data-phase="p1">
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>List 50 people</strong> you know in real estate (agents, brokers, contractors, investors, property managers)</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Send personal texts/emails</strong> to top 20</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Use script:</strong> “Hey [Name], I just launched Atlas Visual — a video production company focused on helping developers and investment firms market properties. Do you know anyone who might need listing videos or brand content? I'd love an intro.”</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Schedule 5–10 intro conversations</strong> (not sales pitches)</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Post launch announcement</strong> on LinkedIn and personal social</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Ask 3 past clients for testimonials</strong></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:28px; padding:18px 20px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-sm);">
+      <strong style="color:var(--accent);">Phase 1 Budget:</strong> <span style="color:var(--text);">~$1,500</span> &nbsp;|&nbsp; <strong style="color:var(--accent);">Success Metric:</strong> <span style="color:var(--text);">5+ warm conversations scheduled, website live, LLC formed</span>
+    </div>
+  </div>
+</section>
+
+<!-- Phase 2: Outreach -->
+<section class="section reveal" id="phase2">
+  <div class="container">
+    <div class="section-header">
+      <h4>Phase 2</h4>
+      <h2>Outreach <span style="color:var(--text-muted);font-weight:400;">(Days 31–60)</span></h2>
+      <p>Turn on the outbound engine. LinkedIn, cold email, content, and direct mail — all working in parallel.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-step active"><span>Wk 1</span></div>
+      <div class="timeline-step active"><span>Wk 2</span></div>
+      <div class="timeline-step active"><span>Wk 3</span></div>
+      <div class="timeline-step active"><span>Wk 4</span></div>
+      <div class="timeline-step active"><span>Wk 5</span></div>
+      <div class="timeline-step active"><span>Wk 6</span></div>
+      <div class="timeline-step active"><span>Wk 7</span></div>
+      <div class="timeline-step active"><span>Wk 8</span></div>
+      <div class="timeline-step"><span>Wk 9</span></div>
+      <div class="timeline-step"><span>Wk 10</span></div>
+      <div class="timeline-step"><span>Wk 11</span></div>
+      <div class="timeline-step"><span>Wk 12</span></div>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Phase 2 Progress</span><span id="p2-percent">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="p2-bar" style="width:0%"></div></div>
+    </div>
+
+    <div class="week-grid">
+      <!-- Weeks 5-6 -->
+      <div class="week-card">
+        <h3><span class="dot"></span>Weeks 5–6: LinkedIn Outbound System</h3>
+        <div class="checklist" data-phase="p2">
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Identify 100 target contacts</strong> on LinkedIn</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Titles to target:</strong> Director of Development, VP Acquisitions, Asset Manager, Marketing Manager at multifamily/commercial firms</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Send 20 personalized connection requests/week</strong> with note</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Script:</strong> “Hi [Name], I produce cinematic property videos for developers in the PNW market. Would love to connect and share some work.”</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Post 2x/week on LinkedIn</strong> (behind-the-scenes, before/after, market commentary)</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Engage daily</strong> on target contacts' posts</div></div>
+        </div>
+      </div>
+
+      <!-- Weeks 7-8 -->
+      <div class="week-card">
+        <h3><span class="dot"></span>Weeks 7–8: Cold Outreach + Content</h3>
+        <div class="checklist" data-phase="p2">
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Send 20 personalized cold emails/week</strong> to developers/PE firms</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Use the cold email script</strong> from the playbook</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Volume target:</strong> 80 emails sent, expect 4–8 responses, 1–2 meetings</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Film 2–3 spec RE videos</strong> (friend's property, AirBnB, commercial space)</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Post spec videos to YouTube</strong> with SEO titles</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Repost clips</strong> to Instagram Reels/TikTok</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Send direct mailer</strong> to 30 local developers (postcard + portfolio link, ~$100)</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:28px; padding:18px 20px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-sm);">
+      <strong style="color:var(--accent);">Phase 2 Budget:</strong> <span style="color:var(--text);">~$800</span> (mailers, LinkedIn Premium, sample shoot costs) &nbsp;|&nbsp; <strong style="color:var(--accent);">Success Metric:</strong> <span style="color:var(--text);">3+ discovery calls booked, 1+ proposal sent</span>
+    </div>
+  </div>
+</section>
+
+<!-- Phase 3: Close -->
+<section class="section reveal" id="phase3">
+  <div class="container">
+    <div class="section-header">
+      <h4>Phase 3</h4>
+      <h2>Close <span style="color:var(--text-muted);font-weight:400;">(Days 61–90)</span></h2>
+      <p>Convert conversations into contracts. Execute first projects and stress-test every system.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-step active"><span>Wk 1</span></div>
+      <div class="timeline-step active"><span>Wk 2</span></div>
+      <div class="timeline-step active"><span>Wk 3</span></div>
+      <div class="timeline-step active"><span>Wk 4</span></div>
+      <div class="timeline-step active"><span>Wk 5</span></div>
+      <div class="timeline-step active"><span>Wk 6</span></div>
+      <div class="timeline-step active"><span>Wk 7</span></div>
+      <div class="timeline-step active"><span>Wk 8</span></div>
+      <div class="timeline-step active"><span>Wk 9</span></div>
+      <div class="timeline-step active"><span>Wk 10</span></div>
+      <div class="timeline-step active"><span>Wk 11</span></div>
+      <div class="timeline-step active"><span>Wk 12</span></div>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Phase 3 Progress</span><span id="p3-percent">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="p3-bar" style="width:0%"></div></div>
+    </div>
+
+    <div class="week-grid">
+      <!-- Weeks 9-10 -->
+      <div class="week-card">
+        <h3><span class="dot"></span>Weeks 9–10: Proposals & Negotiation</h3>
+        <div class="checklist" data-phase="p3">
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Follow up on all proposals sent</strong> (3–5 touch rule)</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Send 3+ proposals</strong> (use tiered pricing: Essential / Signature / Enterprise)</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Handle objections</strong> with prepared responses</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Offer “founding client” pricing:</strong> 30% below market for first 3 clients in exchange for testimonial + 2 referrals</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Pricing ladder:</strong> Project 1–3 at $900–1,500 → Project 4–6 at $2,500–3,500 → Project 7+ at market rate</div></div>
+        </div>
+      </div>
+
+      <!-- Weeks 11-12 -->
+      <div class="week-card">
+        <h3><span class="dot"></span>Weeks 11–12: First Projects & Systems Test</h3>
+        <div class="checklist" data-phase="p3">
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Close first 1–2 clients</strong></div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Execute first project end-to-end</strong> (solo shoot, owner edit or contract editor)</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Document what worked and what didn't</strong></div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Collect testimonial + case study permission</strong></div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Ask for 2 referrals</strong> from each client</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Update portfolio</strong> with new work</div></div>
+          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Begin migration conversation:</strong> “Many of our clients move to a monthly retainer after the first project...”</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:28px; padding:18px 20px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-sm);">
+      <strong style="color:var(--accent);">Phase 3 Budget:</strong> <span style="color:var(--text);">~$700</span> (editor costs for first projects, travel) &nbsp;|&nbsp; <strong style="color:var(--accent);">Success Metric:</strong> <span style="color:var(--text);">1–3 projects closed, $3,000–8,000 revenue, 2+ testimonials</span>
+    </div>
+  </div>
+</section>
+
+<!-- Daily Checklist -->
+<section class="section reveal" id="daily">
+  <div class="container">
+    <div class="section-header">
+      <h4>Daily Discipline</h4>
+      <h2>Daily Checklist <span style="color:var(--text-muted);font-weight:400;">(Ongoing)</span></h2>
+      <p>Every single day during the 90 days. Non-negotiable.</p>
+    </div>
+    <div class="checklist" data-phase="daily">
+      <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>1 LinkedIn post or engagement</strong></div></div>
+      <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>5 connection requests or follow-ups</strong></div></div>
+      <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>1 piece of content created or shared</strong></div></div>
+      <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Review CRM and follow up with 3 warm leads</strong></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Weekly Metrics -->
+<section class="section reveal" id="metrics">
+  <div class="container">
+    <div class="section-header">
+      <h4>Scoreboard</h4>
+      <h2>Weekly Metrics Tracker</h2>
+      <p>Track these every Sunday. Numbers don't lie.</p>
+    </div>
+    <div class="metrics-grid">
+      <div class="metric-cell"><div class="num">—</div><div class="desc">Outreach Volume</div></div>
+      <div class="metric-cell"><div class="num">—</div><div class="desc">Response Rate</div></div>
+      <div class="metric-cell"><div class="num">—</div><div class="desc">Meetings Booked</div></div>
+      <div class="metric-cell"><div class="num">—</div><div class="desc">Proposals Sent</div></div>
+      <div class="metric-cell"><div class="num">—</div><div class="desc">Proposals Won / Lost</div></div>
+      <div class="metric-cell"><div class="num">—</div><div class="desc">Revenue Closed</div></div>
+      <div class="metric-cell"><div class="num">—</div><div class="desc">Pipeline Value</div></div>
+      <div class="metric-cell"><div class="num">—</div><div class="desc">Content Pieces</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Budget -->
+<section class="section reveal" id="budget">
+  <div class="container">
+    <div class="section-header">
+      <h4>Resources</h4>
+      <h2>Budget Summary</h2>
+      <p>~$10K capital allocation. Preserve cash, spend where it moves the needle.</p>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="budget-table">
+        <thead><tr><th>Category</th><th style="text-align:right;">Amount</th></tr></thead>
+        <tbody>
+          <tr><td>Legal / LLC / Insurance</td><td style="text-align:right;">$1,200</td></tr>
+          <tr><td>Website / Tools / Software</td><td style="text-align:right;">$500</td></tr>
+          <tr><td>Marketing / Mailers / Ads</td><td style="text-align:right;">$800</td></tr>
+          <tr><td>Spec Shoots / Travel</td><td style="text-align:right;">$400</td></tr>
+          <tr><td>Editor Costs (first projects)</td><td style="text-align:right;">$700</td></tr>
+          <tr><td>Operating Reserve</td><td style="text-align:right;">$6,500</td></tr>
+          <tr><td>TOTAL</td><td style="text-align:right;">$10,100</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Success Criteria -->
+<section class="section reveal" id="success">
+  <div class="container">
+    <div class="section-header">
+      <h4>Day 90 Review</h4>
+      <h2>Success Criteria</h2>
+      <p>Know your numbers before you start. Minimum viable is your floor — stretch is your ceiling.</p>
+    </div>
+    <div class="criteria-grid">
+      <div class="criteria-card">
+        <div class="tag">Minimum</div>
+        <h3 style="margin-top:8px;">Minimum Viable</h3>
+        <ul style="color:var(--text-muted); font-size:0.92rem; line-height:1.7;">
+          <li>• 1–2 projects closed</li>
+          <li>• $2,000–5,000 revenue</li>
+          <li>• Website + portfolio live</li>
+          <li>• 1 testimonial</li>
+        </ul>
+      </div>
+      <div class="criteria-card">
+        <div class="tag">Target</div>
+        <h3 style="margin-top:8px;">Target</h3>
+        <ul style="color:var(--text-muted); font-size:0.92rem; line-height:1.7;">
+          <li>• 3–5 projects closed</li>
+          <li>• $6,000–15,000 revenue</li>
+          <li>• 2–3 testimonials</li>
+          <li>• 1 warm referral source</li>
+        </ul>
+      </div>
+      <div class="criteria-card stretch">
+        <div class="tag">Stretch</div>
+        <h3 style="margin-top:8px;">Stretch</h3>
+        <ul style="color:var(--text-muted); font-size:0.92rem; line-height:1.7;">
+          <li>• 5–8 projects closed</li>
+          <li>• $15,000–25,000 revenue</li>
+          <li>• 3+ testimonials</li>
+          <li>• 2+ referral sources</li>
+          <li>• 1 retainer conversation started</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Failure Modes -->
+<section class="section reveal" id="failures">
+  <div class="container">
+    <div class="section-header">
+      <h4>Red Flags</h4>
+      <h2>Failure Modes to Watch</h2>
+      <p>Every plan has failure points. Know them in advance so you can dodge them.</p>
+    </div>
+    <div class="failure-item">
+      <div class="failure-icon">1</div>
+      <div>
+        <h4>Week 3 Panic</h4>
+        <p>“I don't have any clients, this isn't working.” <strong>→</strong> Normal. Keep outreach volume high. Trust the system.</p>
+      </div>
+    </div>
+    <div class="failure-item">
+      <div class="failure-icon">2</div>
+      <div>
+        <h4>Pricing Too High Too Soon</h4>
+        <p>First 3 projects should be below market to build portfolio and social proof. Raise rates after you have case studies.</p>
+      </div>
+    </div>
+    <div class="failure-item">
+      <div class="failure-icon">3</div>
+      <div>
+        <h4>Editing Bottleneck</h4>
+        <p>If you're editing everything, you can't sell. Use a contract editor after project 3 to free up your time for business development.</p>
+      </div>
+    </div>
+    <div class="failure-item">
+      <div class="failure-icon">4</div>
+      <div>
+        <h4>Chasing Bad Clients</h4>
+        <p>If they negotiate hard on price, they'll negotiate hard on revisions. Walk away. Bad clients cost more than no clients.</p>
+      </div>
+    </div>
+    <div class="failure-item">
+      <div class="failure-icon">5</div>
+      <div>
+        <h4>Perfectionism</h4>
+        <p>Launch the website before it's perfect. Send the email before it's perfect. <strong>Done beats perfect.</strong> Speed is your advantage.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <p>Atlas Visual — 90-Day Execution Plan</p>
+    <p style="margin-top:4px; font-size:0.75rem;">Built for execution. No fluff.</p>
+  </div>
+</footer>
+
+<script>
+  // Checkbox toggle + progress bars
+  document.querySelectorAll('.check-item').forEach(item => {
+    item.addEventListener('click', function() {
+      this.classList.toggle('done');
+      updateProgress();
+    });
+  });
+
+  function updateProgress() {
+    ['p1','p2','p3'].forEach(phase => {
+      const items = document.querySelectorAll('.checklist[data-phase="' + phase + '"] .check-item');
+      const done = document.querySelectorAll('.checklist[data-phase="' + phase + '"] .check-item.done');
+      const pct = items.length ? Math.round((done.length / items.length) * 100) : 0;
+      const bar = document.getElementById(phase + '-bar');
+      const label = document.getElementById(phase + '-percent');
+      if (bar) bar.style.width = pct + '%';
+      if (label) label.textContent = pct + '%';
+    });
+  }
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // Sticky nav active link
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+        });
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  // Animate progress bars on load
+  setTimeout(updateProgress, 300);
+</script>
+</body>
+</html>
