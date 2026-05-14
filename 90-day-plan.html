@@ -3,25 +3,35 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>90-Day Execution Plan — Atlas Visual</title>
+<title>90-Day Launch Plan — Atlas Visual Command Center</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
   :root {
     --bg: #06070a;
-    --bg-elevated: #0c0e14;
-    --bg-card: #11131a;
+    --bg-elevated: #0c0d12;
+    --bg-card: #11121a;
     --bg-hover: #181b26;
+    --border: #1a1c26;
     --accent: #d4a853;
-    --accent-dim: rgba(212,168,83,0.15);
+    --accent-dim: #a8833a;
+    --accent-bg: rgba(212,168,83,0.08);
     --text: #e8e9ec;
-    --text-muted: #8b8f9a;
-    --border: rgba(255,255,255,0.08);
-    --radius: 12px;
-    --radius-sm: 8px;
-    --max-width: 1100px;
-    --transition: 0.2s ease;
+    --text-dim: #8b8f9a;
+    --text-muted: #5a5e6b;
+    --danger: #c25b5b;
+    --danger-bg: rgba(194,91,91,0.08);
+    --warning: #d4945a;
+    --warning-bg: rgba(212,148,90,0.08);
+    --success: #6ab78a;
+    --success-bg: rgba(106,183,138,0.08);
+    --info: #6a9bc7;
+    --info-bg: rgba(106,155,199,0.08);
+    --radius: 10px;
+    --radius-sm: 6px;
+    --max-width: 1200px;
+    --transition: 0.18s ease;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -30,21 +40,18 @@
     font-family: 'Inter', sans-serif;
     background: var(--bg);
     color: var(--text);
-    line-height: 1.65;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; margin: 0 0 0.5em; line-height: 1.2; }
-  h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 700; letter-spacing: -0.02em; }
-  h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; letter-spacing: -0.01em; }
-  h3 { font-size: 1.15rem; font-weight: 600; }
-  h4 { font-size: 1rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; }
-  p { margin: 0 0 1em; color: var(--text-muted); }
+  h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; margin: 0 0 0.45em; line-height: 1.2; }
+  h1 { font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 700; letter-spacing: -0.02em; }
+  h2 { font-size: clamp(1.35rem, 2.8vw, 1.8rem); font-weight: 600; letter-spacing: -0.01em; }
+  h3 { font-size: 1.05rem; font-weight: 600; }
+  h4 { font-size: 0.78rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; }
+  p { margin: 0 0 1em; color: var(--text-dim); }
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
-  ul { margin: 0 0 1em; padding-left: 0; list-style: none; }
-  li { margin: 0 0 0.5em; }
 
-  /* Layout */
   .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
 
   /* Sticky Nav */
@@ -52,7 +59,7 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(6,7,10,0.85);
+    background: rgba(6,7,10,0.9);
     backdrop-filter: blur(16px) saturate(1.2);
     border-bottom: 1px solid var(--border);
   }
@@ -68,171 +75,197 @@
   .nav-brand {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 700;
-    font-size: 1.05rem;
+    font-size: 1rem;
     color: var(--text);
     letter-spacing: -0.01em;
+    white-space: nowrap;
   }
-  .nav-links { display: flex; gap: 6px; flex-wrap: wrap; }
+  .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
   .nav-link {
     padding: 6px 12px;
     border-radius: var(--radius-sm);
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     font-weight: 500;
-    color: var(--text-muted);
+    color: var(--text-dim);
     transition: var(--transition);
     white-space: nowrap;
   }
   .nav-link:hover, .nav-link.active {
     color: var(--accent);
-    background: var(--accent-dim);
+    background: var(--accent-bg);
     text-decoration: none;
   }
 
   /* Hero */
   .hero {
-    padding: 80px 0 60px;
+    padding: 64px 0 48px;
     text-align: center;
     border-bottom: 1px solid var(--border);
   }
-  .hero-badge {
+  .hero h1 { margin-bottom: 8px; }
+  .hero-sub {
+    color: var(--text-dim);
+    font-size: 1.05rem;
+    max-width: 560px;
+    margin: 0 auto 36px;
+  }
+
+  /* Overview Bar */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  @media (max-width: 960px) { .overview-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .overview-grid { grid-template-columns: 1fr; } }
+  .ov-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    text-align: left;
+  }
+  .ov-card .ov-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 8px;
+  }
+  .ov-card .ov-value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .ov-card .ov-detail {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+  .ov-card .ov-detail strong { color: var(--text); font-weight: 600; }
+  .ov-target { color: var(--warning) !important; }
+  .ov-danger { color: var(--danger) !important; }
+
+  /* Budget breakdown mini */
+  .budget-mini {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    margin-top: 8px;
+  }
+  .budget-chip {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  /* Section */
+  .section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+  .section-header { margin-bottom: 28px; }
+  .section-header h2 { margin-bottom: 6px; }
+  .section-header p { max-width: 640px; margin-bottom: 0; }
+
+  /* Phase banner */
+  .phase-banner {
     display: inline-block;
     padding: 5px 14px;
     border-radius: 100px;
     border: 1px solid var(--accent);
     color: var(--accent);
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: 0.72rem;
+    font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin-bottom: 20px;
+    margin-bottom: 14px;
   }
-  .hero p { max-width: 560px; margin: 0 auto 36px; font-size: 1.05rem; }
-
-  /* Phase cards in hero */
-  .phase-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  .phase-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 22px 18px;
-    text-align: center;
-    transition: var(--transition);
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .phase-card:hover { border-color: var(--accent); transform: translateY(-3px); }
-  .phase-card::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; height: 3px;
-    background: var(--accent);
-    opacity: 0;
-    transition: opacity var(--transition);
-  }
-  .phase-card:hover::after { opacity: 1; }
-  .phase-card .days {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--accent);
-    margin-bottom: 4px;
-  }
-  .phase-card .label {
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-  .phase-card .arrow {
-    margin-top: 10px;
-    font-size: 1.1rem;
-    color: var(--text-muted);
-  }
-
-  /* Sections */
-  .section { padding: 64px 0; border-bottom: 1px solid var(--border); }
-  .section:last-child { border-bottom: none; }
-  .section-header { margin-bottom: 32px; }
-  .section-header h2 { margin-bottom: 6px; }
-  .section-header p { max-width: 640px; margin-bottom: 0; }
-
-  /* Phase timeline bar */
-  .timeline {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 28px;
-  }
-  .timeline-step {
-    flex: 1;
-    height: 6px;
-    border-radius: 3px;
-    background: var(--bg-hover);
-    position: relative;
-    transition: var(--transition);
-  }
-  .timeline-step.active { background: var(--accent); }
-  .timeline-step span {
-    position: absolute;
-    top: 14px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    white-space: nowrap;
-  }
-  .timeline-arrow { color: var(--accent); font-size: 1rem; }
 
   /* Progress bar */
-  .progress-wrap { margin-bottom: 28px; }
+  .progress-wrap { margin-bottom: 24px; }
   .progress-label {
     display: flex;
     justify-content: space-between;
-    font-size: 0.78rem;
+    font-size: 0.75rem;
     font-weight: 600;
-    color: var(--text-muted);
+    color: var(--text-dim);
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
   .progress-bar {
-    height: 8px;
+    height: 6px;
     background: var(--bg-hover);
-    border-radius: 4px;
+    border-radius: 3px;
     overflow: hidden;
   }
   .progress-fill {
     height: 100%;
-    border-radius: 4px;
+    border-radius: 3px;
     background: var(--accent);
-    transition: width 1.2s ease;
+    transition: width 0.4s ease;
   }
 
-  /* Checklist */
-  .checklist { display: flex; flex-direction: column; gap: 10px; }
-  .check-item {
+  /* Week cards */
+  .week-grid { display: flex; flex-direction: column; gap: 24px; }
+  .week-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+  .week-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .week-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .week-title .dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+  .week-meta {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  /* Task row */
+  .task-row {
     display: flex;
     align-items: flex-start;
-    gap: 12px;
+    gap: 14px;
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
-    padding: 14px 16px;
+    padding: 16px 18px;
+    margin-bottom: 10px;
     transition: var(--transition);
     cursor: pointer;
   }
-  .check-item:hover { border-color: rgba(212,168,83,0.35); background: var(--bg-hover); }
-  .check-item.done { opacity: 0.55; }
-  .check-item.done .check-text { text-decoration: line-through; color: var(--text-muted); }
-  .check-box {
+  .task-row:hover { border-color: rgba(212,168,83,0.3); }
+  .task-row.done { opacity: 0.5; }
+  .task-row.done .task-name { text-decoration: line-through; color: var(--text-muted); }
+
+  .task-checkbox {
     width: 20px; height: 20px;
     min-width: 20px;
     border-radius: 5px;
@@ -241,119 +274,141 @@
     margin-top: 2px;
     transition: var(--transition);
   }
-  .check-item.done .check-box { border-color: var(--accent); background: var(--accent); }
-  .check-box svg { width: 12px; height: 12px; color: var(--bg); opacity: 0; transition: opacity var(--transition); }
-  .check-item.done .check-box svg { opacity: 1; }
-  .check-text { font-size: 0.92rem; line-height: 1.5; color: var(--text); }
-  .check-text strong { color: var(--text); font-weight: 600; }
-
-  /* Week grid */
-  .week-grid { display: grid; grid-template-columns: 1fr; gap: 28px; }
-  @media (min-width: 860px) {
-    .week-grid { grid-template-columns: repeat(2, 1fr); }
+  .task-row.done .task-checkbox {
+    border-color: var(--accent);
+    background: var(--accent);
   }
-  .week-card {
-    background: var(--bg-elevated);
+  .task-checkbox svg { width: 12px; height: 12px; color: var(--bg); opacity: 0; transition: opacity var(--transition); }
+  .task-row.done .task-checkbox svg { opacity: 1; }
+
+  .task-body { flex: 1; min-width: 0; }
+  .task-header-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .task-name {
+    font-size: 0.94rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .task-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
     border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 24px;
-    transition: var(--transition);
+    color: var(--text-dim);
   }
-  .week-card:hover { border-color: rgba(212,168,83,0.25); }
-  .week-card h3 { margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
-  .week-card h3 .dot {
-    width: 8px; height: 8px; border-radius: 50%; background: var(--accent); display: inline-block;
+  .task-time { color: var(--info); border-color: rgba(106,155,199,0.3); }
+  .task-diff { color: var(--warning); border-color: rgba(212,148,90,0.3); }
+  .task-diff.hard { color: var(--danger); border-color: rgba(194,91,91,0.3); }
+
+  .task-why, .task-skip {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-bottom: 4px;
+  }
+  .task-why { color: var(--text-dim); }
+  .task-why strong { color: var(--success); font-weight: 600; }
+  .task-skip { color: var(--text-muted); }
+  .task-skip strong { color: var(--danger); font-weight: 600; }
+
+  /* Reality check */
+  .reality-check {
+    background: var(--warning-bg);
+    border: 1px solid rgba(212,148,90,0.25);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    margin-top: 14px;
+    font-size: 0.88rem;
+    color: var(--warning);
+    line-height: 1.55;
+  }
+  .reality-check strong {
+    color: var(--warning);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.75rem;
   }
 
-  /* Budget table */
-  .budget-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
-  .budget-table th, .budget-table td {
-    padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.92rem;
-  }
-  .budget-table th {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em;
-    color: var(--text-muted); background: var(--bg-card);
-  }
-  .budget-table tr:last-child td { border-bottom: none; font-weight: 700; color: var(--accent); }
-  .budget-table tr:hover td { background: var(--bg-hover); }
-
-  /* Metrics grid */
-  .metrics-grid {
+  /* Progress Summary */
+  .summary-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
   }
-  @media (min-width: 640px) { .metrics-grid { grid-template-columns: repeat(4, 1fr); } }
-  .metric-cell {
+  @media (max-width: 860px) { .summary-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .summary-grid { grid-template-columns: 1fr; } }
+  .summary-cell {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 16px;
+    border-radius: var(--radius);
+    padding: 20px;
     text-align: center;
   }
-  .metric-cell .num {
+  .summary-cell .sum-num {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.4rem; font-weight: 700; color: var(--accent); margin-bottom: 4px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 4px;
   }
-  .metric-cell .desc { font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  .summary-cell .sum-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
 
-  /* Criteria cards */
-  .criteria-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 16px;
+  /* Reset button */
+  .reset-btn {
+    background: transparent;
+    border: 1px solid var(--danger);
+    color: var(--danger);
+    padding: 8px 18px;
+    border-radius: var(--radius-sm);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
   }
-  @media (min-width: 720px) { .criteria-grid { grid-template-columns: repeat(3, 1fr); } }
-  .criteria-card {
+  .reset-btn:hover { background: var(--danger-bg); }
+
+  .actions-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  /* Overall progress */
+  .overall-progress {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 24px;
-    position: relative;
-    transition: var(--transition);
+    margin-bottom: 24px;
   }
-  .criteria-card:hover { border-color: var(--accent); }
-  .criteria-card .tag {
-    position: absolute; top: 16px; right: 16px;
-    font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
-    padding: 3px 10px; border-radius: 100px; border: 1px solid var(--text-muted); color: var(--text-muted);
-  }
-  .criteria-card.stretch .tag { border-color: var(--accent); color: var(--accent); }
-
-  /* Failure modes */
-  .failure-item {
-    display: flex; gap: 14px; align-items: flex-start;
-    background: var(--bg-card); border: 1px solid var(--border);
-    border-radius: var(--radius-sm); padding: 18px 18px 18px 16px; margin-bottom: 10px;
-  }
-  .failure-icon {
-    min-width: 28px; height: 28px; border-radius: 50%;
-    background: rgba(212,168,83,0.12); border: 1px solid rgba(212,168,83,0.35);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.85rem; color: var(--accent);
-  }
-  .failure-item h4 { margin-bottom: 6px; font-size: 0.85rem; }
-  .failure-item p { margin-bottom: 0; font-size: 0.88rem; }
+  .overall-progress .progress-label { font-size: 0.85rem; margin-bottom: 10px; }
+  .overall-progress .progress-bar { height: 10px; border-radius: 5px; }
+  .overall-progress .progress-fill { border-radius: 5px; }
 
   /* Footer */
   .footer {
-    padding: 40px 0 60px; text-align: center; border-top: 1px solid var(--border);
+    padding: 40px 0 60px;
+    text-align: center;
+    border-top: 1px solid var(--border);
   }
-  .footer p { font-size: 0.82rem; color: var(--text-muted); }
-
-  /* Scroll reveal */
-  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-
-  /* Responsive */
-  @media (max-width: 720px) {
-    .phase-row { grid-template-columns: 1fr; }
-    .nav-inner { flex-direction: column; align-items: flex-start; }
-    .nav-links { width: 100%; justify-content: flex-start; }
-    .hero { padding: 60px 0 44px; }
-    .section { padding: 44px 0; }
-  }
+  .footer p { font-size: 0.8rem; color: var(--text-muted); }
 </style>
 </head>
 <body>
@@ -361,164 +416,348 @@
 <!-- Sticky Nav -->
 <nav class="nav">
   <div class="nav-inner">
-    <div class="nav-brand">Atlas Visual — 90-Day Plan</div>
+    <div class="nav-brand">Atlas Visual</div>
     <div class="nav-links">
-      <a class="nav-link active" href="#hero">Overview</a>
-      <a class="nav-link" href="#phase1">Foundation</a>
-      <a class="nav-link" href="#phase2">Outreach</a>
-      <a class="nav-link" href="#phase3">Close</a>
-      <a class="nav-link" href="#budget">Budget</a>
-      <a class="nav-link" href="#success">Success</a>
+      <a class="nav-link" href="index.html">Dashboard</a>
+      <a class="nav-link" href="playbook.html">Playbook</a>
+      <a class="nav-link active" href="90-day-plan.html">90-Day Plan</a>
+      <a class="nav-link" href="financial-model.html">Financial Model</a>
+      <a class="nav-link" href="scaling-roadmap.html">Scaling Roadmap</a>
     </div>
   </div>
 </nav>
 
 <!-- Hero -->
-<section class="hero" id="hero">
+<section class="hero">
   <div class="container">
-    <div class="hero-badge">Operations Manual</div>
-    <h1>The First 90 Days</h1>
-    <p>Day-by-day execution plan. What to do, when to do it, and what success looks like.</p>
-    <div class="phase-row">
-      <div class="phase-card" onclick="document.getElementById('phase1').scrollIntoView({behavior:'smooth'})">
-        <div class="days">01–30</div>
-        <div class="label">Foundation</div>
-        <div class="arrow">→</div>
+    <h1>90-Day Launch Plan</h1>
+    <p class="hero-sub">Week by week. Task by task. No excuses.</p>
+    <div class="overview-grid">
+      <div class="ov-card">
+        <div class="ov-label">Phase Progress</div>
+        <div class="ov-value" style="font-size:1.1rem; line-height:1.5;">
+          <div>1. Foundation (Wk 1-4)</div>
+          <div>2. Outreach (Wk 5-8)</div>
+          <div>3. Close (Wk 9-12)</div>
+        </div>
       </div>
-      <div class="phase-card" onclick="document.getElementById('phase2').scrollIntoView({behavior:'smooth'})">
-        <div class="days">31–60</div>
-        <div class="label">Outreach</div>
-        <div class="arrow">→</div>
+      <div class="ov-card">
+        <div class="ov-label">Capital Allocation</div>
+        <div class="ov-value">$10,000</div>
+        <div class="budget-mini">
+          <span class="budget-chip">Legal/Ins $1,200</span>
+          <span class="budget-chip">Reserve $6,500</span>
+          <span class="budget-chip">Marketing $2,000</span>
+          <span class="budget-chip">Software $700</span>
+        </div>
       </div>
-      <div class="phase-card" onclick="document.getElementById('phase3').scrollIntoView({behavior:'smooth'})">
-        <div class="days">61–90</div>
-        <div class="label">Close</div>
-        <div class="arrow">→</div>
+      <div class="ov-card">
+        <div class="ov-label">Target</div>
+        <div class="ov-value ov-target">Week 8</div>
+        <div class="ov-detail">First paid project by Week 8. If not, you're behind.</div>
+      </div>
+      <div class="ov-card">
+        <div class="ov-label">Time Commitment</div>
+        <div class="ov-value ov-danger">40-50 hrs/wk</div>
+        <div class="ov-detail">Less time = longer timeline. No workaround.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Phase 1: Foundation -->
-<section class="section reveal" id="phase1">
+<!-- PHASE 1: FOUNDATION -->
+<section class="section" id="phase1">
   <div class="container">
     <div class="section-header">
-      <h4>Phase 1</h4>
-      <h2>Foundation <span style="color:var(--text-muted);font-weight:400;">(Days 1–30)</span></h2>
-      <p>Build the legal, digital, and operational backbone of Atlas Visual. No outreach yet — just infrastructure.</p>
+      <span class="phase-banner">Phase 1</span>
+      <h2>Foundation <span style="color:var(--text-muted);font-weight:400;">(Weeks 1-4)</span></h2>
+      <p>Build the legal, financial, and operational backbone. You cannot sell from a broken foundation.</p>
     </div>
 
-    <!-- Timeline -->
-    <div class="timeline">
-      <div class="timeline-step active"><span>Wk 1</span></div>
-      <div class="timeline-step active"><span>Wk 2</span></div>
-      <div class="timeline-step active"><span>Wk 3</span></div>
-      <div class="timeline-step active"><span>Wk 4</span></div>
-      <div class="timeline-step"><span>Wk 5</span></div>
-      <div class="timeline-step"><span>Wk 6</span></div>
-      <div class="timeline-step"><span>Wk 7</span></div>
-      <div class="timeline-step"><span>Wk 8</span></div>
-      <div class="timeline-step"><span>Wk 9</span></div>
-      <div class="timeline-step"><span>Wk 10</span></div>
-      <div class="timeline-step"><span>Wk 11</span></div>
-      <div class="timeline-step"><span>Wk 12</span></div>
-    </div>
-
-    <!-- Progress bar -->
     <div class="progress-wrap">
       <div class="progress-label"><span>Phase 1 Progress</span><span id="p1-percent">0%</span></div>
       <div class="progress-bar"><div class="progress-fill" id="p1-bar" style="width:0%"></div></div>
     </div>
 
-    <div class="week-grid">
-      <!-- Week 1 -->
-      <div class="week-card">
-        <h3><span class="dot"></span>Week 1: Legal & Identity</h3>
-        <div class="checklist" data-phase="p1">
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Form LLC</strong> in Washington State (file online, $200)</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Obtain EIN</strong> from IRS (free, online)</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Open business checking account</strong></div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Register for WA B&O tax</strong> (1.5% on gross receipts)</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Obtain Master Business License</strong> ($50–100)</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Get liability insurance quote</strong> (BOP + E&O, ~$1,200/year)</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Purchase domain</strong> (atlasvisual.co or similar, ~$15)</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Set up Google Workspace</strong> ($12/month)</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Create Atlas Visual logo</strong> (Canva Pro or hire designer, $50–200)</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Set up QuickBooks or Wave</strong> for accounting</div></div>
+    <!-- Week 1 -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-title"><span class="dot"></span>Week 1: Legal & Banking</div>
+        <div class="week-meta">May 19-25 • 5 tasks • 14 hrs estimated</div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w1_t1">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Form LLC and get EIN</span>
+            <span class="task-badge task-time">4 hrs</span>
+            <span class="task-badge task-diff">Difficulty 2</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Without this, you can't open a business bank account. Your personal assets stay exposed.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll commingle funds and create tax hell. The IRS does not care that you were "too busy."</div>
         </div>
       </div>
 
-      <!-- Week 2 -->
-      <div class="week-card">
-        <h3><span class="dot"></span>Week 2: Digital Presence</h3>
-        <div class="checklist" data-phase="p1">
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Build website</strong> (use existing index.html or Carrd/Squarespace)</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Create LinkedIn company page</strong></div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Set up Calendly</strong> for discovery calls</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Create portfolio/demo reel</strong> (use existing work)</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Set up Vimeo Pro or YouTube</strong> for portfolio hosting</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Order business cards</strong> (Moo, $100)</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Create email signature</strong> and brand templates</div></div>
+      <div class="task-row" data-key="av_plan_w1_t2">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Get liability insurance quote and bind coverage</span>
+            <span class="task-badge task-time">3 hrs</span>
+            <span class="task-badge task-diff">Difficulty 2</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> One lawsuit from a trip on a shoot location ends your company before it starts.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You're gambling with everything. Good luck explaining that to your family.</div>
         </div>
       </div>
 
-      <!-- Week 3 -->
-      <div class="week-card">
-        <h3><span class="dot"></span>Week 3: Systems & Tools</h3>
-        <div class="checklist" data-phase="p1">
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Set up Frame.io account</strong> ($15/month)</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Subscribe to Artlist or Epidemic Sound</strong> ($199/year)</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Create editor onboarding kit</strong> (LUTs, style guide, templates)</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Draft client services agreement template</strong></div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Draft subcontractor/editor agreement template</strong></div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Set up CRM</strong> (HubSpot free tier)</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Create proposal template</strong></div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Set up invoicing system</strong> (QuickBooks or Wave)</div></div>
+      <div class="task-row" data-key="av_plan_w1_t3">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Open business checking account</span>
+            <span class="task-badge task-time">2 hrs</span>
+            <span class="task-badge task-diff">Difficulty 1</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Separating business and personal money isn't optional. It's the bare minimum.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> Your accountant will charge you double to untangle the mess at year-end.</div>
         </div>
       </div>
 
-      <!-- Week 4 -->
-      <div class="week-card">
-        <h3><span class="dot"></span>Week 4: Warm Network Blitz</h3>
-        <div class="checklist" data-phase="p1">
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>List 50 people</strong> you know in real estate (agents, brokers, contractors, investors, property managers)</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Send personal texts/emails</strong> to top 20</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Use script:</strong> “Hey [Name], I just launched Atlas Visual — a video production company focused on helping developers and investment firms market properties. Do you know anyone who might need listing videos or brand content? I'd love an intro.”</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Schedule 5–10 intro conversations</strong> (not sales pitches)</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Post launch announcement</strong> on LinkedIn and personal social</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Ask 3 past clients for testimonials</strong></div></div>
+      <div class="task-row" data-key="av_plan_w1_t4">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Set up accounting system (Wave or QuickBooks)</span>
+            <span class="task-badge task-time">3 hrs</span>
+            <span class="task-badge task-diff">Difficulty 2</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> If you don't track expenses from day one, you'll lose deductions and overpay taxes.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll have no idea if you're profitable until it's too late to fix.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w1_t5">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Register domain and set up professional email</span>
+            <span class="task-badge task-time">2 hrs</span>
+            <span class="task-badge task-diff">Difficulty 1</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> A Gmail address tells prospects you're not serious. Perception is reality.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> Prospects will judge you. They won't tell you why they ghosted. They'll move on.</div>
         </div>
       </div>
     </div>
 
-    <div style="margin-top:28px; padding:18px 20px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-sm);">
-      <strong style="color:var(--accent);">Phase 1 Budget:</strong> <span style="color:var(--text);">~$1,500</span> &nbsp;|&nbsp; <strong style="color:var(--accent);">Success Metric:</strong> <span style="color:var(--text);">5+ warm conversations scheduled, website live, LLC formed</span>
+    <!-- Week 2 -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-title"><span class="dot"></span>Week 2: Portfolio & Positioning</div>
+        <div class="week-meta">May 26 - Jun 1 • 4 tasks • 27 hrs estimated</div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w2_t1">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Build portfolio page with 3 best past projects</span>
+            <span class="task-badge task-time">8 hrs</span>
+            <span class="task-badge task-diff">Difficulty 3</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> No one hires without seeing work. Your reel is your resume.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll have nothing to show prospects. Conversations will die at "Can you send examples?"</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w2_t2">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Create 1 spec video for real estate niche</span>
+            <span class="task-badge task-time">12 hrs</span>
+            <span class="task-badge task-diff hard">Difficulty 5</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> You need something that screams "I understand this industry." Generic work won't cut it.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll look like every other generalist. Generalists starve. Specialists get hired.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w2_t3">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Write service descriptions and pricing</span>
+            <span class="task-badge task-time">4 hrs</span>
+            <span class="task-badge task-diff">Difficulty 3</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> If you can't articulate what you sell and for how much, you can't sell it.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> Every sales conversation becomes an awkward negotiation. You'll undercharge out of fear.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w2_t4">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Set up CRM (HubSpot free or similar)</span>
+            <span class="task-badge task-time">3 hrs</span>
+            <span class="task-badge task-diff">Difficulty 2</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Leads slip through cracks without a system. You will forget to follow up.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll lose warm leads because you forgot who they were. Happens every time.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Week 3 -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-title"><span class="dot"></span>Week 3: Prospecting Prep</div>
+        <div class="week-meta">Jun 2-8 • 4 tasks • 18 hrs estimated</div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w3_t1">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Create LinkedIn company page and optimize personal profile</span>
+            <span class="task-badge task-time">4 hrs</span>
+            <span class="task-badge task-diff">Difficulty 2</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Prospects will look you up. What they find determines whether they reply.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> Your cold outreach will convert at half the rate. You're making it harder for no reason.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w3_t2">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Build list of 50 target prospects in Clark County</span>
+            <span class="task-badge task-time">6 hrs</span>
+            <span class="task-badge task-diff">Difficulty 3</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Spray-and-pray outreach gets ignored. Targeted lists get replies.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll waste hours messaging people who were never going to buy. Quantity without focus is noise.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w3_t3">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Research local real estate developer associations and meetups</span>
+            <span class="task-badge task-time">3 hrs</span>
+            <span class="task-badge task-diff">Difficulty 2</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Warm introductions beat cold outreach every time. These rooms are full of buyers.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll compete in the inbox while your competitors shake hands at events. They will win.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w3_t4">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Create pitch deck / one-pager</span>
+            <span class="task-badge task-time">5 hrs</span>
+            <span class="task-badge task-diff">Difficulty 3</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> When you're on a call, you need something to send that sells while you listen.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll fumble through verbal explanations. Prospects need to see it, not hear it.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Week 4 -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-title"><span class="dot"></span>Week 4: Operations & Team</div>
+        <div class="week-meta">Jun 9-15 • 5 tasks + reality check • 13 hrs estimated</div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w4_t1">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Set up editor relationships (interview 3 editors)</span>
+            <span class="task-badge task-time">4 hrs</span>
+            <span class="task-badge task-diff">Difficulty 3</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> You can't edit and sell at the same time. You need reliable editors before you need them.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> Your first project will bottleneck on editing. You'll miss deadlines and look amateur.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w4_t2">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Create contract template</span>
+            <span class="task-badge task-time">3 hrs</span>
+            <span class="task-badge task-diff">Difficulty 2</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Verbal agreements fail. Scope creep destroys margins. A contract is your only protection.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll get burned. Everyone does. The client who "seems nice" will demand 12 revisions.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w4_t3">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Set up invoicing system</span>
+            <span class="task-badge task-time">2 hrs</span>
+            <span class="task-badge task-diff">Difficulty 1</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> If you can't invoice professionally, you can't get paid professionally.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll send Venmo requests and look like a side hustle. Clients pay slower when you look small.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w4_t4">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Create project intake questionnaire</span>
+            <span class="task-badge task-time">2 hrs</span>
+            <span class="task-badge task-diff">Difficulty 2</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Bad projects start with unclear expectations. A questionnaire forces clarity upfront.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll discover the client wanted drone footage on delivery day. Too late.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w4_t5">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Warm network blitz: message 20 contacts</span>
+            <span class="task-badge task-time">2 hrs</span>
+            <span class="task-badge task-diff">Difficulty 1</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Your existing network is the fastest path to revenue. They already trust you.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You're ignoring the lowest-friction leads you have. Pride is expensive.</div>
+        </div>
+      </div>
+
+      <div class="reality-check">
+        <strong>Week 4 Reality Check:</strong> You will feel like you haven't accomplished anything real. This is normal. The foundation is invisible but everything depends on it. Don't quit because you can't see progress yet.
+      </div>
     </div>
   </div>
 </section>
 
-<!-- Phase 2: Outreach -->
-<section class="section reveal" id="phase2">
+<!-- PHASE 2: OUTREACH -->
+<section class="section" id="phase2">
   <div class="container">
     <div class="section-header">
-      <h4>Phase 2</h4>
-      <h2>Outreach <span style="color:var(--text-muted);font-weight:400;">(Days 31–60)</span></h2>
-      <p>Turn on the outbound engine. LinkedIn, cold email, content, and direct mail — all working in parallel.</p>
-    </div>
-
-    <div class="timeline">
-      <div class="timeline-step active"><span>Wk 1</span></div>
-      <div class="timeline-step active"><span>Wk 2</span></div>
-      <div class="timeline-step active"><span>Wk 3</span></div>
-      <div class="timeline-step active"><span>Wk 4</span></div>
-      <div class="timeline-step active"><span>Wk 5</span></div>
-      <div class="timeline-step active"><span>Wk 6</span></div>
-      <div class="timeline-step active"><span>Wk 7</span></div>
-      <div class="timeline-step active"><span>Wk 8</span></div>
-      <div class="timeline-step"><span>Wk 9</span></div>
-      <div class="timeline-step"><span>Wk 10</span></div>
-      <div class="timeline-step"><span>Wk 11</span></div>
-      <div class="timeline-step"><span>Wk 12</span></div>
+      <span class="phase-banner">Phase 2</span>
+      <h2>Outreach <span style="color:var(--text-muted);font-weight:400;">(Weeks 5-8)</span></h2>
+      <p>Turn on the outbound engine. Cold email, LinkedIn, networking, and content — all in parallel.</p>
     </div>
 
     <div class="progress-wrap">
@@ -526,63 +765,259 @@
       <div class="progress-bar"><div class="progress-fill" id="p2-bar" style="width:0%"></div></div>
     </div>
 
-    <div class="week-grid">
-      <!-- Weeks 5-6 -->
-      <div class="week-card">
-        <h3><span class="dot"></span>Weeks 5–6: LinkedIn Outbound System</h3>
-        <div class="checklist" data-phase="p2">
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Identify 100 target contacts</strong> on LinkedIn</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Titles to target:</strong> Director of Development, VP Acquisitions, Asset Manager, Marketing Manager at multifamily/commercial firms</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Send 20 personalized connection requests/week</strong> with note</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Script:</strong> “Hi [Name], I produce cinematic property videos for developers in the PNW market. Would love to connect and share some work.”</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Post 2x/week on LinkedIn</strong> (behind-the-scenes, before/after, market commentary)</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Engage daily</strong> on target contacts' posts</div></div>
+    <!-- Week 5 -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-title"><span class="dot"></span>Week 5: Cold Outreach Begins</div>
+        <div class="week-meta">Jun 16-22 • 4 tasks • 15 hrs estimated</div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w5_t1">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Send 20 personalized cold emails to target prospects</span>
+            <span class="task-badge task-time">6 hrs</span>
+            <span class="task-badge task-diff">Difficulty 3</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Cold email is a numbers game with a human filter. Personalized gets replies. Templates get deleted.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> Your pipeline stays empty. No outreach = no revenue. Period.</div>
         </div>
       </div>
 
-      <!-- Weeks 7-8 -->
-      <div class="week-card">
-        <h3><span class="dot"></span>Weeks 7–8: Cold Outreach + Content</h3>
-        <div class="checklist" data-phase="p2">
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Send 20 personalized cold emails/week</strong> to developers/PE firms</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Use the cold email script</strong> from the playbook</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Volume target:</strong> 80 emails sent, expect 4–8 responses, 1–2 meetings</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Film 2–3 spec RE videos</strong> (friend's property, AirBnB, commercial space)</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Post spec videos to YouTube</strong> with SEO titles</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Repost clips</strong> to Instagram Reels/TikTok</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Send direct mailer</strong> to 30 local developers (postcard + portfolio link, ~$100)</div></div>
+      <div class="task-row" data-key="av_plan_w5_t2">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Attend 1 local networking event</span>
+            <span class="task-badge task-time">3 hrs</span>
+            <span class="task-badge task-diff">Difficulty 2</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> One handshake is worth 50 cold emails. People buy from people they met.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll hide behind your screen and wonder why no one knows your name.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w5_t3">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Post 3 valuable LinkedIn posts about video marketing for real estate</span>
+            <span class="task-badge task-time">4 hrs</span>
+            <span class="task-badge task-diff">Difficulty 3</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Content builds authority before you ask for a meeting. It warms up cold prospects.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> Your LinkedIn will be a ghost town. Prospects will see no activity and assume you're inactive.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w5_t4">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Follow up on all Week 5 emails that didn't respond</span>
+            <span class="task-badge task-time">2 hrs</span>
+            <span class="task-badge task-diff">Difficulty 2</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> 80% of sales happen after the 5th contact. Most people quit after one.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You're leaving money in someone else's inbox. Follow-up is where deals live.</div>
         </div>
       </div>
     </div>
 
-    <div style="margin-top:28px; padding:18px 20px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-sm);">
-      <strong style="color:var(--accent);">Phase 2 Budget:</strong> <span style="color:var(--text);">~$800</span> (mailers, LinkedIn Premium, sample shoot costs) &nbsp;|&nbsp; <strong style="color:var(--accent);">Success Metric:</strong> <span style="color:var(--text);">3+ discovery calls booked, 1+ proposal sent</span>
+    <!-- Week 6 -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-title"><span class="dot"></span>Week 6: Double Down</div>
+        <div class="week-meta">Jun 23-29 • 4 tasks • 13 hrs estimated</div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w6_t1">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Send 20 more personalized cold emails</span>
+            <span class="task-badge task-time">6 hrs</span>
+            <span class="task-badge task-diff">Difficulty 3</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Momentum compounds. Stopping now resets your effort to zero.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> Prospects forget you exist. Outreach is like a flywheel — it takes consistent force.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w6_t2">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Schedule 2 coffee meetings with potential referral partners</span>
+            <span class="task-badge task-time">3 hrs</span>
+            <span class="task-badge task-diff">Difficulty 2</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Referral partners (agents, architects, contractors) are force multipliers.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll rely entirely on your own effort. Partners 10x your reach for minimal cost.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w6_t3">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Create and send 1 "value-first" email to your network</span>
+            <span class="task-badge task-time">2 hrs</span>
+            <span class="task-badge task-diff">Difficulty 2</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Give before you ask. Share a market insight or helpful resource. People remember givers.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> Your network will only hear from you when you want something. That's called using people.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w6_t4">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Update portfolio with any new work</span>
+            <span class="task-badge task-time">2 hrs</span>
+            <span class="task-badge task-diff">Difficulty 2</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Fresh work signals an active business. Stale portfolios signal a dead one.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> Prospects will see the same 3 projects for months. They'll assume you have no clients.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Week 7 -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-title"><span class="dot"></span>Week 7: Follow-Up & Content</div>
+        <div class="week-meta">Jun 30 - Jul 6 • 4 tasks • 16 hrs estimated</div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w7_t1">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Send 20 more personalized cold emails</span>
+            <span class="task-badge task-time">6 hrs</span>
+            <span class="task-badge task-diff">Difficulty 3</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> By now your messaging should be sharper. Use what you learned from Week 5-6 responses.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll wonder why the pipeline dried up. The answer is you stopped filling it.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w7_t2">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Follow up on all non-responders from Weeks 5-6</span>
+            <span class="task-badge task-time">3 hrs</span>
+            <span class="task-badge task-diff">Difficulty 2</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Most people are busy, not uninterested. A polite follow-up gets the meeting.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You're writing off leads who were going to say yes on the third email. Amateur move.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w7_t3">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Attend 1 more networking event</span>
+            <span class="task-badge task-time">3 hrs</span>
+            <span class="task-badge task-diff">Difficulty 2</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Repetition builds recognition. Show up twice and people start remembering you.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll be the stranger at every event. Familiarity breeds trust.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w7_t4">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Create case study from best past project</span>
+            <span class="task-badge task-time">4 hrs</span>
+            <span class="task-badge task-diff">Difficulty 3</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Case studies sell outcomes, not services. Prospects want proof, not promises.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll keep describing what you do instead of showing what you deliver. Descriptions don't close.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Week 8 -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-title"><span class="dot"></span>Week 8: Push to Close</div>
+        <div class="week-meta">Jul 7-13 • 4 tasks + reality check • 15 hrs estimated</div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w8_t1">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Send final batch of 20 cold emails</span>
+            <span class="task-badge task-time">6 hrs</span>
+            <span class="task-badge task-diff">Difficulty 3</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> This is the last pure outreach week. After this, your time shifts to closing conversations.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll enter Week 9 with an empty pipeline and panic. Don't do that to yourself.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w8_t2">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Follow up on warm leads</span>
+            <span class="task-badge task-time">3 hrs</span>
+            <span class="task-badge task-diff">Difficulty 2</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Warm leads cool fast. A week of silence kills momentum.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> Your "warm" leads will go cold, then dead. You'll have to start over.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w8_t3">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Send proposals to any prospects who showed interest</span>
+            <span class="task-badge task-time">4 hrs</span>
+            <span class="task-badge task-diff">Difficulty 3</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Interest without a proposal is just a conversation. You need to ask for the business.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> Prospects will assume you're not serious. They'll hire the person who sent the proposal.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w8_t4">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Send direct mailer to 30 local developers</span>
+            <span class="task-badge task-time">2 hrs</span>
+            <span class="task-badge task-diff">Difficulty 2</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Physical mail stands out in a digital world. Most competitors won't bother.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You're leaving a cheap, high-impact channel on the table. Competitors will take it.</div>
+        </div>
+      </div>
+
+      <div class="reality-check">
+        <strong>Week 8 Reality Check:</strong> If you don't have at least 1 prospect in active conversation by now, your outreach is failing. Change the message, not the volume. Something in your pitch, portfolio, or targeting is off. Fix it before Phase 3.
+      </div>
     </div>
   </div>
 </section>
 
-<!-- Phase 3: Close -->
-<section class="section reveal" id="phase3">
+<!-- PHASE 3: CLOSE -->
+<section class="section" id="phase3">
   <div class="container">
     <div class="section-header">
-      <h4>Phase 3</h4>
-      <h2>Close <span style="color:var(--text-muted);font-weight:400;">(Days 61–90)</span></h2>
-      <p>Convert conversations into contracts. Execute first projects and stress-test every system.</p>
-    </div>
-
-    <div class="timeline">
-      <div class="timeline-step active"><span>Wk 1</span></div>
-      <div class="timeline-step active"><span>Wk 2</span></div>
-      <div class="timeline-step active"><span>Wk 3</span></div>
-      <div class="timeline-step active"><span>Wk 4</span></div>
-      <div class="timeline-step active"><span>Wk 5</span></div>
-      <div class="timeline-step active"><span>Wk 6</span></div>
-      <div class="timeline-step active"><span>Wk 7</span></div>
-      <div class="timeline-step active"><span>Wk 8</span></div>
-      <div class="timeline-step active"><span>Wk 9</span></div>
-      <div class="timeline-step active"><span>Wk 10</span></div>
-      <div class="timeline-step active"><span>Wk 11</span></div>
-      <div class="timeline-step active"><span>Wk 12</span></div>
+      <span class="phase-banner">Phase 3</span>
+      <h2>Close <span style="color:var(--text-muted);font-weight:400;">(Weeks 9-12)</span></h2>
+      <p>Convert conversations into contracts. Execute, deliver, and learn.</p>
     </div>
 
     <div class="progress-wrap">
@@ -590,189 +1025,279 @@
       <div class="progress-bar"><div class="progress-fill" id="p3-bar" style="width:0%"></div></div>
     </div>
 
-    <div class="week-grid">
-      <!-- Weeks 9-10 -->
-      <div class="week-card">
-        <h3><span class="dot"></span>Weeks 9–10: Proposals & Negotiation</h3>
-        <div class="checklist" data-phase="p3">
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Follow up on all proposals sent</strong> (3–5 touch rule)</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Send 3+ proposals</strong> (use tiered pricing: Essential / Signature / Enterprise)</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Handle objections</strong> with prepared responses</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Offer “founding client” pricing:</strong> 30% below market for first 3 clients in exchange for testimonial + 2 referrals</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Pricing ladder:</strong> Project 1–3 at $900–1,500 → Project 4–6 at $2,500–3,500 → Project 7+ at market rate</div></div>
+    <!-- Week 9 -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-title"><span class="dot"></span>Week 9: Nurture & Refine</div>
+        <div class="week-meta">Jul 14-20 • 4 tasks • 9 hrs estimated</div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w9_t1">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Follow up on all proposals</span>
+            <span class="task-badge task-time">2 hrs</span>
+            <span class="task-badge task-diff">Difficulty 2</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Proposals sit in inboxes until someone nudges them. That someone is you.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> Your proposals will expire silently. Prospects won't chase you. Ever.</div>
         </div>
       </div>
 
-      <!-- Weeks 11-12 -->
-      <div class="week-card">
-        <h3><span class="dot"></span>Weeks 11–12: First Projects & Systems Test</h3>
-        <div class="checklist" data-phase="p3">
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Close first 1–2 clients</strong></div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Execute first project end-to-end</strong> (solo shoot, owner edit or contract editor)</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Document what worked and what didn't</strong></div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Collect testimonial + case study permission</strong></div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Ask for 2 referrals</strong> from each client</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Update portfolio</strong> with new work</div></div>
-          <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Begin migration conversation:</strong> “Many of our clients move to a monthly retainer after the first project...”</div></div>
+      <div class="task-row" data-key="av_plan_w9_t2">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Schedule discovery calls with interested prospects</span>
+            <span class="task-badge task-time">3 hrs</span>
+            <span class="task-badge task-diff">Difficulty 2</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Discovery calls turn maybes into meetings. You can't close over email alone.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll trade 20 emails when one 20-minute call would have closed it.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w9_t3">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Refine pitch based on feedback</span>
+            <span class="task-badge task-time">3 hrs</span>
+            <span class="task-badge task-diff">Difficulty 3</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> If prospects are saying no, they're telling you what's wrong. Listen and adjust.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll keep delivering the same broken pitch and getting the same rejection. Insanity.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w9_t4">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Ask for referrals from past clients/contacts</span>
+            <span class="task-badge task-time">1 hr</span>
+            <span class="task-badge task-diff">Difficulty 1</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Referrals convert at 10x the rate of cold outreach. This is the highest-ROI hour you'll spend.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You're ignoring a channel that costs nothing and closes faster than anything else.</div>
         </div>
       </div>
     </div>
 
-    <div style="margin-top:28px; padding:18px 20px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-sm);">
-      <strong style="color:var(--accent);">Phase 3 Budget:</strong> <span style="color:var(--text);">~$700</span> (editor costs for first projects, travel) &nbsp;|&nbsp; <strong style="color:var(--accent);">Success Metric:</strong> <span style="color:var(--text);">1–3 projects closed, $3,000–8,000 revenue, 2+ testimonials</span>
+    <!-- Week 10 -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-title"><span class="dot"></span>Week 10: Close & Execute</div>
+        <div class="week-meta">Jul 21-27 • 3 tasks + reality check • 17+ hrs estimated</div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w10_t1">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Close first project (negotiate, contract, deposit)</span>
+            <span class="task-badge task-time">4 hrs</span>
+            <span class="task-badge task-diff">Difficulty 3</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Revenue is the only metric that matters. Everything else is preparation.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll be two and a half months in with nothing to show. That's not a business. That's a hobby.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w10_t2">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">If no close: analyze why and adjust</span>
+            <span class="task-badge task-time">3 hrs</span>
+            <span class="task-badge task-diff">Difficulty 3</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> If you can't diagnose failure, you'll repeat it. Be brutally honest with yourself.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll blame the market, the economy, or bad luck. It's none of those. It's your approach.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w10_t3">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Execute first project with extreme quality</span>
+            <span class="task-badge task-time">10+ hrs</span>
+            <span class="task-badge task-diff hard">Difficulty 5</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> This project will test everything — your planning, your skills, your communication. Nail it.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> Your first impression becomes your last. One bad delivery kills word-of-mouth before it starts.</div>
+        </div>
+      </div>
+
+      <div class="reality-check">
+        <strong>Week 10 Reality Check:</strong> Your first project will feel chaotic. That's because it is. Document everything that goes wrong. That document becomes your process manual. Embrace the mess — it's tuition.
+      </div>
+    </div>
+
+    <!-- Week 11 -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-title"><span class="dot"></span>Week 11: Deliver & Learn</div>
+        <div class="week-meta">Jul 28 - Aug 3 • 4 tasks • 5.5 hrs estimated</div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w11_t1">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Deliver first project and request testimonial</span>
+            <span class="task-badge task-time">2 hrs</span>
+            <span class="task-badge task-diff">Difficulty 2</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Testimonials are social proof. Without them, your next prospect has no reason to trust you.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll have zero proof you can deliver. Your next sales cycle will be twice as hard.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w11_t2">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Follow up for referral</span>
+            <span class="task-badge task-time">1 hr</span>
+            <span class="task-badge task-diff">Difficulty 1</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Happy clients want to help. You have to ask. They won't offer unprompted.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You're leaving the easiest revenue on the table. One referral is worth 10 cold calls.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w11_t3">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Bill final invoice</span>
+            <span class="task-badge task-time">30 min</span>
+            <span class="task-badge task-diff">Difficulty 1</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> You did the work. Get the money. Invoicing promptly signals professionalism.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> Clients won't remind you. You'll do free work and resent them for it. Your fault.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w11_t4">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Assess: what worked, what didn't</span>
+            <span class="task-badge task-time">2 hrs</span>
+            <span class="task-badge task-diff">Difficulty 2</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Every project teaches you something. If you don't capture it, you learn nothing.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll make the same mistakes on project 2, 3, and 4. Waste of time and reputation.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Week 12 -->
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-title"><span class="dot"></span>Week 12: Honest Review</div>
+        <div class="week-meta">Aug 4-10 • 4 tasks + reality check • 7.5 hrs estimated</div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w12_t1">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Review 90-day results honestly</span>
+            <span class="task-badge task-time">2 hrs</span>
+            <span class="task-badge task-diff">Difficulty 2</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Lying to yourself is the fastest way to go broke. Numbers don't care about your feelings.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll enter the next 90 days with the same broken assumptions. Delusion is expensive.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w12_t2">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Update financial model with actual numbers</span>
+            <span class="task-badge task-time">1 hr</span>
+            <span class="task-badge task-diff">Difficulty 1</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Projections are fiction until you have real data. Actuals drive real decisions.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll keep operating on a fantasy budget. Runway shrinks while you pretend it doesn't.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w12_t3">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Plan next 90 days based on reality</span>
+            <span class="task-badge task-time">2 hrs</span>
+            <span class="task-badge task-diff">Difficulty 2</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Hope is not a strategy. Your next plan must be rooted in what actually happened.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll repeat the same 90 days expecting different results. That's the definition of failure.</div>
+        </div>
+      </div>
+
+      <div class="task-row" data-key="av_plan_w12_t4">
+        <div class="task-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-header-line">
+            <span class="task-name">Celebrate if you have revenue. If not, decide: continue, pivot, or quit.</span>
+            <span class="task-badge task-time">2.5 hrs</span>
+            <span class="task-badge task-diff">Difficulty 2</span>
+          </div>
+          <div class="task-why"><strong>Why this matters:</strong> Both continuing and quitting are valid. Lying to yourself is not. Make the decision clear-eyed.</div>
+          <div class="task-skip"><strong>If you skip this:</strong> You'll drift into month 4 with no plan, no revenue, and no direction. That's not persistence. That's denial.</div>
+        </div>
+      </div>
+
+      <div class="reality-check">
+        <strong>Week 12 Reality Check:</strong> Celebrate if you have revenue. If not, decide: continue, pivot, or quit. Both are valid. Lying to yourself is not. Your runway is 5-6 months. Count the weeks remaining. Act accordingly.
+      </div>
     </div>
   </div>
 </section>
 
-<!-- Daily Checklist -->
-<section class="section reveal" id="daily">
+<!-- PROGRESS SUMMARY -->
+<section class="section" id="summary">
   <div class="container">
     <div class="section-header">
-      <h4>Daily Discipline</h4>
-      <h2>Daily Checklist <span style="color:var(--text-muted);font-weight:400;">(Ongoing)</span></h2>
-      <p>Every single day during the 90 days. Non-negotiable.</p>
+      <span class="phase-banner">Scoreboard</span>
+      <h2>Progress Summary</h2>
+      <p>Auto-calculating based on checked boxes. Progress saves automatically.</p>
     </div>
-    <div class="checklist" data-phase="daily">
-      <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>1 LinkedIn post or engagement</strong></div></div>
-      <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>5 connection requests or follow-ups</strong></div></div>
-      <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>1 piece of content created or shared</strong></div></div>
-      <div class="check-item"><div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="check-text"><strong>Review CRM and follow up with 3 warm leads</strong></div></div>
-    </div>
-  </div>
-</section>
 
-<!-- Weekly Metrics -->
-<section class="section reveal" id="metrics">
-  <div class="container">
-    <div class="section-header">
-      <h4>Scoreboard</h4>
-      <h2>Weekly Metrics Tracker</h2>
-      <p>Track these every Sunday. Numbers don't lie.</p>
+    <div class="overall-progress">
+      <div class="progress-label"><span>Overall Completion</span><span id="overall-percent">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="overall-bar" style="width:0%"></div></div>
     </div>
-    <div class="metrics-grid">
-      <div class="metric-cell"><div class="num">—</div><div class="desc">Outreach Volume</div></div>
-      <div class="metric-cell"><div class="num">—</div><div class="desc">Response Rate</div></div>
-      <div class="metric-cell"><div class="num">—</div><div class="desc">Meetings Booked</div></div>
-      <div class="metric-cell"><div class="num">—</div><div class="desc">Proposals Sent</div></div>
-      <div class="metric-cell"><div class="num">—</div><div class="desc">Proposals Won / Lost</div></div>
-      <div class="metric-cell"><div class="num">—</div><div class="desc">Revenue Closed</div></div>
-      <div class="metric-cell"><div class="num">—</div><div class="desc">Pipeline Value</div></div>
-      <div class="metric-cell"><div class="num">—</div><div class="desc">Content Pieces</div></div>
-    </div>
-  </div>
-</section>
 
-<!-- Budget -->
-<section class="section reveal" id="budget">
-  <div class="container">
-    <div class="section-header">
-      <h4>Resources</h4>
-      <h2>Budget Summary</h2>
-      <p>~$10K capital allocation. Preserve cash, spend where it moves the needle.</p>
+    <div class="summary-grid">
+      <div class="summary-cell">
+        <div class="sum-num" id="p1-count">0/20</div>
+        <div class="sum-label">Phase 1 Tasks</div>
+      </div>
+      <div class="summary-cell">
+        <div class="sum-num" id="p2-count">0/20</div>
+        <div class="sum-label">Phase 2 Tasks</div>
+      </div>
+      <div class="summary-cell">
+        <div class="sum-num" id="p3-count">0/16</div>
+        <div class="sum-label">Phase 3 Tasks</div>
+      </div>
+      <div class="summary-cell">
+        <div class="sum-num" id="total-count">0/56</div>
+        <div class="sum-label">Total Tasks</div>
+      </div>
     </div>
-    <div style="overflow-x:auto;">
-      <table class="budget-table">
-        <thead><tr><th>Category</th><th style="text-align:right;">Amount</th></tr></thead>
-        <tbody>
-          <tr><td>Legal / LLC / Insurance</td><td style="text-align:right;">$1,200</td></tr>
-          <tr><td>Website / Tools / Software</td><td style="text-align:right;">$500</td></tr>
-          <tr><td>Marketing / Mailers / Ads</td><td style="text-align:right;">$800</td></tr>
-          <tr><td>Spec Shoots / Travel</td><td style="text-align:right;">$400</td></tr>
-          <tr><td>Editor Costs (first projects)</td><td style="text-align:right;">$700</td></tr>
-          <tr><td>Operating Reserve</td><td style="text-align:right;">$6,500</td></tr>
-          <tr><td>TOTAL</td><td style="text-align:right;">$10,100</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
 
-<!-- Success Criteria -->
-<section class="section reveal" id="success">
-  <div class="container">
-    <div class="section-header">
-      <h4>Day 90 Review</h4>
-      <h2>Success Criteria</h2>
-      <p>Know your numbers before you start. Minimum viable is your floor — stretch is your ceiling.</p>
-    </div>
-    <div class="criteria-grid">
-      <div class="criteria-card">
-        <div class="tag">Minimum</div>
-        <h3 style="margin-top:8px;">Minimum Viable</h3>
-        <ul style="color:var(--text-muted); font-size:0.92rem; line-height:1.7;">
-          <li>• 1–2 projects closed</li>
-          <li>• $2,000–5,000 revenue</li>
-          <li>• Website + portfolio live</li>
-          <li>• 1 testimonial</li>
-        </ul>
-      </div>
-      <div class="criteria-card">
-        <div class="tag">Target</div>
-        <h3 style="margin-top:8px;">Target</h3>
-        <ul style="color:var(--text-muted); font-size:0.92rem; line-height:1.7;">
-          <li>• 3–5 projects closed</li>
-          <li>• $6,000–15,000 revenue</li>
-          <li>• 2–3 testimonials</li>
-          <li>• 1 warm referral source</li>
-        </ul>
-      </div>
-      <div class="criteria-card stretch">
-        <div class="tag">Stretch</div>
-        <h3 style="margin-top:8px;">Stretch</h3>
-        <ul style="color:var(--text-muted); font-size:0.92rem; line-height:1.7;">
-          <li>• 5–8 projects closed</li>
-          <li>• $15,000–25,000 revenue</li>
-          <li>• 3+ testimonials</li>
-          <li>• 2+ referral sources</li>
-          <li>• 1 retainer conversation started</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Failure Modes -->
-<section class="section reveal" id="failures">
-  <div class="container">
-    <div class="section-header">
-      <h4>Red Flags</h4>
-      <h2>Failure Modes to Watch</h2>
-      <p>Every plan has failure points. Know them in advance so you can dodge them.</p>
-    </div>
-    <div class="failure-item">
-      <div class="failure-icon">1</div>
-      <div>
-        <h4>Week 3 Panic</h4>
-        <p>“I don't have any clients, this isn't working.” <strong>→</strong> Normal. Keep outreach volume high. Trust the system.</p>
-      </div>
-    </div>
-    <div class="failure-item">
-      <div class="failure-icon">2</div>
-      <div>
-        <h4>Pricing Too High Too Soon</h4>
-        <p>First 3 projects should be below market to build portfolio and social proof. Raise rates after you have case studies.</p>
-      </div>
-    </div>
-    <div class="failure-item">
-      <div class="failure-icon">3</div>
-      <div>
-        <h4>Editing Bottleneck</h4>
-        <p>If you're editing everything, you can't sell. Use a contract editor after project 3 to free up your time for business development.</p>
-      </div>
-    </div>
-    <div class="failure-item">
-      <div class="failure-icon">4</div>
-      <div>
-        <h4>Chasing Bad Clients</h4>
-        <p>If they negotiate hard on price, they'll negotiate hard on revisions. Walk away. Bad clients cost more than no clients.</p>
-      </div>
-    </div>
-    <div class="failure-item">
-      <div class="failure-icon">5</div>
-      <div>
-        <h4>Perfectionism</h4>
-        <p>Launch the website before it's perfect. Send the email before it's perfect. <strong>Done beats perfect.</strong> Speed is your advantage.</p>
-      </div>
+    <div class="actions-bar">
+      <p style="margin:0; color:var(--text-muted); font-size:0.85rem;">Your progress is saved to this browser. Clearing browser data will reset it.</p>
+      <button class="reset-btn" onclick="resetProgress()">Reset Progress</button>
     </div>
   </div>
 </section>
@@ -780,55 +1305,97 @@
 <!-- Footer -->
 <footer class="footer">
   <div class="container">
-    <p>Atlas Visual — 90-Day Execution Plan</p>
+    <p>Atlas Visual — Internal Command Center</p>
     <p style="margin-top:4px; font-size:0.75rem;">Built for execution. No fluff.</p>
   </div>
 </footer>
 
 <script>
-  // Checkbox toggle + progress bars
-  document.querySelectorAll('.check-item').forEach(item => {
-    item.addEventListener('click', function() {
+  // Checkbox state
+  function saveState(key, done) {
+    localStorage.setItem(key, done ? '1' : '0');
+  }
+  function loadState(key) {
+    return localStorage.getItem(key) === '1';
+  }
+
+  // Initialize checkboxes
+  document.querySelectorAll('.task-row').forEach(row => {
+    const key = row.getAttribute('data-key');
+    if (!key) return;
+    if (loadState(key)) row.classList.add('done');
+
+    row.addEventListener('click', function(e) {
+      // Allow clicking anywhere on the row
       this.classList.toggle('done');
-      updateProgress();
+      saveState(key, this.classList.contains('done'));
+      updateAllProgress();
     });
   });
 
-  function updateProgress() {
-    ['p1','p2','p3'].forEach(phase => {
-      const items = document.querySelectorAll('.checklist[data-phase="' + phase + '"] .check-item');
-      const done = document.querySelectorAll('.checklist[data-phase="' + phase + '"] .check-item.done');
-      const pct = items.length ? Math.round((done.length / items.length) * 100) : 0;
-      const bar = document.getElementById(phase + '-bar');
-      const label = document.getElementById(phase + '-percent');
-      if (bar) bar.style.width = pct + '%';
-      if (label) label.textContent = pct + '%';
-    });
-  }
+  function updateAllProgress() {
+    const phaseDefs = {
+      p1: { keys: [], total: 20 },
+      p2: { keys: [], total: 20 },
+      p3: { keys: [], total: 16 }
+    };
 
-  // Scroll reveal
-  const revealEls = document.querySelectorAll('.reveal');
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-  }, { threshold: 0.08 });
-  revealEls.forEach(el => revealObserver.observe(el));
-
-  // Sticky nav active link
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-link');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        navLinks.forEach(link => {
-          link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
-        });
+    // Map keys to phases by week prefix
+    document.querySelectorAll('.task-row').forEach(row => {
+      const key = row.getAttribute('data-key');
+      if (!key) return;
+      const done = row.classList.contains('done');
+      if (key.includes('_w1_') || key.includes('_w2_') || key.includes('_w3_') || key.includes('_w4_')) {
+        phaseDefs.p1.keys.push(done);
+      } else if (key.includes('_w5_') || key.includes('_w6_') || key.includes('_w7_') || key.includes('_w8_')) {
+        phaseDefs.p2.keys.push(done);
+      } else if (key.includes('_w9_') || key.includes('_w10_') || key.includes('_w11_') || key.includes('_w12_')) {
+        phaseDefs.p3.keys.push(done);
       }
     });
-  }, { rootMargin: '-40% 0px -55% 0px' });
-  sections.forEach(s => observer.observe(s));
 
-  // Animate progress bars on load
-  setTimeout(updateProgress, 300);
+    let totalDone = 0;
+    let totalTasks = 0;
+
+    Object.keys(phaseDefs).forEach(phase => {
+      const def = phaseDefs[phase];
+      const done = def.keys.filter(Boolean).length;
+      const total = def.total;
+      totalDone += done;
+      totalTasks += total;
+      const pct = total ? Math.round((done / total) * 100) : 0;
+
+      const bar = document.getElementById(phase + '-bar');
+      const label = document.getElementById(phase + '-percent');
+      const count = document.getElementById(phase + '-count');
+      if (bar) bar.style.width = pct + '%';
+      if (label) label.textContent = pct + '%';
+      if (count) count.textContent = done + '/' + total;
+    });
+
+    const overallPct = totalTasks ? Math.round((totalDone / totalTasks) * 100) : 0;
+    const overallBar = document.getElementById('overall-bar');
+    const overallLabel = document.getElementById('overall-percent');
+    const totalCount = document.getElementById('total-count');
+    if (overallBar) overallBar.style.width = overallPct + '%';
+    if (overallLabel) overallLabel.textContent = overallPct + '%';
+    if (totalCount) totalCount.textContent = totalDone + '/' + totalTasks;
+  }
+
+  function resetProgress() {
+    if (!confirm('Reset all progress? This cannot be undone.')) return;
+    document.querySelectorAll('.task-row').forEach(row => {
+      const key = row.getAttribute('data-key');
+      if (key) {
+        localStorage.removeItem(key);
+        row.classList.remove('done');
+      }
+    });
+    updateAllProgress();
+  }
+
+  // Init on load
+  updateAllProgress();
 </script>
 </body>
 </html>

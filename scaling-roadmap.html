@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Atlas Visual Scaling Roadmap</title>
+  <title>Scaling Roadmap — Atlas Visual Command Center</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -36,7 +36,6 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -64,7 +63,6 @@
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
-
     .nav-inner {
       max-width: 1200px;
       margin: 0 auto;
@@ -74,7 +72,6 @@
       justify-content: space-between;
       height: 56px;
     }
-
     .nav-logo {
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 700;
@@ -83,16 +80,13 @@
       letter-spacing: 0.05em;
       text-transform: uppercase;
     }
-
     .nav-links {
       display: flex;
       gap: 8px;
       overflow-x: auto;
       scrollbar-width: none;
     }
-
     .nav-links::-webkit-scrollbar { display: none; }
-
     .nav-links a {
       color: var(--text-dim);
       text-decoration: none;
@@ -103,7 +97,6 @@
       white-space: nowrap;
       transition: all 0.2s;
     }
-
     .nav-links a:hover, .nav-links a.active {
       color: var(--text);
       background: var(--bg-elevated);
@@ -115,7 +108,6 @@
       margin: 0 auto;
       padding: 0 24px;
     }
-
     section {
       padding: 72px 0;
       border-bottom: 1px solid var(--border);
@@ -127,7 +119,6 @@
       text-align: center;
       border-bottom: 1px solid var(--border);
     }
-
     .hero-badge {
       display: inline-block;
       font-size: 11px;
@@ -140,7 +131,6 @@
       border-radius: 100px;
       margin-bottom: 24px;
     }
-
     .hero h1 {
       font-size: clamp(36px, 6vw, 64px);
       font-weight: 700;
@@ -149,21 +139,19 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-
     .hero-sub {
       font-size: clamp(16px, 2.5vw, 20px);
       color: var(--text-dim);
-      max-width: 600px;
+      max-width: 680px;
       margin: 0 auto 32px;
       line-height: 1.5;
     }
-
     .hero-insight {
       background: var(--accent-glow);
       border: 1px solid var(--accent-dim);
       border-radius: 12px;
       padding: 20px 28px;
-      max-width: 640px;
+      max-width: 700px;
       margin: 0 auto 48px;
       font-family: 'Space Grotesk', sans-serif;
       font-size: 16px;
@@ -180,7 +168,6 @@
       max-width: 900px;
       margin: 0 auto;
     }
-
     .phase-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -189,12 +176,10 @@
       text-align: center;
       transition: all 0.2s;
     }
-
     .phase-card:hover {
       border-color: var(--border-light);
       background: var(--bg-card-hover);
     }
-
     .phase-card .phase-num {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 24px;
@@ -202,14 +187,12 @@
       color: var(--accent);
       margin-bottom: 6px;
     }
-
     .phase-card .phase-name {
       font-size: 13px;
       font-weight: 600;
       color: var(--text);
       margin-bottom: 4px;
     }
-
     .phase-card .phase-time {
       font-size: 11px;
       color: var(--text-muted);
@@ -219,18 +202,15 @@
     .section-header {
       margin-bottom: 40px;
     }
-
     .section-header h2 {
       font-size: clamp(24px, 4vw, 36px);
       margin-bottom: 12px;
     }
-
     .section-header p {
       color: var(--text-dim);
       font-size: 16px;
       max-width: 640px;
     }
-
     .phase-label {
       display: inline-block;
       font-size: 11px;
@@ -241,7 +221,6 @@
       border-radius: 6px;
       margin-bottom: 12px;
     }
-
     .phase-label--pre { color: var(--info); background: var(--info-bg); border: 1px solid var(--info-border); }
     .phase-label--1 { color: var(--accent); background: var(--accent-glow); border: 1px solid var(--accent-dim); }
     .phase-label--2 { color: var(--success); background: var(--success-bg); border: 1px solid var(--success-border); }
@@ -257,13 +236,11 @@
       overflow: hidden;
       margin-bottom: 24px;
     }
-
     .progress-bar .fill {
       height: 100%;
       border-radius: 100px;
       transition: width 0.6s ease;
     }
-
     .fill--pre { width: 10%; background: var(--info); }
     .fill--1 { width: 25%; background: var(--accent); }
     .fill--2 { width: 40%; background: var(--success); }
@@ -283,10 +260,28 @@
       font-weight: 500;
       color: var(--text);
     }
-
     .goal-banner span {
       color: var(--text-dim);
       font-weight: 400;
+    }
+
+    /* Brutal truth block */
+    .brutal-truth {
+      background: var(--danger-bg);
+      border: 1px solid var(--danger-border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 24px 0;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--danger);
+      line-height: 1.55;
+    }
+    .brutal-truth::before {
+      content: 'BRUTAL TRUTH: ';
+      font-weight: 700;
+      letter-spacing: 0.05em;
     }
 
     /* Checklists */
@@ -296,24 +291,20 @@
       gap: 16px;
       margin-bottom: 24px;
     }
-
     .week-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 20px;
     }
-
     .week-card h4 {
       font-size: 14px;
       margin-bottom: 12px;
       color: var(--accent);
     }
-
     .week-card ul {
       list-style: none;
     }
-
     .week-card li {
       position: relative;
       padding-left: 24px;
@@ -322,7 +313,6 @@
       color: var(--text-dim);
       line-height: 1.5;
     }
-
     .week-card li::before {
       content: '';
       position: absolute;
@@ -341,7 +331,6 @@
       gap: 16px;
       margin: 24px 0;
     }
-
     .metric-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -349,7 +338,6 @@
       padding: 20px;
       text-align: center;
     }
-
     .metric-card .metric-value {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 24px;
@@ -357,7 +345,6 @@
       color: var(--accent);
       margin-bottom: 4px;
     }
-
     .metric-card .metric-label {
       font-size: 12px;
       color: var(--text-muted);
@@ -372,28 +359,27 @@
       gap: 16px;
       margin: 24px 0;
     }
-
     .decision-card {
       border-radius: 12px;
       padding: 20px;
       border: 1px solid;
     }
-
     .decision-card--go {
       background: var(--success-bg);
       border-color: var(--success-border);
     }
-
     .decision-card--pivot {
       background: var(--warning-bg);
       border-color: var(--warning-border);
     }
-
     .decision-card--quit {
       background: var(--danger-bg);
       border-color: var(--danger-border);
     }
-
+    .decision-card--delay {
+      background: var(--info-bg);
+      border-color: var(--info-border);
+    }
     .decision-card .decision-label {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 13px;
@@ -402,15 +388,30 @@
       letter-spacing: 0.08em;
       margin-bottom: 8px;
     }
-
     .decision-card--go .decision-label { color: var(--success); }
     .decision-card--pivot .decision-label { color: var(--warning); }
     .decision-card--quit .decision-label { color: var(--danger); }
-
+    .decision-card--delay .decision-label { color: var(--info); }
     .decision-card p {
       font-size: 14px;
       color: var(--text-dim);
       line-height: 1.5;
+    }
+
+    /* Honest Timeline note */
+    .honest-timeline {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 14px;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+    .honest-timeline strong {
+      color: var(--text-dim);
+      font-style: normal;
     }
 
     /* Tables */
@@ -420,13 +421,11 @@
       border: 1px solid var(--border);
       border-radius: 12px;
     }
-
     table {
       width: 100%;
       border-collapse: collapse;
       font-size: 14px;
     }
-
     thead th {
       background: var(--bg-elevated);
       color: var(--text-dim);
@@ -439,19 +438,16 @@
       border-bottom: 1px solid var(--border);
       white-space: nowrap;
     }
-
     tbody td {
       padding: 12px 16px;
       border-bottom: 1px solid var(--border);
       color: var(--text-dim);
       vertical-align: top;
     }
-
     tbody tr:last-child td { border-bottom: none; }
-
     tbody tr:hover td { background: var(--bg-elevated); }
 
-    /* Warning / Callout Boxes */
+    /* Callout Boxes */
     .callout {
       border-radius: 12px;
       padding: 20px 24px;
@@ -460,124 +456,56 @@
       gap: 16px;
       align-items: flex-start;
     }
-
     .callout-icon {
       font-size: 20px;
       line-height: 1;
       flex-shrink: 0;
     }
-
     .callout-content h4 {
       font-size: 14px;
       margin-bottom: 6px;
       color: var(--text);
     }
-
     .callout-content p {
       font-size: 14px;
       color: var(--text-dim);
       line-height: 1.6;
     }
-
     .callout--danger {
       background: var(--danger-bg);
       border: 1px solid var(--danger-border);
     }
-
     .callout--warning {
       background: var(--warning-bg);
       border: 1px solid var(--warning-border);
     }
-
     .callout--success {
       background: var(--success-bg);
       border: 1px solid var(--success-border);
     }
-
     .callout--info {
       background: var(--info-bg);
       border: 1px solid var(--info-border);
     }
 
-    /* Timeline */
-    .timeline {
-      position: relative;
-      padding-left: 28px;
-    }
-
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 8px;
-      top: 6px;
-      bottom: 6px;
-      width: 2px;
-      background: var(--border-light);
-    }
-
-    .timeline-item {
-      position: relative;
-      padding-bottom: 28px;
-    }
-
-    .timeline-item:last-child { padding-bottom: 0; }
-
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: -24px;
-      top: 4px;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: var(--bg);
-      border: 2px solid var(--accent);
-    }
-
-    .timeline-item--done::before { background: var(--accent); }
-
-    .timeline-item .t-time {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--accent);
-      margin-bottom: 4px;
-    }
-
-    .timeline-item .t-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-
-    .timeline-item .t-desc {
-      font-size: 14px;
-      color: var(--text-dim);
-      line-height: 1.5;
-    }
-
     /* Failure Pattern Cards */
     .failure-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 16px;
       margin: 24px 0;
     }
-
     .failure-card {
       background: var(--danger-bg);
       border: 1px solid var(--danger-border);
       border-radius: 12px;
       padding: 20px;
     }
-
     .failure-card h4 {
       font-size: 14px;
       color: var(--danger);
       margin-bottom: 8px;
     }
-
     .failure-card p {
       font-size: 14px;
       color: var(--text-dim);
@@ -587,11 +515,10 @@
     /* Owner Evolution */
     .evo-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 12px;
       margin: 24px 0;
     }
-
     .evo-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -599,7 +526,6 @@
       padding: 20px 16px;
       text-align: center;
     }
-
     .evo-card .evo-phase {
       font-size: 11px;
       font-weight: 600;
@@ -608,7 +534,6 @@
       color: var(--accent);
       margin-bottom: 8px;
     }
-
     .evo-card .evo-role {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 15px;
@@ -616,56 +541,46 @@
       color: var(--text);
       margin-bottom: 8px;
     }
-
-    .evo-card .evo-split {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-    }
-
-    .evo-card .evo-skill {
-      font-size: 12px;
+    .evo-card .evo-desc {
+      font-size: 13px;
       color: var(--text-dim);
-      font-weight: 500;
+      line-height: 1.5;
     }
 
-    /* Resource Links */
-    .resource-links {
+    /* Summary cards */
+    .summary-cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 12px;
+      grid-template-columns: 1fr;
+      gap: 16px;
       margin: 24px 0;
     }
-
-    .resource-link {
-      display: block;
+    .summary-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 20px;
-      text-decoration: none;
+      padding: 24px;
+    }
+    .summary-card p {
+      font-size: 15px;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+    .summary-card strong {
       color: var(--text);
-      transition: all 0.2s;
     }
 
-    .resource-link:hover {
-      border-color: var(--accent-dim);
-      background: var(--bg-card-hover);
-    }
-
-    .resource-link .rl-phase {
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--accent);
-      margin-bottom: 6px;
-    }
-
-    .resource-link .rl-desc {
+    /* Exit Criteria banner */
+    .exit-banner {
+      background: var(--bg-elevated);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+      padding: 16px 20px;
+      margin: 20px 0;
       font-size: 14px;
       color: var(--text-dim);
-      line-height: 1.5;
+    }
+    .exit-banner strong {
+      color: var(--text);
     }
 
     /* Utility */
@@ -675,14 +590,12 @@
     .text-success { color: var(--success); }
     .text-danger { color: var(--danger); }
     .text-warning { color: var(--warning); }
-
     .mb-8 { margin-bottom: 8px; }
     .mb-12 { margin-bottom: 12px; }
     .mb-16 { margin-bottom: 16px; }
     .mb-24 { margin-bottom: 24px; }
     .mb-32 { margin-bottom: 32px; }
     .mt-24 { margin-top: 24px; }
-
     .font-mono {
       font-family: 'Space Grotesk', sans-serif;
       font-variant-numeric: tabular-nums;
@@ -696,7 +609,9 @@
       .hero { padding: 56px 0 40px; }
       .week-grid { grid-template-columns: 1fr; }
       .metric-row { grid-template-columns: 1fr 1fr; }
-      .evo-grid { grid-template-columns: 1fr 1fr; }
+      .evo-grid { grid-template-columns: 1fr; }
+      .decision-grid { grid-template-columns: 1fr; }
+      .failure-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -706,7 +621,7 @@
   <div class="nav-inner">
     <div class="nav-logo">Atlas Visual</div>
     <div class="nav-links">
-      <a href="index.html">Home</a>
+      <a href="index.html">Dashboard</a>
       <a href="playbook.html">Playbook</a>
       <a href="90-day-plan.html">90-Day Plan</a>
       <a href="financial-model.html">Financial Model</a>
@@ -717,43 +632,43 @@
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-badge">Master Document</div>
-  <h1>The Atlas Visual Scaling Roadmap</h1>
-  <p class="hero-sub">From $0 to $1M+. Every phase, every milestone, every decision gate.</p>
+  <div class="hero-badge">Internal Command Center</div>
+  <h1>Scaling Roadmap</h1>
+  <p class="hero-sub">The 5-year honest view. Most of this won't happen. Plan for it anyway.</p>
   <div class="hero-insight">
-    This is not a creative journey. It is a sales and systems journey with a camera.
+    You have a 5-year plan. The market has other plans. This document is a compass, not a contract.
   </div>
 
   <div class="phase-cards">
     <div class="phase-card">
       <div class="phase-num">0</div>
-      <div class="phase-name">Foundation</div>
-      <div class="phase-time">Pre-Launch</div>
+      <div class="phase-name">Pre-Launch</div>
+      <div class="phase-time">Month 0</div>
     </div>
     <div class="phase-card">
       <div class="phase-num">1</div>
       <div class="phase-name">Launch</div>
-      <div class="phase-time">Days 1-90</div>
+      <div class="phase-time">Months 1-3</div>
     </div>
     <div class="phase-card">
       <div class="phase-num">2</div>
       <div class="phase-name">Validation</div>
-      <div class="phase-time">Months 4-6</div>
+      <div class="phase-time">Months 4-12</div>
     </div>
     <div class="phase-card">
       <div class="phase-num">3</div>
       <div class="phase-name">Optimization</div>
-      <div class="phase-time">Months 7-12</div>
+      <div class="phase-time">Months 12-18</div>
     </div>
     <div class="phase-card">
       <div class="phase-num">4</div>
       <div class="phase-name">Scale</div>
-      <div class="phase-time">Year 2</div>
+      <div class="phase-time">Months 18-36</div>
     </div>
     <div class="phase-card">
       <div class="phase-num">5</div>
       <div class="phase-name">Expansion</div>
-      <div class="phase-time">Year 3+</div>
+      <div class="phase-time">Year 3-5</div>
     </div>
   </div>
 </div>
@@ -764,7 +679,7 @@
     <div class="section-header">
       <span class="phase-label phase-label--pre">Phase 0</span>
       <h2>Pre-Launch</h2>
-      <p>Before Day 1. Be ready to operate as a business on Day 1, not a freelancer with a camera.</p>
+      <p>You're here. Probably. This phase feels productive. It's mostly admin. The real work hasn't started.</p>
     </div>
 
     <div class="progress-bar">
@@ -772,76 +687,58 @@
     </div>
 
     <div class="goal-banner">
-      Goal: <span>LLC formed, website live, 5+ warm conversations scheduled</span>
+      Goal: <span>Ready to sell. Not ready to deliver at scale.</span>
     </div>
 
     <div class="week-grid">
       <div class="week-card">
-        <h4>Week 1-2: Legal & Identity</h4>
+        <h4>Legal & Identity</h4>
         <ul>
-          <li>Form LLC + EIN</li>
+          <li>LLC formation + EIN</li>
           <li>Business checking account</li>
-          <li>Insurance (BOP + E&amp;O, ~$1,200/year)</li>
-          <li>Contract templates (client + subcontractor)</li>
-          <li>Domain + Google Workspace</li>
-          <li>Set up accounting (QuickBooks SE, $30/mo)</li>
+          <li>Insurance (BOP + E&O, ~$1,200/year)</li>
+          <li>Client contract templates</li>
+          <li>Subcontractor agreements</li>
         </ul>
       </div>
       <div class="week-card">
-        <h4>Week 3-4: Digital Presence</h4>
+        <h4>Digital Presence</h4>
         <ul>
-          <li>Website live (use existing index.html)</li>
+          <li>Website live</li>
           <li>LinkedIn company page</li>
-          <li>Portfolio/demo reel (even if spec work)</li>
-          <li>Vimeo/YouTube portfolio channel</li>
-          <li>Business cards</li>
-          <li>Email signature + brand templates</li>
+          <li>Portfolio / demo reel</li>
+          <li>Vimeo portfolio channel</li>
+          <li>Email signature + templates</li>
         </ul>
       </div>
       <div class="week-card">
-        <h4>Week 5-6: Systems & Tools</h4>
+        <h4>Systems & Tools</h4>
         <ul>
           <li>Frame.io for client review</li>
-          <li>Artlist/Epidemic Sound subscription</li>
+          <li>Artlist / Epidemic Sound</li>
           <li>CRM (HubSpot free)</li>
-          <li>Editor onboarding kit (LUTs, style guide, templates)</li>
-          <li>Proposal template</li>
-          <li>Invoicing system</li>
+          <li>Proposal & invoicing system</li>
+          <li>Accounting (QuickBooks SE)</li>
         </ul>
       </div>
       <div class="week-card">
-        <h4>Week 7-8: Network Prep</h4>
+        <h4>Network Prep</h4>
         <ul>
           <li>List 50 real estate contacts</li>
           <li>Identify 100 LinkedIn targets</li>
-          <li>Join NAIOP, ULI, local realtor associations</li>
-          <li>Prepare warm outreach scripts</li>
+          <li>Join NAIOP, ULI, local associations</li>
+          <li>Prepare outreach scripts</li>
           <li>Schedule 5-10 intro coffees</li>
         </ul>
       </div>
     </div>
 
-    <div class="metric-row">
-      <div class="metric-card">
-        <div class="metric-value">$1,500</div>
-        <div class="metric-label">Budget</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-value">8 weeks</div>
-        <div class="metric-label">Timeline</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-value">5+</div>
-        <div class="metric-label">Warm Conversations</div>
-      </div>
+    <div class="exit-banner">
+      <strong>Exit Criteria:</strong> LLC formed, insurance active, website live, portfolio ready, pricing set, contracts ready. You can legally operate and confidently pitch.
     </div>
 
-    <div class="callout callout--info">
-      <div class="callout-icon">&#9432;</div>
-      <div class="callout-content">
-        <h4>Resource</h4>
-        <p>Use the <a href="playbook.html" style="color:var(--info);">playbook</a> for detailed legal, equipment, and operational info.</p>
-      </div>
+    <div class="brutal-truth">
+      Spending 3 months on a logo is not pre-launch. It's procrastination. Most people fail here because they confuse being busy with being ready.
     </div>
   </div>
 </section>
@@ -852,7 +749,7 @@
     <div class="section-header">
       <span class="phase-label phase-label--1">Phase 1</span>
       <h2>Launch</h2>
-      <p>Days 1-90. Close first clients, validate pricing, build portfolio.</p>
+      <p>Your first 3 months will be mostly rejection. If you have 0 conversations by Week 6, your pitch is broken. Not your luck.</p>
     </div>
 
     <div class="progress-bar">
@@ -860,70 +757,61 @@
     </div>
 
     <div class="goal-banner">
-      Goal: <span>$3,000-8,000 revenue, 1+ paying client, 2+ testimonials</span>
+      Goal: <span>First paid project + 3 prospects in pipeline. Key metric: conversations started, not deals closed.</span>
     </div>
 
     <div class="week-grid">
       <div class="week-card">
-        <h4>Month 1: Foundation + Warm Network</h4>
+        <h4>Month 1: Warm Network</h4>
         <ul>
-          <li>Execute 90-Day Plan Phase 1</li>
-          <li>Target: 5+ intro conversations, website live</li>
+          <li>Reach out to every contact you know</li>
+          <li>Target: 5+ intro conversations</li>
+          <li>Film 1-2 spec pieces if portfolio is thin</li>
           <li>Budget: $500 (tools, mailers)</li>
         </ul>
       </div>
       <div class="week-card">
         <h4>Month 2: Cold Outreach + Content</h4>
         <ul>
-          <li>Execute 90-Day Plan Phase 2</li>
-          <li>20 cold emails/week, 2 LinkedIn posts/week</li>
+          <li>20 cold emails/week minimum</li>
+          <li>2 LinkedIn posts/week</li>
           <li>Film 2-3 spec videos</li>
-          <li>Target: 3+ discovery calls, 1+ proposal sent</li>
-          <li>Budget: $800 (mailers, LinkedIn Premium, spec shoots)</li>
+          <li>Target: 3+ discovery calls, 1+ proposal</li>
+          <li>Budget: $800 (mailers, Premium, shoots)</li>
         </ul>
       </div>
       <div class="week-card">
         <h4>Month 3: First Closes</h4>
         <ul>
-          <li>Execute 90-Day Plan Phase 3</li>
-          <li>Close 1-3 projects at "founding client" pricing (30% below market)</li>
+          <li>Close 1-3 projects at "founding client" pricing (~30% below target)</li>
           <li>Collect testimonials + case studies</li>
-          <li>Document what worked</li>
-          <li>Target: $3,000-8,000 revenue, 2+ testimonials</li>
-          <li>Budget: $700 (editor costs, travel)</li>
+          <li>Document what worked and what didn't</li>
+          <li>Target: $2K+ revenue, 2+ testimonials</li>
         </ul>
       </div>
     </div>
 
     <div class="metric-row">
       <div class="metric-card">
-        <div class="metric-value">$2,000</div>
-        <div class="metric-label">Total Budget</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-value">1+</div>
-        <div class="metric-label">Paying Client</div>
-      </div>
-      <div class="metric-card">
         <div class="metric-value">20</div>
         <div class="metric-label">Cold Emails/Week</div>
       </div>
-    </div>
-
-    <div class="callout callout--danger">
-      <div class="callout-icon">&#9888;</div>
-      <div class="callout-content">
-        <h4>Go/No-Go: Day 90</h4>
-        <p>If zero clients by Day 90, pivot or quit. See decision matrix below. Common pitfalls: pricing too high too soon, editing everything yourself, chasing bad clients.</p>
+      <div class="metric-card">
+        <div class="metric-value">$2K+</div>
+        <div class="metric-label">Revenue Target</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">3+</div>
+        <div class="metric-label">Warm Prospects</div>
       </div>
     </div>
 
-    <div class="callout callout--warning">
-      <div class="callout-icon">&#9432;</div>
-      <div class="callout-content">
-        <h4>Resource</h4>
-        <p>Use the <a href="90-day-plan.html" style="color:var(--warning);">90-Day Plan</a> for day-by-day execution.</p>
-      </div>
+    <div class="exit-banner">
+      <strong>Exit Criteria:</strong> 1+ paid project completed, 3+ warm prospects in pipeline, $2K+ total revenue, feedback on pitch and pricing.
+    </div>
+
+    <div class="brutal-truth">
+      Your first project will probably be underpriced. That's fine. Your fifth project at the same price is not fine. Most people fail here because they hide behind "building the brand" instead of talking to prospects.
     </div>
   </div>
 </section>
@@ -934,7 +822,7 @@
     <div class="section-header">
       <span class="phase-label phase-label--2">Phase 2</span>
       <h2>Validation</h2>
-      <p>Months 4-6. Prove repeatable client acquisition and project delivery.</p>
+      <p>This is where most people quit. You will question if this was the right decision. Everyone does.</p>
     </div>
 
     <div class="progress-bar">
@@ -942,83 +830,64 @@
     </div>
 
     <div class="goal-banner">
-      Goal: <span>$32,000-55,000 cumulative revenue (Q2), close rate &gt;15%, 1+ repeat client</span>
+      Goal: <span>Prove you can get consistent work. Validation doesn't mean "I made money once." It means "I can make money again."</span>
     </div>
 
     <div class="week-grid">
       <div class="week-card">
-        <h4>Month 4: Pricing Correction</h4>
+        <h4>Months 4-6: Pricing Correction</h4>
         <ul>
-          <li>Raise prices to market rate (no more founding discounts)</li>
-          <li>Target: 2-3 projects at full rate</li>
-          <li>Begin contract editor relationship (if &gt;3 projects/month)</li>
-          <li>Focus: Signature tier ($3,500-7,500)</li>
-          <li>Revenue target: $8,000-15,000</li>
+          <li>Raise to market rate (no more founding discounts)</li>
+          <li>Target: 1-2 projects/month by Month 6</li>
+          <li>Focus: Signature tier ($2,995)</li>
+          <li>Build editor bench if volume exceeds capacity</li>
         </ul>
       </div>
       <div class="week-card">
-        <h4>Month 5: Repeatability</h4>
+        <h4>Months 7-9: Repeatability</h4>
         <ul>
           <li>Systematize outreach: same volume every week</li>
-          <li>Build editor bench (2-3 reliable editors)</li>
           <li>First retainer conversation with repeat client</li>
-          <li>Target: 3-4 projects</li>
-          <li>Revenue target: $12,000-20,000</li>
+          <li>Target: 2-3 projects/month</li>
+          <li>Revenue target: $5K-8K/month</li>
         </ul>
       </div>
       <div class="week-card">
-        <h4>Month 6: Cash Flow Stability</h4>
+        <h4>Months 10-12: Cash Flow Stability</h4>
         <ul>
           <li>Deposit + final payment rhythm established</li>
-          <li>3-month expense buffer achieved (~$15,000 cumulative cash)</li>
+          <li>3-month expense buffer achieved (~$15K cash)</li>
           <li>Portfolio now has 5+ real projects</li>
-          <li>Target: 3-4 projects</li>
-          <li>Revenue target: $12,000-20,000</li>
+          <li>Target: 2-3 projects/month</li>
         </ul>
       </div>
     </div>
 
     <div class="metric-row">
       <div class="metric-card">
-        <div class="metric-value">&gt;15%</div>
-        <div class="metric-label">Close Rate</div>
+        <div class="metric-value">$8K+</div>
+        <div class="metric-label">Monthly by M12</div>
       </div>
       <div class="metric-card">
-        <div class="metric-value">&gt;$3,500</div>
-        <div class="metric-label">Avg Project Value</div>
+        <div class="metric-value">3+</div>
+        <div class="metric-label">Repeat Clients</div>
       </div>
       <div class="metric-card">
-        <div class="metric-value">&gt;$10K</div>
-        <div class="metric-label">Cash Reserve</div>
+        <div class="metric-value">6+</div>
+        <div class="metric-label">Total Clients</div>
       </div>
       <div class="metric-card">
-        <div class="metric-value">1+</div>
-        <div class="metric-label">Repeat Client</div>
+        <div class="metric-value">$15K</div>
+        <div class="metric-label">Cash Buffer</div>
       </div>
     </div>
 
-    <div class="callout callout--success">
-      <div class="callout-icon">&#9733;</div>
-      <div class="callout-content">
-        <h4>Hiring Trigger</h4>
-        <p>Contract editor if consistently &gt;3 projects/month.</p>
-      </div>
+    <div class="exit-banner">
+      <strong>Exit Criteria:</strong> 3+ repeat clients OR 6+ total clients, $8K+/mo trailing 3-month average, documented what works for client acquisition.
     </div>
 
-    <div class="callout callout--danger">
-      <div class="callout-icon">&#9888;</div>
-      <div class="callout-content">
-        <h4>Go/No-Go: Month 6</h4>
-        <p>If revenue &lt;$15,000 by Month 6 with zero repeats, pivot. Do not proceed to Phase 3 without proof of repeatability.</p>
-      </div>
-    </div>
-
-    <div class="callout callout--info">
-      <div class="callout-icon">&#9432;</div>
-      <div class="callout-content">
-        <h4>Resource</h4>
-        <p>Use the <a href="financial-model.html" style="color:var(--info);">financial model</a> to track against projections.</p>
-      </div>
+    <div class="brutal-truth">
+      Year 1 is the filter. Most don't make it to Year 2. The ones who do aren't necessarily better — they just didn't stop. If you can't break $3K/mo by Month 9, your offer, niche, or pitch is wrong. Hustle won't fix a broken model.
     </div>
   </div>
 </section>
@@ -1029,7 +898,7 @@
     <div class="section-header">
       <span class="phase-label phase-label--3">Phase 3</span>
       <h2>Optimization</h2>
-      <p>Months 7-12. Maximize margins, build systems, prepare for scale.</p>
+      <p>Now you have work. Can you do it without working 70 hours/week? This phase is boring. That's the point. Boring means it's working.</p>
     </div>
 
     <div class="progress-bar">
@@ -1037,98 +906,63 @@
     </div>
 
     <div class="goal-banner">
-      Goal: <span>$80,000-150,000 cumulative revenue (Q3+Q4), net margin &gt;20%, 1+ retainer</span>
+      Goal: <span>Systems, processes, editor bench. Build a business, not a job.</span>
     </div>
 
     <div class="week-grid">
       <div class="week-card">
-        <h4>Month 7-8: Margin Focus</h4>
-        <ul>
-          <li>Stop taking Essential-tier projects unless they lead to Signature/Enterprise</li>
-          <li>Negotiate editor rates down with volume</li>
-          <li>Add value-adds: social cutdowns, stills, drone (upsell)</li>
-          <li>Target: 3-4 projects/month</li>
-          <li>Revenue target: $15,000-25,000/month</li>
-        </ul>
-      </div>
-      <div class="week-card">
-        <h4>Month 9-10: Systems &amp; Automation</h4>
+        <h4>Systems & Templates</h4>
         <ul>
           <li>Proposal templates standardized</li>
           <li>Client onboarding automated</li>
-          <li>CRM fully utilized</li>
-          <li>First retainer client secured ($2,500-4,000/month)</li>
-          <li>Target: 3-4 projects/month + 1 retainer</li>
-          <li>Revenue target: $18,000-28,000/month</li>
+          <li>CRM fully utilized with pipelines</li>
+          <li>Project handoff docs for editors</li>
+          <li>Invoice + follow-up automations</li>
         </ul>
       </div>
       <div class="week-card">
-        <h4>Month 11-12: Year-End Review</h4>
+        <h4>Editor Bench</h4>
         <ul>
-          <li>Financial audit: what tiers were most profitable?</li>
-          <li>Client audit: who are the top 20% by revenue? Who are the bottom 20%?</li>
-          <li>Portfolio audit: which projects attracted the best clients?</li>
-          <li>Plan Year 2 budget and targets</li>
-          <li>Tax prep and estimated payments</li>
-          <li>Target: $15,000-25,000/month</li>
+          <li>2+ reliable contract editors tested</li>
+          <li>50%+ of editing outsourced</li>
+          <li>Style guide + LUTs shared</li>
+          <li>Turnaround times agreed in writing</li>
+          <li>Quality review checklist</li>
+        </ul>
+      </div>
+      <div class="week-card">
+        <h4>Margin Focus</h4>
+        <ul>
+          <li>Stop taking Essential-tier unless it leads upstream</li>
+          <li>Negotiate editor rates with volume</li>
+          <li>Add upsells: social cuts, stills, drone</li>
+          <li>Track actual hours per project</li>
+          <li>Fire bottom 20% of clients by headache</li>
         </ul>
       </div>
     </div>
 
-    <h3 class="mb-16 mt-24">Year 1 Total Targets</h3>
     <div class="metric-row">
       <div class="metric-card">
-        <div class="metric-value">$76K</div>
-        <div class="metric-label">Conservative (25 proj)</div>
+        <div class="metric-value">$12K+</div>
+        <div class="metric-label">Monthly Revenue</div>
       </div>
       <div class="metric-card">
-        <div class="metric-value">$143K</div>
-        <div class="metric-label">Moderate (40 proj)</div>
+        <div class="metric-value">50%</div>
+        <div class="metric-label">Editing Outsourced</div>
       </div>
       <div class="metric-card">
-        <div class="metric-value">$233K</div>
-        <div class="metric-label">Optimistic (45 proj)</div>
+        <div class="metric-value">2+</div>
+        <div class="metric-label">Editor Bench</div>
       </div>
     </div>
 
-    <h3 class="mb-16 mt-24">Key Metrics</h3>
-    <div class="metric-row">
-      <div class="metric-card">
-        <div class="metric-value">&gt;20%</div>
-        <div class="metric-label">Net Margin</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-value">3+</div>
-        <div class="metric-label">Repeat Clients</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-value">1+</div>
-        <div class="metric-label">Retainer</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-value">&gt;$20K</div>
-        <div class="metric-label">Cash Reserve</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-value">&gt;$60K</div>
-        <div class="metric-label">Owner Salary</div>
-      </div>
+    <div class="exit-banner">
+      <strong>Exit Criteria:</strong> $12K+/mo trailing average, editor bench of 2+, repeatable client acquisition process, systems documented, owner working less than 55 hrs/week on average.
     </div>
 
-    <div class="callout callout--warning">
-      <div class="callout-icon">&#9888;</div>
-      <div class="callout-content">
-        <h4>Go/No-Go: Year 1</h4>
-        <p><strong>Double down:</strong> Revenue &gt;$100K + 3+ repeats. <strong>Pivot:</strong> Revenue $60K-100K + 1-2 repeats. <strong>Quit:</strong> Revenue &lt;$60K + 0 repeats.</p>
-      </div>
-    </div>
-
-    <div class="callout callout--info">
-      <div class="callout-icon">&#9432;</div>
-      <div class="callout-content">
-        <h4>Resource</h4>
-        <p>Use the <a href="playbook.html" style="color:var(--info);">playbook's</a> operational workflows and failure modes.</p>
-      </div>
+    <div class="brutal-truth">
+      Most people in Phase 3 are still doing everything themselves. They're too busy to build systems, so they stay busy forever. Working IN the business instead of ON it is how you turn a company into a poorly paid job.
     </div>
   </div>
 </section>
@@ -1139,7 +973,7 @@
     <div class="section-header">
       <span class="phase-label phase-label--4">Phase 4</span>
       <h2>Scale</h2>
-      <p>Year 2. Transition from solo operator to micro-agency.</p>
+      <p>This is where you either hire or stay small forever. Hiring is a $50K+ decision. Treat it like one.</p>
     </div>
 
     <div class="progress-bar">
@@ -1147,76 +981,62 @@
     </div>
 
     <div class="goal-banner">
-      Goal: <span>$250,000-400,000 annual revenue, net margin &gt;25%, retainer revenue &gt;40%</span>
+      Goal: <span>First W-2 hire. Most who try to scale fail here. Cash flow kills them.</span>
     </div>
 
     <div class="week-grid">
       <div class="week-card">
-        <h4>Q1 Year 2: First Hire</h4>
+        <h4>Pre-Hire (Months 18-24)</h4>
         <ul>
-          <li><strong>Trigger:</strong> 6-month trailing avg &gt;$18,000/mo AND cash reserve &gt;$25,000</li>
-          <li>Hire W-2 editor ($48K base + ~$6K loaded = $54K/year)</li>
-          <li>Owner transitions to sales + creative direction only</li>
-          <li>Target: $180,000-250,000 annual revenue</li>
+          <li>6-month trailing avg &gt;$18K/mo</li>
+          <li>Cash reserve &gt;$25K</li>
+          <li>All processes documented (SOPs)</li>
+          <li>Turning away work or missing deadlines</li>
+          <li>Owner at capacity on sales + delivery</li>
         </ul>
       </div>
       <div class="week-card">
-        <h4>Q2 Year 2: Volume</h4>
+        <h4>First W-2 Hire</h4>
         <ul>
-          <li>Editor handles 60% of post-production</li>
+          <li>Hire editor or assistant ($48K base + ~$6K loaded)</li>
+          <li>Owner transitions to sales + creative direction</li>
+          <li>Set 90-day onboarding plan with KPIs</li>
+          <li>Target: $20K+/mo after 3 months</li>
+        </ul>
+      </div>
+      <div class="week-card">
+        <h4>Post-Hire (Months 24-36)</h4>
+        <ul>
+          <li>W-2 handles 60%+ of post-production</li>
           <li>Owner sells full-time</li>
-          <li>Target: $220,000-300,000 annual revenue</li>
           <li>Add second contract editor for overflow</li>
-        </ul>
-      </div>
-      <div class="week-card">
-        <h4>Q3 Year 2: Retainer Base</h4>
-        <ul>
-          <li>40% of revenue from retainers (stable, predictable)</li>
-          <li>Raise prices 15-20% (proven track record)</li>
-          <li>Target: $280,000-350,000 annual revenue</li>
-        </ul>
-      </div>
-      <div class="week-card">
-        <h4>Q4 Year 2: Systems</h4>
-        <ul>
-          <li>Document all processes (SOPs)</li>
-          <li>Implement project management tool (Notion/Monday)</li>
-          <li>Hire part-time producer or account manager</li>
-          <li>Target: $300,000-400,000 annual revenue</li>
+          <li>Implement project management tool</li>
+          <li>Target: $25K+/mo by Month 30</li>
         </ul>
       </div>
     </div>
 
-    <h3 class="mb-16 mt-24">Year 2 Targets</h3>
     <div class="metric-row">
       <div class="metric-card">
-        <div class="metric-value">$250-400K</div>
-        <div class="metric-label">Annual Revenue</div>
+        <div class="metric-value">$18K+</div>
+        <div class="metric-label">Pre-Hire Monthly</div>
       </div>
       <div class="metric-card">
-        <div class="metric-value">&gt;25%</div>
-        <div class="metric-label">Net Margin</div>
+        <div class="metric-value">$25K+</div>
+        <div class="metric-label">Post-Hire Monthly</div>
       </div>
       <div class="metric-card">
-        <div class="metric-value">&gt;40%</div>
-        <div class="metric-label">Retainer Revenue</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-value">&gt;$40K</div>
-        <div class="metric-label">Cash Reserve</div>
+        <div class="metric-value">2+</div>
+        <div class="metric-label">W-2 Team</div>
       </div>
     </div>
 
-    <h3 class="mb-16 mt-24">Team Structure</h3>
-    <p class="text-dim mb-24">Owner + 1 W-2 editor + 1 part-time producer/account manager</p>
+    <div class="exit-banner">
+      <strong>Exit Criteria:</strong> $20K+/mo trailing revenue, 2+ W-2 team members, systems fully documented, business can survive 2 weeks without owner's daily input.
+    </div>
 
-    <div class="callout callout--info">
-      <div class="callout-icon">&#9432;</div>
-      <div class="callout-content">
-        <h4>Resource</h4>
-        <p>Re-read the <a href="playbook.html" style="color:var(--info);">playbook's</a> scaling path section before making your first hire.</p>
-      </div>
+    <div class="brutal-truth">
+      Bringing on a $4K/mo editor at $8K/mo revenue is not scaling. It's suicide. Most founders hire too fast because they're exhausted, not because the business can afford it. Exhaustion is not a hiring strategy.
     </div>
   </div>
 </section>
@@ -1227,7 +1047,7 @@
     <div class="section-header">
       <span class="phase-label phase-label--5">Phase 5</span>
       <h2>Expansion</h2>
-      <p>Year 3+. Geographic expansion and team growth.</p>
+      <p>You probably won't get here. That's fine. This requires you to become a manager, not a filmmaker. Most creatives hate this.</p>
     </div>
 
     <div class="progress-bar">
@@ -1235,132 +1055,60 @@
     </div>
 
     <div class="goal-banner">
-      Goal: <span>$1M+ annual revenue, multiple regional hubs, full agency infrastructure</span>
+      Goal: <span>Multi-city, multiple crews, or specialized niche dominance. You have a business that runs without you for 2+ weeks.</span>
     </div>
 
     <div class="week-grid">
       <div class="week-card">
-        <h4>Year 3: Regional</h4>
+        <h4>Year 3: Second Market</h4>
         <ul>
-          <li><strong>Trigger:</strong> Local market generating &gt;$250,000/year</li>
-          <li>Expand to Seattle (165 miles, 4 Signature projects to break even)</li>
-          <li>Hire second shooter/editor in new market</li>
-          <li>Target: $400,000-600,000 annual revenue</li>
-          <li>Team: 3-4 FTE</li>
+          <li>Local market generating &gt;$250K/year</li>
+          <li>Expand to Seattle or Portland metro</li>
+          <li>Hire second shooter / editor in new market</li>
+          <li>Target: $400K-600K annual revenue</li>
         </ul>
       </div>
       <div class="week-card">
         <h4>Year 4: Multi-Market</h4>
         <ul>
-          <li>Add Bend or Spokane</li>
-          <li>Target: $600,000-900,000 annual revenue</li>
+          <li>Add additional regional hub</li>
+          <li>Hire producer / account manager</li>
+          <li>Target: $600K-900K annual revenue</li>
           <li>Team: 5-7 FTE</li>
-          <li>Implement creative director role (you)</li>
         </ul>
       </div>
       <div class="week-card">
-        <h4>Year 5: National</h4>
+        <h4>Year 5: Niche Dominance or Agency</h4>
         <ul>
-          <li>Target: $1,000,000+ annual revenue</li>
-          <li>Team: 8-12 FTE</li>
-          <li>Multiple regional hubs</li>
-          <li>Full agency infrastructure</li>
+          <li>Target: $500K-1M annual revenue</li>
+          <li>Team: 5-10 employees</li>
+          <li>Either own a niche or own a region</li>
+          <li>Owner is CEO, not filmmaker</li>
         </ul>
       </div>
     </div>
 
-    <div class="callout callout--danger">
-      <div class="callout-icon">&#9888;</div>
-      <div class="callout-content">
-        <h4>Phase 5 Failure Pattern</h4>
-        <p>Expanding before local market is saturated. "I want to be national" is ego. "I want to own Portland" is strategy.</p>
+    <div class="metric-row">
+      <div class="metric-card">
+        <div class="metric-value">$40K+</div>
+        <div class="metric-label">Monthly Revenue</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">5-10</div>
+        <div class="metric-label">Employees</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">2+</div>
+        <div class="metric-label">Weeks Without You</div>
       </div>
     </div>
 
-    <div class="callout callout--info">
-      <div class="callout-icon">&#9432;</div>
-      <div class="callout-content">
-        <h4>Resource</h4>
-        <p>Hire a business coach (Den Lennie, Chris Do, or similar).</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- THE CRITICAL PATH -->
-<section id="critical-path">
-  <div class="container">
-    <div class="section-header">
-      <h2>The Critical Path</h2>
-      <p>Non-negotiable milestones. Miss one and the timeline slips.</p>
+    <div class="exit-banner">
+      <strong>Exit Criteria:</strong> Business generates revenue and delivers work without owner's daily involvement for 2+ consecutive weeks. This is the definition of a real business.
     </div>
 
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="t-time">Day 1</div>
-        <div class="t-title">LLC formed</div>
-        <div class="t-desc">You're a business, not a hobby.</div>
-      </div>
-      <div class="timeline-item">
-        <div class="t-time">Day 30</div>
-        <div class="t-title">Website + portfolio live</div>
-        <div class="t-desc">You can show prospects what you do.</div>
-      </div>
-      <div class="timeline-item">
-        <div class="t-time">Day 60</div>
-        <div class="t-title">First discovery call</div>
-        <div class="t-desc">Market validation begins.</div>
-      </div>
-      <div class="timeline-item">
-        <div class="t-time">Day 90</div>
-        <div class="t-title">First paying client</div>
-        <div class="t-desc">Proof of concept.</div>
-      </div>
-      <div class="timeline-item">
-        <div class="t-time">Month 4</div>
-        <div class="t-title">First full-rate project</div>
-        <div class="t-desc">Pricing validation.</div>
-      </div>
-      <div class="timeline-item">
-        <div class="t-time">Month 6</div>
-        <div class="t-title">3-month cash buffer</div>
-        <div class="t-desc">Survival is no longer in doubt.</div>
-      </div>
-      <div class="timeline-item">
-        <div class="t-time">Month 9</div>
-        <div class="t-title">First retainer</div>
-        <div class="t-desc">Recurring revenue starts.</div>
-      </div>
-      <div class="timeline-item">
-        <div class="t-time">Month 12</div>
-        <div class="t-title">Year-end review</div>
-        <div class="t-desc">Data-driven Year 2 planning.</div>
-      </div>
-      <div class="timeline-item">
-        <div class="t-time">Month 14-18</div>
-        <div class="t-title">First W-2 hire</div>
-        <div class="t-desc">From freelancer to agency.</div>
-      </div>
-      <div class="timeline-item">
-        <div class="t-time">Month 24</div>
-        <div class="t-title">$250K+ revenue</div>
-        <div class="t-desc">Sustainable micro-agency.</div>
-      </div>
-      <div class="timeline-item">
-        <div class="t-time">Month 36</div>
-        <div class="t-title">Geographic expansion</div>
-        <div class="t-desc">From local to regional.</div>
-      </div>
-      <div class="timeline-item">
-        <div class="t-time">Month 48</div>
-        <div class="t-title">$600K+ revenue</div>
-        <div class="t-desc">Small agency.</div>
-      </div>
-      <div class="timeline-item">
-        <div class="t-time">Month 60</div>
-        <div class="t-title">$1M+ revenue</div>
-        <div class="t-desc">National player.</div>
-      </div>
+    <div class="brutal-truth">
+      "I want to be national" is ego. "I want to own Clark County real estate video" is strategy. Most Phase 5 failures come from founder ego — refusing to delegate the creative work because your identity is wrapped up in being the filmmaker.
     </div>
   </div>
 </section>
@@ -1370,103 +1118,192 @@
   <div class="container">
     <div class="section-header">
       <h2>Decision Gates</h2>
-      <p>Brutal honesty at every checkpoint. Green means go, yellow means pivot, red means quit.</p>
+      <p>Green means go. Yellow means pivot. Red means quit. Quitting is a valid choice. Don't glamorize suffering.</p>
+    </div>
+
+    <h3 class="mb-16">Month 3 Gate</h3>
+    <div class="decision-grid mb-32">
+      <div class="decision-card decision-card--go">
+        <div class="decision-label">Proceed</div>
+        <p>1+ project booked or 3+ serious conversations in progress. You have proof the market responds.</p>
+      </div>
+      <div class="decision-card decision-card--pivot">
+        <div class="decision-label">Pivot</div>
+        <p>0 conversations but good feedback on pitch when you do get responses. Change niche, pricing, or channel.</p>
+      </div>
+      <div class="decision-card decision-card--quit">
+        <div class="decision-label">Quit</div>
+        <p>0 conversations AND dread doing outreach. If you're not talking to prospects, you're not in business. You're hobbying.</p>
+      </div>
+    </div>
+    <div class="honest-timeline">
+      <strong>The honest timeline:</strong> Most people think they'll have their first client in 30 days. Reality: 60-90 days is normal if you're doing the work. 120+ days with zero revenue means something is fundamentally wrong.
     </div>
 
     <h3 class="mb-16">Month 6 Gate</h3>
     <div class="decision-grid mb-32">
       <div class="decision-card decision-card--go">
-        <div class="decision-label">Continue</div>
-        <p>Revenue &gt;$15K + 1+ repeat client. Proceed to Phase 3.</p>
+        <div class="decision-label">Proceed</div>
+        <p>2+ clients, $5K+ total revenue, still have $4K+ cash. You're not thriving, but you're learning.</p>
       </div>
       <div class="decision-card decision-card--pivot">
         <div class="decision-label">Pivot</div>
-        <p>Revenue $8K-15K + 0 repeats. Raise prices, narrow niche.</p>
+        <p>Some interest but wrong niche or pricing. People want video, just not what you're offering at that price.</p>
       </div>
       <div class="decision-card decision-card--quit">
         <div class="decision-label">Quit</div>
-        <p>Revenue &lt;$8K. Take a salaried role or change industry.</p>
+        <p>$0 revenue, $0 pipeline, miserable. 6 months with no revenue is not "building." It's waiting.</p>
       </div>
+    </div>
+    <div class="honest-timeline">
+      <strong>The honest timeline:</strong> Most people think they'll be at $10K/mo by Month 6. Reality: $2K-5K total revenue in the first 6 months is more typical for someone without an existing network.
     </div>
 
     <h3 class="mb-16">Month 12 Gate</h3>
     <div class="decision-grid mb-32">
       <div class="decision-card decision-card--go">
-        <div class="decision-label">Double Down</div>
-        <p>Revenue &gt;$100K + 3+ repeats. Full commitment to Phase 3-4.</p>
+        <div class="decision-label">Proceed</div>
+        <p>$8K+/mo trailing, 3+ repeat clients, enjoying the work enough to keep going. Year 2 is warranted.</p>
       </div>
       <div class="decision-card decision-card--pivot">
         <div class="decision-label">Pivot</div>
-        <p>Revenue $60K-100K + 1-2 repeats. Fix sales process.</p>
+        <p>Revenue there but unsustainable hours or bad clients. Fix the model before scaling.</p>
       </div>
       <div class="decision-card decision-card--quit">
         <div class="decision-label">Quit</div>
-        <p>Revenue &lt;$60K + 0 repeats. The model isn't working.</p>
+        <p>Can't break $3K/mo, no repeat clients, burned out. Year 1 is the filter. Most don't make it to Year 2.</p>
       </div>
+    </div>
+    <div class="honest-timeline">
+      <strong>The honest timeline:</strong> Most people think $100K in Year 1 is achievable. Reality: $30K-80K is realistic. $100K+ requires existing relationships, prior reputation, or luck.
     </div>
 
     <h3 class="mb-16">Month 18 Gate (Hire Decision)</h3>
     <div class="decision-grid mb-32">
       <div class="decision-card decision-card--go">
-        <div class="decision-label">Hire W-2 Editor</div>
-        <p>6-month avg &gt;$18K/mo + cash &gt;$25K. Ready for first employee.</p>
+        <div class="decision-label">Hire</div>
+        <p>$15K+/mo trailing, turning away work, documented processes. You have a business that needs people.</p>
       </div>
-      <div class="decision-card decision-card--pivot">
-        <div class="decision-label">Stay Solo</div>
-        <p>6-month avg $12K-18K/mo. Continue with contract editors.</p>
+      <div class="decision-card decision-card--delay">
+        <div class="decision-label">Delay</div>
+        <p>$12K+/mo but processes are a mess. Hiring with messy processes = paying someone to inherit your chaos.</p>
       </div>
       <div class="decision-card decision-card--quit">
-        <div class="decision-label">Do Not Hire</div>
-        <p>6-month avg &lt;$12K/mo. Fix revenue first. Hiring now kills the business.</p>
+        <div class="decision-label">Stay Solo</div>
+        <p>&lt;$12K/mo trailing. Do not hire. Fix revenue first. A $50K salary obligation on $8K/mo revenue is how businesses die.</p>
+      </div>
+    </div>
+    <div class="honest-timeline">
+      <strong>The honest timeline:</strong> Most people think they'll hire their first employee in Month 12. Reality: Month 18-24 is more realistic, and only if revenue is consistent. Most never hire.
+    </div>
+
+    <h3 class="mb-16">Year 2 Gate</h3>
+    <div class="decision-grid">
+      <div class="decision-card decision-card--go">
+        <div class="decision-label">Expand / Scale</div>
+        <p>$20K+/mo, team of 2+, systems running. You have a real business. Keep building.</p>
+      </div>
+      <div class="decision-card decision-card--pivot">
+        <div class="decision-label">Stay Small</div>
+        <p>$15K/mo, happy, no desire to manage. Staying small is a valid choice. Don't let ambition guilt you into misery.</p>
+      </div>
+      <div class="decision-card decision-card--quit">
+        <div class="decision-label">Shut Down / Sell</div>
+        <p>Revenue declining, burned out, no path forward. There is no shame in closing a business that isn't working.</p>
+      </div>
+    </div>
+    <div class="honest-timeline">
+      <strong>The honest timeline:</strong> Most people think scaling is the only success path. Reality: a $15K/mo solo business with low overhead and no employees is an excellent outcome. Don't let Instagram entrepreneurs convince you otherwise.
+    </div>
+  </div>
+</section>
+
+<!-- COMMON FAILURE PATTERNS BY PHASE -->
+<section id="failure-patterns">
+  <div class="container">
+    <div class="section-header">
+      <h2>Common Failure Patterns by Phase</h2>
+      <p>You will experience 2-3 of these. The question is whether you recognize and fix them.</p>
+    </div>
+
+    <div class="failure-grid">
+      <div class="failure-card">
+        <h4>Phase 0: Perfectionism</h4>
+        <p>Spending 3 months on a logo, website revisions, and business card design instead of selling. The best logo in the world won't pay your rent. A mediocre logo and 50 conversations will.</p>
+      </div>
+      <div class="failure-card">
+        <h4>Phase 1: Fear of Outreach</h4>
+        <p>Hiding behind "building the brand" because cold outreach feels bad. Sending 5 emails and quitting. Reality: you need 20+ per week for months. Volume is the only variable you control early on.</p>
+      </div>
+      <div class="failure-card">
+        <h4>Phase 2: Underpricing</h4>
+        <p>Charging $800 for a $5K project because you're "new." Every discount past your first 3 projects teaches the market you're cheap. Clients who pay $800 expect $800 work and complain anyway.</p>
+      </div>
+      <div class="failure-card">
+        <h4>Phase 3: Working IN the Business</h4>
+        <p>No systems, just hustle. Editing every project yourself because "no one can do it like me." You become a $75/hr editor instead of a $200/hr salesperson. The business owns you.</p>
+      </div>
+      <div class="failure-card">
+        <h4>Phase 4: Hiring Too Fast</h4>
+        <p>Bringing on a $4K/mo editor at $8K/mo revenue because you're exhausted. Exhaustion is not a hiring strategy. A W-2 employee is a $50K+/year obligation. Cash flow swings will kill you.</p>
+      </div>
+      <div class="failure-card">
+        <h4>Phase 5: Founder Ego</h4>
+        <p>Refusing to delegate the creative work because your identity is "filmmaker." The business stalls because everything requires you. If you still want to be hands-on in Phase 4, you don't want to scale. You want a high-paying job.</p>
       </div>
     </div>
 
-    <h3 class="mb-16">Year 2 Gate (Expansion)</h3>
-    <div class="decision-grid">
-      <div class="decision-card decision-card--go">
-        <div class="decision-label">Expand</div>
-        <p>Local revenue &gt;$250K + net margin &gt;25%. Open in new city.</p>
-      </div>
-      <div class="decision-card decision-card--pivot">
-        <div class="decision-label">Optimize</div>
-        <p>Local revenue $150K-250K. Own local market first.</p>
-      </div>
-      <div class="decision-card decision-card--quit">
-        <div class="decision-label">Stay Put</div>
-        <p>Local revenue &lt;$150K. Do not expand.</p>
+    <div class="callout callout--warning">
+      <div class="callout-icon">&#9888;</div>
+      <div class="callout-content">
+        <h4>Pattern Recognition</h4>
+        <p>Read this list monthly. When you feel resistance, ask: "Which failure pattern am I living right now?" The answer is usually obvious. The fix is usually uncomfortable.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- COMMON FAILURE PATTERNS -->
-<section id="failure-patterns">
+<!-- OWNER'S EVOLUTION -->
+<section id="owners-evolution">
   <div class="container">
     <div class="section-header">
-      <h2>Common Failure Patterns by Phase</h2>
-      <p>These are not hypotheticals. These are the reasons most video production businesses die.</p>
+      <h2>Owner's Evolution</h2>
+      <p>Your job description changes at every phase. If you still want to be hands-on in Phase 4, you don't want to scale. You want a high-paying job. That's fine. Be honest about it.</p>
     </div>
 
-    <div class="failure-grid">
-      <div class="failure-card">
-        <h4>Phase 1: Not Enough Outreach</h4>
-        <p>Most people send 5 cold emails and quit. You need 20/week for 12 weeks. Volume is the only variable you control early on.</p>
+    <div class="evo-grid">
+      <div class="evo-card">
+        <div class="evo-phase">Phase 0-1</div>
+        <div class="evo-role">Salesperson Who Also Films</div>
+        <div class="evo-desc">60% selling, 30% filming, 10% admin. You are not a creative. You are a founder with a camera. The camera is a tool, not an identity.</div>
       </div>
-      <div class="failure-card">
-        <h4>Phase 2: Pricing Too Low Too Long</h4>
-        <p>The portfolio trap. First 3 projects can be discounted. Projects 4+ must be market rate. Every discount past #3 teaches the market you are cheap.</p>
+      <div class="evo-card">
+        <div class="evo-phase">Phase 2</div>
+        <div class="evo-role">Filmmaker Who Also Sells</div>
+        <div class="evo-desc">40% filming, 40% selling, 20% delivery. You have some work. You still do too much yourself. The transition begins here.</div>
       </div>
-      <div class="failure-card">
-        <h4>Phase 3: Editing Everything Yourself</h4>
-        <p>You become a $75/hr editor instead of a $200/hr salesperson. Hire contract editors. Your job is to sell and direct, not to render.</p>
+      <div class="evo-card">
+        <div class="evo-phase">Phase 3</div>
+        <div class="evo-role">Business Owner Who Sometimes Films</div>
+        <div class="evo-desc">20% filming, 60% selling + systems, 20% management. You start letting go of the work. This feels wrong. Do it anyway.</div>
       </div>
-      <div class="failure-card">
-        <h4>Phase 4: Hiring Too Early</h4>
-        <p>A W-2 editor costs $54K/year. If revenue drops, you fire them or go broke. Wait for 6 months of $18K+/mo before hiring.</p>
+      <div class="evo-card">
+        <div class="evo-phase">Phase 4</div>
+        <div class="evo-role">Manager Who Reviews Work</div>
+        <div class="evo-desc">5% filming, 30% selling, 65% managing people and processes. If this sounds terrible to you, stop at Phase 3. There's no shame in it.</div>
       </div>
-      <div class="failure-card">
-        <h4>Phase 5: Expanding Before Saturation</h4>
-        <p>"I want to be national" is ego. "I want to own Portland" is strategy. Saturate one market before opening another.</p>
+      <div class="evo-card">
+        <div class="evo-phase">Phase 5</div>
+        <div class="evo-role">CEO Who Hires Managers</div>
+        <div class="evo-desc">0% filming, 10% selling key accounts, 90% strategy + leadership. You run a business. You do not make videos. Most filmmakers never make this jump.</div>
+      </div>
+    </div>
+
+    <div class="callout callout--info">
+      <div class="callout-icon">&#9432;</div>
+      <div class="callout-content">
+        <h4>The Honest Question</h4>
+        <p>Do you want to be a filmmaker with a good income, or a business owner who used to be a filmmaker? There is no right answer. There is only the answer you actually want, not the one that sounds impressive.</p>
       </div>
     </div>
   </div>
@@ -1477,144 +1314,123 @@
   <div class="container">
     <div class="section-header">
       <h2>Financial Milestones</h2>
-      <p>The numbers that matter at each stage of growth.</p>
+      <p>These ranges are wide because outcomes vary wildly. Your starting network matters more than your hustle.</p>
     </div>
 
     <div class="table-wrap">
       <table>
         <thead>
           <tr>
-            <th>Year</th>
-            <th>Revenue Target</th>
+            <th>Phase</th>
+            <th>Timeline</th>
+            <th>Monthly Revenue</th>
+            <th>Annual Revenue</th>
             <th>Team</th>
-            <th>Owner Salary</th>
-            <th>True Profit</th>
-            <th>Cash Reserve</th>
+            <th>Profit Margin</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>Year 1</strong></td>
-            <td class="font-mono">$76K-233K</td>
-            <td>Solo + contract</td>
-            <td class="font-mono">$54K-90K</td>
-            <td class="font-mono">$0-86K</td>
-            <td class="font-mono">$8K-69K</td>
+            <td><strong>Pre-Launch</strong></td>
+            <td>M0</td>
+            <td class="font-mono">$0</td>
+            <td class="font-mono">$0</td>
+            <td>0</td>
+            <td class="font-mono">N/A</td>
           </tr>
           <tr>
-            <td><strong>Year 2</strong></td>
-            <td class="font-mono">$250K-400K</td>
-            <td>Owner + 1 W-2</td>
-            <td class="font-mono">$80K-120K</td>
-            <td class="font-mono">$40K-80K</td>
-            <td class="font-mono">$40K-80K</td>
+            <td><strong>Launch</strong></td>
+            <td>M1-3</td>
+            <td class="font-mono">$0-2K</td>
+            <td class="font-mono">$0-6K</td>
+            <td>0</td>
+            <td class="font-mono">Negative</td>
           </tr>
           <tr>
-            <td><strong>Year 3</strong></td>
-            <td class="font-mono">$400K-600K</td>
-            <td>3-4 FTE</td>
-            <td class="font-mono">$100K-150K</td>
-            <td class="font-mono">$80K-150K</td>
-            <td class="font-mono">$80K-150K</td>
+            <td><strong>Validation</strong></td>
+            <td>M4-12</td>
+            <td class="font-mono">$3K-10K</td>
+            <td class="font-mono">$30K-80K</td>
+            <td>0-1 contractors</td>
+            <td class="font-mono">10-25%</td>
           </tr>
           <tr>
-            <td><strong>Year 4</strong></td>
-            <td class="font-mono">$600K-900K</td>
-            <td>5-7 FTE</td>
-            <td class="font-mono">$120K-180K</td>
-            <td class="font-mono">$120K-250K</td>
-            <td class="font-mono">$120K-250K</td>
+            <td><strong>Optimization</strong></td>
+            <td>M12-18</td>
+            <td class="font-mono">$8K-18K</td>
+            <td class="font-mono">$100K-200K</td>
+            <td>1-2 contractors</td>
+            <td class="font-mono">20-35%</td>
           </tr>
           <tr>
-            <td><strong>Year 5</strong></td>
-            <td class="font-mono">$1M+</td>
-            <td>8-12 FTE</td>
-            <td class="font-mono">$150K-250K</td>
+            <td><strong>Scale</strong></td>
+            <td>M18-36</td>
+            <td class="font-mono">$15K-30K</td>
             <td class="font-mono">$200K-400K</td>
-            <td class="font-mono">$200K-400K</td>
+            <td>2-4 employees</td>
+            <td class="font-mono">25-40%</td>
+          </tr>
+          <tr>
+            <td><strong>Expansion</strong></td>
+            <td>Y3-5</td>
+            <td class="font-mono">$40K-80K</td>
+            <td class="font-mono">$500K-1M</td>
+            <td>5-10 employees</td>
+            <td class="font-mono">30-45%</td>
           </tr>
         </tbody>
       </table>
     </div>
-  </div>
-</section>
 
-<!-- OWNER'S EVOLUTION -->
-<section id="owners-evolution">
-  <div class="container">
-    <div class="section-header">
-      <h2>The Owner's Evolution</h2>
-      <p>Your job description changes at every phase. Adapt or become the bottleneck.</p>
+    <div class="callout callout--warning">
+      <div class="callout-icon">&#9888;</div>
+      <div class="callout-content">
+        <h4>Reality Check</h4>
+        <p>Year 1: $30K-80K is realistic. $100K+ requires existing relationships or luck. Year 2: $200K-400K is achievable only if Year 1 was solid. The jump from $80K to $200K is harder than the jump from $0 to $80K.</p>
+      </div>
     </div>
 
-    <div class="evo-grid">
-      <div class="evo-card">
-        <div class="evo-phase">Phase 1</div>
-        <div class="evo-role">Solo Shooter/Editor/Sales</div>
-        <div class="evo-split">20% shoot / 40% edit / 40% sell</div>
-        <div class="evo-skill">Key Skill: Hustle</div>
-      </div>
-      <div class="evo-card">
-        <div class="evo-phase">Phase 2</div>
-        <div class="evo-role">Shooter + Editor Manager</div>
-        <div class="evo-split">25% shoot / 15% edit / 60% sell</div>
-        <div class="evo-skill">Key Skill: Sales</div>
-      </div>
-      <div class="evo-card">
-        <div class="evo-phase">Phase 3</div>
-        <div class="evo-role">Creative Director + Sales</div>
-        <div class="evo-split">15% shoot / 5% edit / 80% sell</div>
-        <div class="evo-skill">Key Skill: Systems</div>
-      </div>
-      <div class="evo-card">
-        <div class="evo-phase">Phase 4</div>
-        <div class="evo-role">CEO + Creative Director</div>
-        <div class="evo-split">5% shoot / 0% edit / 95% manage</div>
-        <div class="evo-skill">Key Skill: Management</div>
-      </div>
-      <div class="evo-card">
-        <div class="evo-phase">Phase 5</div>
-        <div class="evo-role">Founder/Visionary</div>
-        <div class="evo-split">0% shoot / 0% edit / 100% strategy</div>
-        <div class="evo-skill">Key Skill: Leadership</div>
+    <div class="callout callout--info">
+      <div class="callout-icon">&#9432;</div>
+      <div class="callout-content">
+        <h4>Break-Even Math</h4>
+        <p>Your true break-even is 1.05 Signature projects/month ($2,995). Survival runway: 5-6 months with zero revenue on ~$10K capital. If you're not at break-even by Month 5, your pricing or volume is wrong.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- RESOURCES AT EACH PHASE -->
-<section id="resources">
+<!-- THE BRUTAL TRUTH SUMMARY -->
+<section id="brutal-truth">
   <div class="container">
     <div class="section-header">
-      <h2>Resources at Each Phase</h2>
-      <p>Cross-links to the documents that guide execution.</p>
+      <h2>The Brutal Truth Summary</h2>
+      <p>Read this when you're feeling optimistic. Read it again when you're feeling defeated.</p>
     </div>
 
-    <div class="resource-links">
-      <a href="playbook.html" class="resource-link">
-        <div class="rl-phase">Phase 0</div>
-        <div class="rl-desc">Use this roadmap + the playbook for detailed legal/equipment info</div>
-      </a>
-      <a href="90-day-plan.html" class="resource-link">
-        <div class="rl-phase">Phase 1</div>
-        <div class="rl-desc">Use the 90-Day Plan for day-by-day execution</div>
-      </a>
-      <a href="financial-model.html" class="resource-link">
-        <div class="rl-phase">Phase 2</div>
-        <div class="rl-desc">Use the financial model to track against projections</div>
-      </a>
-      <a href="playbook.html" class="resource-link">
-        <div class="rl-phase">Phase 3</div>
-        <div class="rl-desc">Use the playbook's operational workflows + failure modes</div>
-      </a>
-      <a href="playbook.html" class="resource-link">
-        <div class="rl-phase">Phase 4</div>
-        <div class="rl-desc">Re-read the playbook's scaling path section</div>
-      </a>
-      <div class="resource-link" style="cursor:default;">
-        <div class="rl-phase">Phase 5</div>
-        <div class="rl-desc">Hire a business coach (Den Lennie, Chris Do, or similar)</div>
+    <div class="summary-cards">
+      <div class="summary-card">
+        <p><strong>You have a 5-year plan. The market has other plans.</strong> Most successful videographers didn't follow a roadmap. They adapted constantly. This document is a compass, not a contract. Check it monthly. Adjust quarterly.</p>
       </div>
+      <div class="summary-card">
+        <p><strong>If you're not uncomfortable, you're not growing. If you're miserable, you're not sustainable.</strong> There is a difference between productive discomfort and destructive burnout. Learn it fast.</p>
+      </div>
+      <div class="summary-card">
+        <p><strong>The goal isn't to hit every milestone.</strong> It's to still be in business in Year 3. Most video production companies don't make it 18 months. Surviving is winning.</p>
+      </div>
+      <div class="summary-card">
+        <p><strong>Your network matters more than your hustle.</strong> If you know 5 people who can hire you, you'll beat someone with better gear and no connections. Hustle fills gaps. It doesn't replace relationships.</p>
+      </div>
+      <div class="summary-card">
+        <p><strong>Quitting is a valid choice.</strong> If you hate selling, hate managing, and only want to film, there is nothing wrong with being a well-paid freelancer or taking a staff job. The "entrepreneur" badge is not worth your sanity.</p>
+      </div>
+      <div class="summary-card">
+        <p><strong>This document was written for you, not for clients.</strong> Don't show it to prospects. Don't post it on LinkedIn. It's a private reference. If you start using it as marketing material, you've misunderstood its purpose.</p>
+      </div>
+    </div>
+
+    <div class="brutal-truth" style="margin-top: 32px;">
+      Most of this won't happen exactly as planned. Plan for it anyway. The value is in the thinking, not the predictions.
     </div>
   </div>
 </section>
@@ -1622,29 +1438,9 @@
 <!-- FOOTER -->
 <footer style="padding:40px 0;text-align:center;border-top:1px solid var(--border);color:var(--text-muted);font-size:13px;">
   <div class="container">
-    <p>The Atlas Visual Scaling Roadmap &middot; Bookmark this page. Return to it monthly.</p>
+    <p>Atlas Visual Internal Command Center &middot; Bookmark this page. Return to it monthly. &middot; Last updated: today</p>
   </div>
 </footer>
-
-<script>
-  // Active nav link on scroll
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
-
-  function onScroll() {
-    const scrollPos = window.scrollY + 80;
-    sections.forEach(sec => {
-      if (scrollPos >= sec.offsetTop && scrollPos < sec.offsetTop + sec.offsetHeight) {
-        navLinks.forEach(link => {
-          link.classList.remove('active');
-          if (link.getAttribute('href') === '#' + sec.id) link.classList.add('active');
-        });
-      }
-    });
-  }
-
-  window.addEventListener('scroll', onScroll);
-</script>
 
 </body>
 </html>
